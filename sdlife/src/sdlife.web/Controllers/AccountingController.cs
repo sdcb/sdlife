@@ -14,13 +14,12 @@ namespace sdlife.web.Controllers
 
         public AccountingController(IAccountingManager accounting)
         {
-            
             _accounting = accounting;
         }
 
-        public async Task Do()
+        public IActionResult Index()
         {
-            await _accounting.Create("早餐", 4.5m, "test", new DateTime(2016, 1, 1));
+            return View();
         }
     }
 }

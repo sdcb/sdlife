@@ -6,6 +6,12 @@
     "jquery": "2.1.4",
     "jquery-validation": "1.14.0",
     "jquery-validation-unobtrusive": "3.2.4",
-    "angular-material": "*"
+    "angular-material": "*",
+    "fullcalendar": "*",
+    "moment": "*",
+    "angular-ui-calendar": "*"
+  },
+  "resolutions": {
+    "angular": "1.5.5"
   }
 }

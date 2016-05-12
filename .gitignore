@@ -246,3 +246,4 @@ ModelManifest.xml
 **/wwwroot/lib
 site.min.css
 site.min.js
+/sdlife/src/sdlife.web/wwwroot/typings
