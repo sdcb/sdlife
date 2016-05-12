@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace sdlife.web.Services.Implements
 {
-    public class CurrentUser : ICurrentUser
+    public class TestCurrentUser : ICurrentUser
     {
         private readonly HttpContext _httpContext;
 
-        public CurrentUser(IHttpContextAccessor httpContext)
+        public TestCurrentUser(IHttpContextAccessor httpContext)
         {
             _httpContext = httpContext.HttpContext;
         }
@@ -20,7 +20,7 @@ namespace sdlife.web.Services.Implements
         {
             get
             {
-                return _httpContext.User.IsSignedIn();
+                return true;
             }
         }
 
@@ -28,7 +28,7 @@ namespace sdlife.web.Services.Implements
         {
             get
             {
-                return int.Parse(_httpContext.User.GetUserId());
+                return 1;
             }
         }
 
@@ -36,18 +36,18 @@ namespace sdlife.web.Services.Implements
         {
             get
             {
-                return _httpContext.User.GetUserName();
+                return "sdflysha@qq.com";
             }
         }
 
         public string GetClaim(string claimType)
         {
-            return _httpContext.User.FindFirstValue(claimType);
+            throw new NotImplementedException();
         }
 
         public bool IsInRole(string role)
         {
-            return _httpContext.User.IsInRole(role);
+            return true;
         }
     }
 }

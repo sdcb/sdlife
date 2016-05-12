@@ -7,7 +7,7 @@ namespace sdlife.web.Managers
 {
     public interface IAccountingManager
     {
-        Task<Accounting> Create(string title, decimal amount, string comment);
+        Task<Accounting> Create(string title, decimal amount, string comment, DateTime time);
         IQueryable<Accounting> Get();
         IQueryable<AccountingTitle> SearchTitles(string titleQuery);
         Task UpdateComment(int accountId, string comment);

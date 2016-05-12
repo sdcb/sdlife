@@ -32,7 +32,7 @@ namespace sdlife.web.Managers.Implements
                 .Include(x => x.Title);
         }
 
-        public async Task<Accounting> Create(string title, decimal amount, string comment)
+        public async Task<Accounting> Create(string title, decimal amount, string comment, DateTime time)
         {
             var titleEntity = await GetOrCreateTitle(title).ConfigureAwait(false);
 
@@ -44,6 +44,7 @@ namespace sdlife.web.Managers.Implements
                     Comment = comment
                 }, 
                 CreateUserId = _user.UserId, 
+                EventTime = time, 
                 CreateTime = _time.Now, 
                 Title = titleEntity, 
             };
@@ -160,7 +161,7 @@ namespace sdlife.web.Managers.Implements
                 .Where(x => x.Id == accountId)
                 .SingleAsync().ConfigureAwait(false);
 
-            entity.CreateTime = time;
+            entity.EventTime = time;
             await _db.SaveChangesAsync().ConfigureAwait(false);
         }
     }

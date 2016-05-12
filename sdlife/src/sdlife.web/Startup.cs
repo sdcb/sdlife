@@ -14,6 +14,7 @@ using sdlife.web.Services;
 using sdlife.web.Services.Implements;
 using sdlife.web.Managers.Implements;
 using sdlife.web.Managers;
+using Microsoft.AspNet.Http;
 
 namespace sdlife.web
 {
@@ -57,7 +58,7 @@ namespace sdlife.web
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddTransient<ITimeService, TimeService>();
-            services.AddTransient<ICurrentUser, CurrentUser>();
+            services.AddTransient<ICurrentUser, TestCurrentUser>();
 
             // Add managers.
             services.AddTransient<IAccountingManager, AccountingManager>();

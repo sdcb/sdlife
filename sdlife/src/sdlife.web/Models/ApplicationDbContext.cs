@@ -22,6 +22,20 @@ namespace sdlife.web.Models
             builder.Entity<IdentityUserClaim<int>>().ToTable("UserClaim");
             builder.Entity<IdentityRoleClaim<int>>().ToTable("RoleClaim");
 
+            builder.Entity<Accounting>()
+                .HasIndex(x => x.EventTime)
+                .ForSqlServerIsClustered(true)
+                .IsUnique(true);
+            builder.Entity<Accounting>()
+                .HasKey(x => x.Id)
+                .ForSqlServerIsClustered(false);
+            builder.Entity<Accounting>()
+                .Property(x => x.EventTime)
+                .HasDefaultValueSql("SYSDATETIME()");
+            builder.Entity<Accounting>()
+                .Property(x => x.CreateTime)
+                .HasDefaultValueSql("SYSDATETIME()");
+
             builder.Entity<AccountingTitle>()
                 .HasIndex(x => x.Title)
                 .IsUnique(true);

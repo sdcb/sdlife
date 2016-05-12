@@ -14,6 +14,8 @@ namespace sdlife.web.Models
 
         public AccountingTitle Title { get; set; }
 
+        public DateTime EventTime { get; set; } = DateTime.Now;
+
         public DateTime CreateTime { get; set; } = DateTime.Now;
 
         public decimal Amount { get; set; }
