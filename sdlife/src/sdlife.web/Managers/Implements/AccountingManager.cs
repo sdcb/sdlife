@@ -16,8 +16,8 @@ namespace sdlife.web.Managers.Implements
         private readonly ITimeService _time;
 
         public AccountingManager(
-            ApplicationDbContext db, 
-            ICurrentUser user, 
+            ApplicationDbContext db,
+            ICurrentUser user,
             ITimeService time)
         {
             _db = db;
@@ -31,15 +31,15 @@ namespace sdlife.web.Managers.Implements
 
             var entity = new Accounting
             {
-                Amount = dto.Amount, 
+                Amount = dto.Amount,
                 Comment = new AccountingComment
                 {
                     Comment = dto.Comment
-                }, 
-                CreateUserId = _user.UserId, 
-                EventTime = dto.Time, 
-                CreateTime = _time.Now, 
-                Title = titleEntity, 
+                },
+                CreateUserId = _user.UserId,
+                EventTime = dto.Time,
+                CreateTime = _time.Now,
+                Title = titleEntity,
             };
 
             _db.Add(entity);
@@ -118,12 +118,20 @@ namespace sdlife.web.Managers.Implements
 
         public IQueryable<AccountingDto> MyAccountingInRange(DateTime start, DateTime end)
         {
+            //return _db.Accounting
+            //    .Where(x => 
+            //        x.EventTime >= start && 
+            //        x.EventTime < end && 
+            //        x.CreateUserId == _user.UserId)
+            //    .ToDto();
             return _db.Accounting
-                .Where(x => 
-                    x.EventTime >= start && 
-                    x.EventTime < end && 
+                .Include(x => x.Comment)
+                .Include(x => x.Title)
+                .Where(x =>
+                    x.EventTime >= start &&
+                    x.EventTime < end &&
                     x.CreateUserId == _user.UserId)
-                .ToDto();
+                .ToList().Select(x => (AccountingDto)x).AsQueryable();
         }
 
         #region private functions 
