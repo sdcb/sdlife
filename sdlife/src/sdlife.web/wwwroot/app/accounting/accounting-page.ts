@@ -1,39 +1,38 @@
 ﻿/// <reference path="../../typings/tsd.d.ts" />
 
 namespace sdlife.accounting {
-    let module = angular.module(consts.moduleName, ["ngMaterial", "ui.calendar"]);
+    let module = angular.module(consts.moduleName);
 
     class AccountingPage {
-        eventSource = <any[]>[{
-            title: 'Long Event',
-            start: '2016-05-07',
-            end: '2016-05-10'
-        }];
+        eventSource = <IAccountingEventObject[]>[];
         eventSources = [this.eventSource];
-        calendarConfig = {
+        calendarConfig = <IAccountingCalendarConfig>{
             height: 450,
             editable: true,
             header: {
-                left: 'month basicWeek basicDay agendaWeek agendaDay',
-                center: 'title',
-                right: 'today prev,next'
+                left: "month",
+                center: "title",
+                right: "today prev,next"
             },
-            dayClick: (...args) => this.dayClick(...args),
-            eventDrop: this.$scope.alertOnDrop,
-            eventResize: this.$scope.alertOnResize
+            dayClick: (day, ev) => this.dayClick(day, ev),
+            eventDrop: (event, duration, rollback) => this.eventDrop(event, duration, rollback),
+            eventResize: (...args) => console.log(args), 
         }
 
-        static $inject = ["$scope"];
-        constructor(public $scope: any) {
-            console.log(this);
-        }
-
-        dayClick(...args)
-        dayClick(day: moment.Moment, ev: Event) {
-            this.eventSource.push({
-                title: 'Long Event',
-                start: day
+        static $inject = ["$scope", "api"];
+        constructor(
+            public $scope: any,
+            public api: AccountingApi) {
+            this.api.loadInMonth(moment()).then(dto => {
+                let events = addColorToEventObjects(dto.map(x => mapEntityToCalendar(x)));
+                this.eventSource = events;
             });
+        }
+        
+        dayClick(day: moment.Moment, ev: Event) {
+        }
+
+        eventDrop(event: IAccountingEventObject, duration: moment.Duration, rollback: () => void) {
         }
     }
 

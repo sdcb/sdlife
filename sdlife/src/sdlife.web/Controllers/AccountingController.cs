@@ -21,5 +21,10 @@ namespace sdlife.web.Controllers
         {
             return View();
         }
+
+        public Task<Accounting> Create(string title, decimal amount, string comment, DateTime time)
+        {
+            return _accounting.Create(title, amount, comment, time);
+        }
     }
 }

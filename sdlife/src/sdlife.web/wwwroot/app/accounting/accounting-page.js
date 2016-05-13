@@ -3,44 +3,42 @@ var sdlife;
 (function (sdlife) {
     var accounting;
     (function (accounting) {
-        var module = angular.module(accounting.consts.moduleName, ["ngMaterial", "ui.calendar"]);
+        var module = angular.module(accounting.consts.moduleName);
         var AccountingPage = (function () {
-            function AccountingPage($scope) {
+            function AccountingPage($scope, api) {
                 var _this = this;
                 this.$scope = $scope;
-                this.eventSource = [{
-                        title: 'Long Event',
-                        start: '2016-05-07',
-                        end: '2016-05-10'
-                    }];
+                this.api = api;
+                this.eventSource = [];
                 this.eventSources = [this.eventSource];
                 this.calendarConfig = {
                     height: 450,
                     editable: true,
                     header: {
-                        left: 'month basicWeek basicDay agendaWeek agendaDay',
-                        center: 'title',
-                        right: 'today prev,next'
+                        left: "month",
+                        center: "title",
+                        right: "today prev,next"
                     },
-                    dayClick: function () {
+                    dayClick: function (day, ev) { return _this.dayClick(day, ev); },
+                    eventDrop: function (event, duration, rollback) { return _this.eventDrop(event, duration, rollback); },
+                    eventResize: function () {
                         var args = [];
                         for (var _i = 0; _i < arguments.length; _i++) {
                             args[_i - 0] = arguments[_i];
                         }
-                        return _this.dayClick.apply(_this, args);
+                        return console.log(args);
                     },
-                    eventDrop: this.$scope.alertOnDrop,
-                    eventResize: this.$scope.alertOnResize
                 };
-                console.log(this);
+                this.api.loadInMonth(moment()).then(function (dto) {
+                    var events = accounting.addColorToEventObjects(dto.map(function (x) { return accounting.mapEntityToCalendar(x); }));
+                    _this.eventSource = events;
+                });
             }
             AccountingPage.prototype.dayClick = function (day, ev) {
-                this.eventSource.push({
-                    title: 'Long Event',
-                    start: day
-                });
             };
-            AccountingPage.$inject = ["$scope"];
+            AccountingPage.prototype.eventDrop = function (event, duration, rollback) {
+            };
+            AccountingPage.$inject = ["$scope", "api"];
             return AccountingPage;
         }());
         module.component("accountingPage", {
