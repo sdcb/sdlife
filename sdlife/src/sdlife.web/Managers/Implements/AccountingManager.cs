@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Entity;
 using sdlife.web.Models;
 using sdlife.web.Services;
+using sdlife.web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,27 +25,19 @@ namespace sdlife.web.Managers.Implements
             _time = time;
         }
 
-        public IQueryable<Accounting> Get()
+        public async Task<AccountingDto> Create(AccountingDto dto)
         {
-            return _db.Accounting
-                .Include(x => x.Comment)
-                .Include(x => x.CreateUser)
-                .Include(x => x.Title);
-        }
-
-        public async Task<Accounting> Create(string title, decimal amount, string comment, DateTime time)
-        {
-            var titleEntity = await GetOrCreateTitle(title).ConfigureAwait(false);
+            var titleEntity = await GetOrCreateTitle(dto.Title).ConfigureAwait(false);
 
             var entity = new Accounting
             {
-                Amount = amount, 
+                Amount = dto.Amount, 
                 Comment = new AccountingComment
                 {
-                    Comment = comment
+                    Comment = dto.Comment
                 }, 
                 CreateUserId = _user.UserId, 
-                EventTime = time, 
+                EventTime = dto.Time, 
                 CreateTime = _time.Now, 
                 Title = titleEntity, 
             };
@@ -55,104 +48,11 @@ namespace sdlife.web.Managers.Implements
             return entity;
         }
 
-        public async Task<AccountingTitle> GetOrCreateTitle(string title)
-        {
-            var result = await _db.AccountingTitle
-                .Where(x => x.Title == title)
-                .FirstOrDefaultAsync().ConfigureAwait(false);
-
-            if (result != null)
-            {
-                return result;
-            }
-            else
-            {
-                return await CreateTitle(title).ConfigureAwait(false);
-            }
-        }
-
-        public IQueryable<AccountingTitle> SearchTitles(string titleQuery)
+        public IQueryable<string> SearchTitles(string titleQuery)
         {
             return _db.AccountingTitle
-                .Where(x => x.Title.StartsWith(titleQuery));
-        }
-
-        public async Task<AccountingTitle> CreateTitle(string title)
-        {
-            var newOne = new AccountingTitle
-            {
-                CreateTime = DateTime.Now,
-                CreateUserId = _user.UserId,
-                Title = title
-            };
-            _db.Add(newOne);
-
-            await _db.SaveChangesAsync().ConfigureAwait(false);
-            return newOne;
-        }
-
-        public async Task UpdateComment(int accountId, string comment)
-        {
-            var account = _db.Accounting
-                .Include(x => x.Comment)
-                .Where(x => x.Id == accountId)
-                .Single();
-
-            if (!string.IsNullOrWhiteSpace(comment))
-            {
-                if (account.Comment == null)
-                {
-                    await CreateComment(accountId, comment).ConfigureAwait(false);
-                }
-                else
-                {
-                    await UpdateComment(account.Comment, comment).ConfigureAwait(false);
-                }
-            }
-            else if (account.Comment != null)
-            {
-                await DeleteComment(account.Comment).ConfigureAwait(false);
-            }
-        }
-
-        private async Task<AccountingComment> CreateComment(int accountId, string comment)
-        {
-            var commentEntity = new AccountingComment
-            {
-                AccountingId = accountId,
-                Comment = comment
-            };
-
-            _db.Add(commentEntity);
-
-            await _db.SaveChangesAsync().ConfigureAwait(false);
-            return commentEntity;
-        }
-
-        private async Task DeleteComment(AccountingComment comment)
-        {
-            _db.Remove(comment);
-            await _db.SaveChangesAsync().ConfigureAwait(false);
-        }
-
-        private async Task UpdateComment(AccountingComment entity, string comment)
-        {
-            entity.Comment = comment;
-            _db.Update(entity);
-
-            await _db.SaveChangesAsync().ConfigureAwait(false);
-        }
-
-        public async Task UpdateTitle(int accountId, string title)
-        {
-            var entity = await _db.Accounting
-                .Where(x => x.Id == accountId)
-                .SingleAsync().ConfigureAwait(false);
-
-            var titleEntity = await GetOrCreateTitle(title).ConfigureAwait(false);
-
-            entity.TitleId = titleEntity.Id;
-            await _db.SaveChangesAsync().ConfigureAwait(false);
+                .Where(x => x.Title.StartsWith(titleQuery))
+                .Select(x => x.Title);
         }
 
         public async Task UpdateTime(int accountId, DateTime time)
@@ -172,5 +72,102 @@ namespace sdlife.web.Managers.Implements
                 .SumAsync(x => x.Amount).ConfigureAwait(false);
             return amount;
         }
+
+        public async Task<AccountingDto> Update(AccountingDto dto)
+        {
+            var entity = await _db.Accounting
+                .Include(x => x.Title)
+                .Include(x => x.Comment)
+                .Where(x => x.Id == dto.Id)
+                .SingleAsync().ConfigureAwait(false);
+
+            if (entity.Title.Title != dto.Title)
+            {
+                var newTitle = GetOrCreateTitle(dto.Title);
+                entity.TitleId = newTitle.Id;
+            }
+
+            if (entity.EventTime != dto.Time)
+            {
+                entity.EventTime = dto.Time;
+            }
+
+            if (entity.Amount != dto.Amount)
+            {
+                entity.Amount = dto.Amount;
+            }
+
+            if (entity.Comment?.Comment != dto.Comment)
+            {
+                if (dto.Comment == null)
+                {
+                    entity.Comment = null;
+                }
+                else
+                {
+                    entity.Comment = new AccountingComment
+                    {
+                        Comment = dto.Comment
+                    };
+                }
+            }
+
+            await _db.SaveChangesAsync().ConfigureAwait(false);
+            return entity;
+        }
+
+        public IQueryable<AccountingDto> MyAccountingInRange(DateTime start, DateTime end)
+        {
+            return _db.Accounting
+                .Where(x => 
+                    x.EventTime >= start && 
+                    x.EventTime < end && 
+                    x.CreateUserId == _user.UserId)
+                .ToDto();
+        }
+
+        #region private functions 
+        private async Task<AccountingTitle> GetOrCreateTitle(string title)
+        {
+            var result = await _db.AccountingTitle
+                .Where(x => x.Title == title)
+                .FirstOrDefaultAsync().ConfigureAwait(false);
+
+            if (result != null)
+            {
+                return result;
+            }
+            else
+            {
+                return await CreateTitle(title).ConfigureAwait(false);
+            }
+        }
+
+        private async Task<AccountingTitle> CreateTitle(string title)
+        {
+            var newOne = new AccountingTitle
+            {
+                CreateTime = DateTime.Now,
+                CreateUserId = _user.UserId,
+                Title = title
+            };
+            _db.Add(newOne);
+
+            await _db.SaveChangesAsync().ConfigureAwait(false);
+            return newOne;
+        }
+
+        private async Task<List<AccountingTitle>> DeleteUnreferencedTitle()
+        {
+            var titles = await _db.AccountingTitle
+                .Where(x => x.Accountings.Count == 0)
+                .ToListAsync().ConfigureAwait(false);
+
+            _db.RemoveRange(titles);
+            await _db.SaveChangesAsync().ConfigureAwait(false);
+
+            return titles;
+        }
+        #endregion
     }
 }

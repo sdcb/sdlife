@@ -247,3 +247,5 @@ ModelManifest.xml
 site.min.css
 site.min.js
 /sdlife/src/sdlife.web/wwwroot/typings
+*.js
+*.js.map

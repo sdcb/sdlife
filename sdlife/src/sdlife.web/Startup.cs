@@ -15,6 +15,7 @@ using sdlife.web.Services.Implements;
 using sdlife.web.Managers.Implements;
 using sdlife.web.Managers;
 using Microsoft.AspNet.Http;
+using Newtonsoft.Json.Serialization;
 
 namespace sdlife.web
 {
@@ -52,7 +53,11 @@ namespace sdlife.web
                 .AddEntityFrameworkStores<ApplicationDbContext, int>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ContractResolver =
+                    new CamelCasePropertyNamesContractResolver();
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();

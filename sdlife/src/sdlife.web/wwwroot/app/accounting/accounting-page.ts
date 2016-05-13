@@ -25,7 +25,7 @@ namespace sdlife.accounting {
             public api: AccountingApi) {
             this.api.loadInMonth(moment()).then(dto => {
                 let events = addColorToEventObjects(dto.map(x => mapEntityToCalendar(x)));
-                this.eventSource = events;
+                this.eventSource.splice(0, this.eventSource.length, ...events);
             });
         }
         
