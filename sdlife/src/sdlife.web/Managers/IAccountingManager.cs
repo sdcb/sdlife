@@ -13,5 +13,7 @@ namespace sdlife.web.Managers
         Task UpdateComment(int accountId, string comment);
         Task UpdateTitle(int accountId, string title);
         Task UpdateTime(int accountId, DateTime time);
+
+        Task<decimal> MyTotalAmountInRange(DateTime start, DateTime end);
     }
 }

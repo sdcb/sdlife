@@ -164,5 +164,13 @@ namespace sdlife.web.Managers.Implements
             entity.EventTime = time;
             await _db.SaveChangesAsync().ConfigureAwait(false);
         }
+
+        public async Task<decimal> MyTotalAmountInRange(DateTime start, DateTime end)
+        {
+            var amount = await _db.Accounting
+                .Where(x => x.EventTime >= start && x.EventTime < end)
+                .SumAsync(x => x.Amount).ConfigureAwait(false);
+            return amount;
+        }
     }
 }
