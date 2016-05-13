@@ -5,7 +5,7 @@ namespace sdlife.accounting {
         moduleName: "accounting"
     };
 
-    angular.module(consts.moduleName, ["ngMaterial", "ui.calendar"]);
+    angular.module(consts.moduleName, ["ngMaterial", "ui.calendar", "ngMessages"]);
 
     export function mapEntityToCalendar(entity: IAccountingEntity): IAccountingEventObject {
         return {

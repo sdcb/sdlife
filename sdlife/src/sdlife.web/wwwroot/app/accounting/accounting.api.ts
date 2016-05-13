@@ -42,8 +42,10 @@ namespace sdlife.accounting {
             return this.$.post("/Accounting/Delete", { id: id });
         }
 
-        get3() {
-            return 3;
+        searchTitle(title: string) {
+            return this.$.post<string[]>("/Accounting/SearchTitle", { query: title }).then(cb => {
+                return cb.data;
+            });
         }
     }
 

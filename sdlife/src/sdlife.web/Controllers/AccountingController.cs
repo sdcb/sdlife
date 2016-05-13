@@ -36,7 +36,17 @@ namespace sdlife.web.Controllers
 
         public IQueryable<AccountingDto> MyAccountingInRange([FromBody]JObject body)
         {
-            var data = _accounting.MyAccountingInRange(body.Value<DateTime>("from"), body.Value<DateTime>("to"));
+            var from = body.Value<DateTime>("from");
+            var to = body.Value<DateTime>("to");
+            var data = _accounting.MyAccountingInRange(from, to);
+            return data;
+        }
+
+        public IQueryable<string> SearchTitle([FromBody]JObject body)
+        {
+            var query = body.Value<string>("query");
+            var data = _accounting.SearchTitles(query)
+                .Take(20);
             return data;
         }
     }

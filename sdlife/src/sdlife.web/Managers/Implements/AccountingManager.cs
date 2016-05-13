@@ -50,9 +50,12 @@ namespace sdlife.web.Managers.Implements
 
         public IQueryable<string> SearchTitles(string titleQuery)
         {
-            return _db.AccountingTitle
+            var query = _db.AccountingTitle
+                .OrderByDescending(x => x.Accountings.Count)
                 .Where(x => x.Title.StartsWith(titleQuery))
                 .Select(x => x.Title);
+            
+            return query;
         }
 
         public async Task UpdateTime(int accountId, DateTime time)

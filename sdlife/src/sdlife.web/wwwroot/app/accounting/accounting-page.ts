@@ -19,17 +19,23 @@ namespace sdlife.accounting {
             eventResize: (...args) => console.log(args), 
         }
 
-        static $inject = ["$scope", "api"];
+        static $inject = ["api", "$mdDialog"];
         constructor(
-            public $scope: any,
-            public api: AccountingApi) {
+            public api: AccountingApi,
+            public dialog: ng.material.IDialogService
+        ) {
             this.api.loadInMonth(moment()).then(dto => {
                 let events = addColorToEventObjects(dto.map(x => mapEntityToCalendar(x)));
                 this.eventSource.splice(0, this.eventSource.length, ...events);
             });
         }
         
-        dayClick(day: moment.Moment, ev: Event) {
+        dayClick(date: moment.Moment, ev: MouseEvent) {
+            showAccountingCreateDialog(date, this.dialog, ev).then((...args) => {
+                console.log("then");
+            }).catch((...args) => {
+                console.log("catch");
+            });
         }
 
         eventDrop(event: IAccountingEventObject, duration: moment.Duration, rollback: () => void) {
