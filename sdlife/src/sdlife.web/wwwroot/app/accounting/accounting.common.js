@@ -8,3 +8,4 @@ var sdlife;
         };
     })(accounting = sdlife.accounting || (sdlife.accounting = {}));
 })(sdlife || (sdlife = {}));
+//# sourceMappingURL=accounting.common.js.map

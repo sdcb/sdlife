@@ -50,3 +50,4 @@ var sdlife;
         });
     })(accounting = sdlife.accounting || (sdlife.accounting = {}));
 })(sdlife || (sdlife = {}));
+//# sourceMappingURL=accounting-page.js.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"accounting.common.js","sourceRoot":"","sources":["accounting.common.ts"],"names":[],"mappings":"AAAC,+CAA+C;AAEhD,IAAU,MAAM,CAIf;AAJD,WAAU,MAAM;IAAC,IAAA,UAAU,CAI1B;IAJgB,WAAA,UAAU,EAAC,CAAC;QACd,iBAAM,GAAG;YAChB,UAAU,EAAE,YAAY;SAC3B,CAAC;IACN,CAAC,EAJgB,UAAU,GAAV,iBAAU,KAAV,iBAAU,QAI1B;AAAD,CAAC,EAJS,MAAM,KAAN,MAAM,QAIf"}
