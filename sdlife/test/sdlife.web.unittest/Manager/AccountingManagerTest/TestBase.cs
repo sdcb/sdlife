@@ -31,6 +31,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
             _db.Accounting.RemoveRange(_db.Accounting.ToList());
             _db.AccountingTitle.RemoveRange(_db.AccountingTitle.ToList());
+            _db.AccountingComment.RemoveRange(_db.AccountingComment.ToList());
             _db.SaveChanges();
         }
     }

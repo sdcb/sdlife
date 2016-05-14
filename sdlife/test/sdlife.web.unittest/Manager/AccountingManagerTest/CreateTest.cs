@@ -28,6 +28,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
             // Action
             var accounting = await _db.Accounting
+                .Include(x => x.Title)
                 .SingleAsync(x => x.Id == created.Id);
 
             // Assert
@@ -44,7 +45,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
         public async Task CreateCommentCheck(string comment, bool hasComment, string expectedComment)
         {
             // Arrange
-            await _accounting.Create(new ViewModels.AccountingDto
+            var created = await _accounting.Create(new ViewModels.AccountingDto
             {
                 Amount = 1,
                 Time = _time.Now,
@@ -53,7 +54,9 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             });
 
             // Action
-            var accounting = await _db.Accounting.FirstAsync();
+            var accounting = await _db.Accounting
+                .Include(x => x.Comment)
+                .SingleAsync(x => x.Id == created.Id);
 
             // Assert
             if (hasComment)
@@ -71,8 +74,6 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
         [InlineData("中餐", "ZC")]
         [InlineData("阿里云", "ALY")]
         [InlineData("打车", "DC")]
-        [InlineData("打车", "DC")]
-        [InlineData("水果", "SG")]
         public async Task CreateWithPinYinTest(string title, string expectedShortCut)
         {
             // Arrange
@@ -85,8 +86,8 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
             // Action
             var accounting = await _db.Accounting
-                .Where(x => x.Id == created.Id)
-                .SingleAsync();
+                .Include(x => x.Title)
+                .SingleAsync(x => x.Id == created.Id);
 
             // Assert
             Assert.Equal(expectedShortCut, accounting.Title.ShortCut);

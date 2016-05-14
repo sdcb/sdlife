@@ -50,14 +50,22 @@ namespace sdlife.web.Managers.Implements
             }
 
             _db.Add(entity);
-
             await _db.SaveChangesAsync().ConfigureAwait(false);
+
+            _db.Entry(entity).State = EntityState.Detached;
+            _db.Entry(entity.Title).State = EntityState.Detached;
+            if (entity.Comment != null)
+            {
+                _db.Entry(entity.Comment).State = EntityState.Detached;
+            }
+
             return entity;
         }
 
         public async Task<List<string>> SearchTitles(string titleQuery, int limit)
         {
             var query = await _db.AccountingTitle
+                .Include(x => x.Accountings)
                 .Where(x => x.Title.StartsWith(titleQuery) || x.ShortCut.StartsWith(titleQuery))
                 .ToListAsync().ConfigureAwait(false);
             return query
@@ -95,8 +103,7 @@ namespace sdlife.web.Managers.Implements
 
             if (entity.Title.Title != dto.Title)
             {
-                var newTitle = GetOrCreateTitle(dto.Title);
-                entity.TitleId = newTitle.Id;
+                entity.Title = await GetOrCreateTitle(dto.Title).ConfigureAwait(false);
             }
 
             if (entity.EventTime != dto.Time)
@@ -111,16 +118,20 @@ namespace sdlife.web.Managers.Implements
 
             if (entity.Comment?.Comment != dto.Comment)
             {
-                if (dto.Comment == null)
+                if (string.IsNullOrWhiteSpace(dto.Comment))
                 {
                     entity.Comment = null;
                 }
-                else
+                else if (entity.Comment == null)
                 {
                     entity.Comment = new AccountingComment
                     {
                         Comment = dto.Comment
                     };
+                }
+                else
+                {
+                    entity.Comment.Comment = dto.Comment;
                 }
             }
 
@@ -169,7 +180,7 @@ namespace sdlife.web.Managers.Implements
             {
                 CreateTime = DateTime.Now,
                 CreateUserId = _user.UserId,
-                Title = title, 
+                Title = title,
                 ShortCut = _pinYin.GetStringCapitalPinYin(title)
             };
             _db.Add(newOne);
