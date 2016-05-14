@@ -14,6 +14,10 @@ namespace sdlife.web.Models
         [MaxLength(20)]
         public string Title { get; set; }
 
+        [Required]
+        [MaxLength(20)]
+        public string ShortCut { get; set; }
+
         public DateTime CreateTime { get; set; } = DateTime.Now;
 
         public int CreateUserId { get; set; }

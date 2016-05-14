@@ -40,6 +40,8 @@ namespace sdlife.web.Models
                 .HasIndex(x => x.Title)
                 .IsUnique(true);
             builder.Entity<AccountingTitle>()
+                .HasIndex(x => x.ShortCut);
+            builder.Entity<AccountingTitle>()
                 .HasMany(x => x.Accountings)
                 .WithOne(x => x.Title)
                 .OnDelete(DeleteBehavior.Restrict);

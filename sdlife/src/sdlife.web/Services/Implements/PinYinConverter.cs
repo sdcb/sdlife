@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace sdlife.web.Services.Implements
 {
-    public class PinYinConverter
+    public class PinYinConverter : IPinYinConverter
     {
         public char GetCharCapitalPinYin(char ch)
         {

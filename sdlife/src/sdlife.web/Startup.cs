@@ -64,6 +64,7 @@ namespace sdlife.web
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddTransient<ITimeService, TimeService>();
             services.AddTransient<ICurrentUser, TestCurrentUser>();
+            services.AddTransient<IPinYinConverter, PinYinConverter>();
 
             // Add managers.
             services.AddTransient<IAccountingManager, AccountingManager>();

@@ -14,15 +14,18 @@ namespace sdlife.web.Managers.Implements
         private readonly ApplicationDbContext _db;
         private readonly ICurrentUser _user;
         private readonly ITimeService _time;
+        private readonly IPinYinConverter _pinYin;
 
         public AccountingManager(
             ApplicationDbContext db,
             ICurrentUser user,
-            ITimeService time)
+            ITimeService time,
+            IPinYinConverter pinYin)
         {
             _db = db;
             _user = user;
             _time = time;
+            _pinYin = pinYin;
         }
 
         public async Task<AccountingDto> Create(AccountingDto dto)
@@ -52,7 +55,7 @@ namespace sdlife.web.Managers.Implements
         {
             var query = _db.AccountingTitle
                 .OrderByDescending(x => x.Accountings.Count)
-                .Where(x => x.Title.StartsWith(titleQuery))
+                .Where(x => x.Title.StartsWith(titleQuery) || x.ShortCut.StartsWith(titleQuery))
                 .Select(x => x.Title);
             
             return query;
@@ -160,7 +163,8 @@ namespace sdlife.web.Managers.Implements
             {
                 CreateTime = DateTime.Now,
                 CreateUserId = _user.UserId,
-                Title = title
+                Title = title, 
+                ShortCut = _pinYin.GetStringCapitalPinYin(title)
             };
             _db.Add(newOne);
 
