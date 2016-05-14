@@ -35,15 +35,19 @@ namespace sdlife.web.Managers.Implements
             var entity = new Accounting
             {
                 Amount = dto.Amount,
-                Comment = new AccountingComment
-                {
-                    Comment = dto.Comment
-                },
                 CreateUserId = _user.UserId,
                 EventTime = dto.Time,
                 CreateTime = _time.Now,
                 Title = titleEntity,
             };
+
+            if (!string.IsNullOrWhiteSpace(dto.Comment))
+            {
+                entity.Comment = new AccountingComment
+                {
+                    Comment = dto.Comment
+                };
+            }
 
             _db.Add(entity);
 

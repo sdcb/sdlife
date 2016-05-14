@@ -9,13 +9,6 @@ namespace sdlife.web.Services.Implements
 {
     public class TestCurrentUser : ICurrentUser
     {
-        private readonly HttpContext _httpContext;
-
-        public TestCurrentUser(IHttpContextAccessor httpContext)
-        {
-            _httpContext = httpContext.HttpContext;
-        }
-
         public bool IsSignedIn
         {
             get
