@@ -42,11 +42,10 @@ namespace sdlife.web.Controllers
             return data;
         }
 
-        public IQueryable<string> SearchTitle([FromBody]JObject body)
+        public async Task<IEnumerable<string>> SearchTitle([FromBody]JObject body)
         {
             var query = body.Value<string>("query");
-            var data = _accounting.SearchTitles(query)
-                .Take(20);
+            var data = await _accounting.SearchTitles(query);
             return data;
         }
     }

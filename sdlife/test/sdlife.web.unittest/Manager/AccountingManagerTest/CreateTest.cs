@@ -11,29 +11,8 @@ using Xunit;
 
 namespace sdlife.web.unittest.Manager.AccountingManagerTest
 {
-    public class CreateTest
+    public class CreateTest : TestBase
     {
-        private readonly AccountingManager _accounting;
-        private readonly ApplicationDbContext _db;
-        private readonly TestTimeService _time;
-
-        public CreateTest()
-        {
-            var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseInMemoryDatabase();
-
-            _db = new ApplicationDbContext(optionsBuilder.Options);
-            var currentUser = new TestCurrentUser();
-            _time = new TestTimeService();
-            var pinYin = new PinYinConverter();
-            
-            _accounting = new AccountingManager(_db, currentUser, _time, pinYin);
-        }
-
-        void Setup()
-        {
-        }
-
         [Theory]
         [InlineData(3.5, "2016/5/14 10:44", "早餐")]
         public async Task CreateWontReportError(double money, string timeString, string title)

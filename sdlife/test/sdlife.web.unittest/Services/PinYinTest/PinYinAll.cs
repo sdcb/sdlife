@@ -5,13 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace sdlife.web.unittest.Services
+namespace sdlife.web.unittest.Services.PinYinTest
 {
-    public class PinYinService_Test
+    public class PinYinAll
     {
         private readonly PinYinConverter pinYin;
 
-        public PinYinService_Test()
+        public PinYinAll()
         {
             pinYin = new PinYinConverter();
         }

@@ -55,14 +55,16 @@ namespace sdlife.web.Managers.Implements
             return entity;
         }
 
-        public IQueryable<string> SearchTitles(string titleQuery)
+        public async Task<List<string>> SearchTitles(string titleQuery, int limit)
         {
-            var query = _db.AccountingTitle
-                .OrderByDescending(x => x.Accountings.Count)
+            var query = await _db.AccountingTitle
                 .Where(x => x.Title.StartsWith(titleQuery) || x.ShortCut.StartsWith(titleQuery))
-                .Select(x => x.Title);
-            
-            return query;
+                .ToListAsync().ConfigureAwait(false);
+            return query
+                .OrderByDescending(x => x.Accountings.Count)
+                .Select(x => x.Title)
+                .Take(limit)
+                .ToList();
         }
 
         public async Task UpdateTime(int accountId, DateTime time)
