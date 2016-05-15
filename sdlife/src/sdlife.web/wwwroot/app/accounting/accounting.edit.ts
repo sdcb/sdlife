@@ -5,12 +5,12 @@
         editTime: Date;
 
         commit(valid: boolean) {
-            let time = moment(this.input.time);
+            let time = moment(this.editTime);
             this.loading = this.api.update({
                 id: this.input.id, 
                 amount: this.input.amount,
                 comment: this.input.comment,
-                time: moment(this.input.time)
+                time: moment(this.editTime)
                     .hour(time.hour())
                     .minute(time.minute())
                     .second(moment().second())
