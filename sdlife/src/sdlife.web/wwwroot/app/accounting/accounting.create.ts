@@ -21,7 +21,7 @@
                     .second(moment().second())
                     .millisecond(moment().millisecond())
                     .format(),
-                title: this.result.title
+                title: this.result.title || this.$searchTitle
             }).then((data) => {
                 this.dialog.hide(data);
             });
