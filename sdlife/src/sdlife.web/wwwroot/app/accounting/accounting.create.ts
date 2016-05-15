@@ -27,7 +27,7 @@
         static $inject = ["$mdDialog", "date", "api"];
         constructor(
             public dialog: ng.material.IDialogService,
-            public date: moment.Moment,
+            public date: Date,
             public api: AccountingApi
         ) {
             console.log(this);
@@ -35,7 +35,7 @@
     }
 
     export function showAccountingCreateDialog(
-        date: moment.Moment, 
+        date: Date, 
         dialog: ng.material.IDialogService,
         ev: MouseEvent) {
         return dialog.show(<ng.material.IDialogOptions>{

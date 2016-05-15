@@ -1,7 +1,7 @@
 ﻿<form name="createForm" ng-submit="vm.commit(createForm.$valid)">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h2>记一笔 ({{vm.date.format("LL")}})</h2>
+            <h2>记一笔 ({{vm.date | accountingDate}})</h2>
             <span flex></span>
             <md-button class="md-icon-button" ng-click="vm.cancel()">
                 <md-icon>close</md-icon>
@@ -21,7 +21,7 @@
                                  md-search-text="vm.$searchTitle"
                                  md-selected-item="vm.result.title"
                                  md-items="item in vm.searchTitle(vm.$searchTitle)"
-                                 md-floating-label="内容">
+                                 md-floating-label="标题">
                     <md-item-template>
                         <span md-highlight-text="vm.$searchTitle" md-highlight-flags="^i">{{item}}</span>
                     </md-item-template>

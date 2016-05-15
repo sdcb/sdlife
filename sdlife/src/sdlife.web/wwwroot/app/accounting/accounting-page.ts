@@ -31,7 +31,7 @@ namespace sdlife.accounting {
             });
         }
         
-        dayClick(date: moment.Moment, ev: MouseEvent) {
+        dayClick(date: Date, ev: MouseEvent) {
             showAccountingCreateDialog(date, this.dialog, ev).then((...args) => {
                 console.log("then");
             }).catch((...args) => {

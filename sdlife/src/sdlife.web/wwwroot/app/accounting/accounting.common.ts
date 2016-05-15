@@ -3,11 +3,26 @@
 namespace sdlife.accounting {
     export var consts = {
         moduleName: "accounting", 
-        version: "20160515", 
+        version: new Date().getTime(), 
     };
 
-    angular.module(consts.moduleName, ["ngMaterial", "ui.calendar", "ngMessages"]);
+    let module = angular.module(consts.moduleName, ["ngMaterial", "ui.calendar", "ngMessages"]);
     moment.locale("zh-cn");
+
+    module.filter("accountingDate", () => {
+        return (dateOrMoment: moment.Moment|Date) => {
+            let time = moment(dateOrMoment);
+            if (time.isSame(moment(), "day")) {
+                return "今天";
+            } else if (time.clone().add(1, "day").isSame(moment(), "day")) {
+                return "昨天";
+            } else if (time.clone().add(2, "day").isSame(moment(), "day")) {
+                return "前天";
+            } else {
+                return time.clone().format("LL");
+            }
+        };
+    });
 
     export function mapEntityToCalendar(entity: IAccountingEntity): IAccountingEventObject {
         return {

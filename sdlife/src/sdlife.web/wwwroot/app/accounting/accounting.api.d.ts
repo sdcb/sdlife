@@ -29,7 +29,7 @@
             right: string
         }, 
         lang?: "zh-cn", 
-        dayClick: (date: moment.Moment, ev: MouseEvent) => void, 
+        dayClick: (date: Date, ev: MouseEvent) => void, 
         eventDrop: (event: IAccountingEventObject, duration: moment.Duration, rollback: () => void) => void, 
         eventResize: (event: IAccountingEventObject) => void, 
     }
