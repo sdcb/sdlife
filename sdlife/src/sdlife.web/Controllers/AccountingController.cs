@@ -34,6 +34,11 @@ namespace sdlife.web.Controllers
             return await _accounting.Create(dto);
         }
 
+        public async Task UpdateTime(int id, [FromBody]DateTime time)
+        {
+            await _accounting.UpdateTime(id, time);
+        }
+
         public IQueryable<AccountingDto> MyAccountingInRange([FromBody]JObject body)
         {
             var from = body.Value<DateTime>("from");

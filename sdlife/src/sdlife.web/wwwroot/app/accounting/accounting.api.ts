@@ -7,8 +7,8 @@ namespace sdlife.accounting {
         constructor(public $: angular.IHttpService) {
         }
 
-        loadInMonth(month: moment.Moment | string) {
-            let time = moment(month);
+        loadInMonth(month: moment.Moment) {
+            let time = month.clone();
             let from = time.clone().startOf("month");
             let to = from.clone().add(1, "month");
 
@@ -32,10 +32,8 @@ namespace sdlife.accounting {
             });
         }
 
-        updateTime(id: number, time: string) {
-            return this.$.post("/Accounting/UpdateTime", { time: time }).then(cb => {
-                return cb.data;
-            });
+        updateTime(id: number, time: string | moment.Moment) {
+            return this.$.post(`/Accounting/UpdateTime?id=${id}`, time);
         }
 
         delete(id: number) {

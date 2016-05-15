@@ -17,21 +17,27 @@ namespace sdlife.accounting {
             },
             dayClick: (day, ev) => this.dayClick(day, ev),
             eventDrop: (event, duration, rollback) => this.eventDrop(event, duration, rollback),
-            eventResize: (...args) => console.log(args), 
+            eventResize: (_1, _2, revert) => revert(), 
+            viewRender: (view, el) => this.loadData(view.calendar.getDate()), 
+            eventRender: (event, element) => this.eventRender(event, element), 
+            eventDragStop: (event, ev, ui, view) => this.eventDragStop(event, ev, ui, view)
         }
 
         loading: ng.IPromise<any>;
 
-        static $inject = ["api", "$mdDialog"];
+        static $inject = ["$compile", "$scope", "api", "$mdDialog"];
         constructor(
+            public compile: ng.ICompileService, 
+            public scope: ng.IScope, 
             public api: AccountingApi,
             public dialog: ng.material.IDialogService
         ) {
-            this.loadData();
         }
 
-        loadData() {
-            return this.loading = this.api.loadInMonth(moment()).then(dto => {
+        currentMonth: moment.Moment;
+        loadData(date: moment.Moment = null) {
+            this.currentMonth = date || this.currentMonth;
+            return this.loading = this.api.loadInMonth(this.currentMonth).then(dto => {
                 let events = addColorToEventObjects(dto.map(x => mapEntityToCalendar(x)));
                 this.eventSource.splice(0, this.eventSource.length, ...events);
             });
@@ -46,6 +52,21 @@ namespace sdlife.accounting {
         }
 
         eventDrop(event: IAccountingEventObject, duration: moment.Duration, rollback: () => void) {
+            this.loading = this.api.updateTime(event.entity.id, event.start)
+                .catch(() => rollback());
+        }
+
+        eventRender(event: IAccountingEventObject, element: JQuery) {
+            if (event.entity.comment) {
+                element.append($(`
+<md-tooltip>${event.entity.comment.replace("\n", "<br/>")}</md-tooltip>`));
+
+                this.compile(element)(this.scope);
+            }
+        }
+
+        eventDragStop(event: IAccountingEventObject, ev: MouseEvent, ui: any, view: FullCalendar.ViewObject) {
+            console.log(ev.toElement);
         }
     }
 

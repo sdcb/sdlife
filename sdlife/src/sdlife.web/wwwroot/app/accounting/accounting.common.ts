@@ -26,7 +26,7 @@ namespace sdlife.accounting {
 
     export function mapEntityToCalendar(entity: IAccountingEntity): IAccountingEventObject {
         return {
-            title: entity.title, 
+            title: `\r\n${entity.title}: ¥${entity.amount.toFixed(1)}`, 
             start: entity.time, 
             allDay: false, 
             entity: entity

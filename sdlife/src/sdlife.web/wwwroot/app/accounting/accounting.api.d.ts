@@ -31,6 +31,19 @@
         lang?: "zh-cn", 
         dayClick: (date: moment.Moment, ev: MouseEvent) => void, 
         eventDrop: (event: IAccountingEventObject, duration: moment.Duration, rollback: () => void) => void, 
-        eventResize: (event: IAccountingEventObject) => void, 
+        eventResize: (event: IAccountingEventObject, delta: moment.Duration, revertFunc: () => void, jsEvent: Event, ui: any, view: FullCalendar.ViewObject) => void, 
+        viewRender: (view: FullCalendar.ViewObject, element: JQuery) => void;
+        eventRender: (event: IAccountingEventObject, element: JQuery, view: FullCalendar.ViewObject) => void;
+        eventDragStop?: (event: IAccountingEventObject, jsEvent: MouseEvent, ui: any, view: FullCalendar.ViewObject) => void;
+    }
+}
+
+declare namespace FullCalendar {
+    interface Calendar {
+        getDate(): moment.Moment;
+    }
+
+    interface ViewObject {
+        calendar: Calendar;
     }
 }
