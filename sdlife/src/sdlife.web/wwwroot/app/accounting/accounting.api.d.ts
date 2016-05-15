@@ -35,6 +35,7 @@
         viewRender: (view: FullCalendar.ViewObject, element: JQuery) => void;
         eventRender: (event: IAccountingEventObject, element: JQuery, view: FullCalendar.ViewObject) => void;
         eventDragStop?: (event: IAccountingEventObject, jsEvent: MouseEvent, ui: any, view: FullCalendar.ViewObject) => void;
+        eventClick?: (event: IAccountingEventObject, jsEvent: MouseEvent, view: FullCalendar.ViewObject) => any; // return type boolean or void
     }
 }
 

@@ -20,7 +20,7 @@ namespace sdlife.accounting {
             eventResize: (_1, _2, revert) => revert(), 
             viewRender: (view, el) => this.loadData(view.calendar.getDate()), 
             eventRender: (event, element) => this.eventRender(event, element), 
-            eventDragStop: (event, ev, ui, view) => this.eventDragStop(event, ev, ui, view)
+            eventClick: (event, jsEvent, view) => this.eventClick(event, jsEvent, view)
         }
 
         loading: ng.IPromise<any>;
@@ -46,8 +46,12 @@ namespace sdlife.accounting {
         dayClick(date: moment.Moment, ev: MouseEvent) {
             showAccountingCreateDialog(date.format(), this.dialog, ev).then((...args) => {
                 return this.loadData();
-            }).catch((...args) => {
-                console.log("catch");
+            });
+        }
+
+        eventClick(event: IAccountingEventObject, jsEvent: MouseEvent, view: FullCalendar.ViewObject) {
+            showAccountingEditDialog(event.entity, this.dialog, jsEvent).then(() => {
+                return this.loadData();
             });
         }
 

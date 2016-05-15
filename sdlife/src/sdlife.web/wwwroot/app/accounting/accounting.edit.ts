@@ -1,26 +1,22 @@
 ﻿namespace sdlife.accounting {
-    class AcountingCreateDialog {
-        result = {
-            amount: 0, 
-            comment: null, 
-            time: moment().startOf("minute").toDate(), 
-            title: ""
-        };
+    class AcountingEditDialog {
         $searchTitle = "";
         loading: ng.IPromise<any>;
+        editTime: Date;
 
         commit(valid: boolean) {
-            let time = moment(this.result.time);
-            this.loading = this.api.create({
-                amount: this.result.amount,
-                comment: this.result.comment,
-                time: moment(this.date)
+            let time = moment(this.input.time);
+            this.loading = this.api.update({
+                id: this.input.id, 
+                amount: this.input.amount,
+                comment: this.input.comment,
+                time: moment(this.input.time)
                     .hour(time.hour())
                     .minute(time.minute())
                     .second(moment().second())
                     .millisecond(moment().millisecond())
                     .format(),
-                title: this.result.title || this.$searchTitle
+                title: this.input.title || this.$searchTitle
             }).then((data) => {
                 this.dialog.hide(data);
             });
@@ -34,29 +30,30 @@
             return this.api.searchTitle(title);
         }
 
-        static $inject = ["$mdDialog", "date", "api"];
+        static $inject = ["$mdDialog", "entity", "api"];
         constructor(
             public dialog: ng.material.IDialogService,
-            public date: string,
+            public input: IAccountingEntity,
             public api: AccountingApi
         ) {
             console.log(this);
+            this.editTime = moment(this.input.time).startOf("minute").toDate();
         }
     }
 
-    export function showAccountingCreateDialog(
-        date: string, 
+    export function showAccountingEditDialog(
+        entity: IAccountingEntity, 
         dialog: ng.material.IDialogService,
         ev: MouseEvent) {
         return dialog.show(<ng.material.IDialogOptions>{
-            controller: AcountingCreateDialog,
-            templateUrl: `/app/accounting/accounting.create.html?${consts.version}`, 
+            controller: AcountingEditDialog,
+            templateUrl: `/app/accounting/accounting.edit.html?${consts.version}`, 
             controllerAs: "vm",
 
             clickOutsideToClose: false,
             targetEvent: ev, 
             locals: {
-                date: date
+                entity: entity
             }, 
         });
     }

@@ -2,7 +2,7 @@
     <loading promise="vm.loading" size="90"></loading>
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h2>记一笔 ({{vm.date | accountingDate}})</h2>
+            <h2>编辑 ({{vm.date | accountingDate}})</h2>
             <span flex></span>
             <md-button class="md-icon-button" ng-click="vm.cancel()">
                 <md-icon>close</md-icon>
@@ -19,7 +19,7 @@
                                  md-input-minlength="1"
                                  md-input-maxlength="20"
                                  md-search-text="vm.$searchTitle"
-                                 md-selected-item="vm.result.title"
+                                 md-selected-item="vm.input.title"
                                  md-items="item in vm.searchTitle(vm.$searchTitle)"
                                  md-floating-label="标题">
                     <md-item-template>
@@ -30,13 +30,13 @@
                 <md-input-container flex>
                     <label>金额</label>
                     <input type="number" required min="0.5" max="9999999" step="0.5"
-                           ng-model="vm.result.amount" />
+                           ng-model="vm.input.amount" />
                 </md-input-container>
 
                 <md-input-container>
                     <label>时间</label>
                     <input type="time" required 
-                           ng-model="vm.result.time" />
+                           ng-model="vm.editTime" />
                 </md-input-container>
             </div>
 
@@ -44,7 +44,7 @@
                 <label>备注</label>
                 <textarea md-maxlength="4000" rows="3" 
                           md-select-on-focus 
-                          ng-model="vm.result.comment"></textarea>
+                          ng-model="vm.input.comment"></textarea>
             </md-input-container>
         </div>
     </md-dialog-content>
