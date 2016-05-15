@@ -7,13 +7,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Accounting</title>
-    <link href="~/lib/angular/angular-csp.css" rel="stylesheet" />
-    <link href="~/lib/angular-material/angular-material.css" rel="stylesheet" />
-    <link href="~/lib/fullcalendar/dist/fullcalendar.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Roboto' rel="stylesheet" type="text/css">
-
-    <link href="~/css/site.css" rel="stylesheet" />
+    <environment names="Development">
+        <link href="~/lib/angular/angular-csp.css" rel="stylesheet" />
+        <link href="~/lib/angular-material/angular-material.css" rel="stylesheet" />
+        <link href="~/lib/fullcalendar/dist/fullcalendar.css" rel="stylesheet" />
+        <link href="~/css/site.css" rel="stylesheet" />
+    </environment>
+    <environment names="Production, Development2">
+        <link href="~/lib/lib.min.css" asp-append-version="true" rel="stylesheet" />
+        <link href="~/css/site.min.css" asp-append-version="true" rel="stylesheet" />
+    </environment>
 </head>
 <body ng-app="accounting">
     <accounting-page></accounting-page>
@@ -43,20 +46,8 @@
     </environment>
 
     <environment names="Production,Development2">
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/angular/angular.min.js"></script>
-        <script src="~/lib/jquery.ui.touch/jquery.ui.touch.js"></script>
-        <script src="~/lib/angular-aria/angular-aria.min.js"></script>
-        <script src="~/lib/angular-messages/angular-messages.min.js"></script>
-        <script src="~/lib/angular-animate/angular-animate.min.js"></script>
-        <script src="~/lib/angular-material/angular-material.min.js"></script>
-        <script src="~/lib/moment/min/moment.min.js"></script>
-        <script src="~/lib/moment/locale/zh-cn.js"></script>
-        <script src="~/lib/fullcalendar/dist/fullcalendar.min.js"></script>
-        <script src="~/lib/fullcalendar/dist/lang/zh-cn.js"></script>
-        <script src="~/lib/angular-ui-calendar/src/calendar.js"></script>
-
-        <script src="~/app/app.min.js"></script>
+        <script src="~/lib/lib.min.js" asp-append-version="true"></script>
+        <script src="~/app/app.min.js" asp-append-version="true"></script>
     </environment>
     
 </body>
