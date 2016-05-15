@@ -48,3 +48,7 @@ declare namespace FullCalendar {
         calendar: Calendar;
     }
 }
+
+interface JQuery {
+    addTouch(): JQuery;
+}

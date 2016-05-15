@@ -47,6 +47,7 @@
     export function showAccountingCreateDialog(
         date: string, 
         dialog: ng.material.IDialogService,
+        media: ng.material.IMedia, 
         ev: MouseEvent) {
         return dialog.show(<ng.material.IDialogOptions>{
             controller: AcountingCreateDialog,
@@ -58,6 +59,7 @@
             locals: {
                 date: date
             }, 
+            fullscreen: media("xs") || media("md")
         });
     }
     

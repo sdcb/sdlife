@@ -25,12 +25,13 @@ namespace sdlife.accounting {
 
         loading: ng.IPromise<any>;
 
-        static $inject = ["$compile", "$scope", "api", "$mdDialog"];
+        static $inject = ["$compile", "$scope", "api", "$mdDialog", "$mdMedia"];
         constructor(
             public compile: ng.ICompileService, 
             public scope: ng.IScope, 
             public api: AccountingApi,
-            public dialog: ng.material.IDialogService
+            public dialog: ng.material.IDialogService, 
+            public media: ng.material.IMedia
         ) {
         }
 
@@ -48,13 +49,13 @@ namespace sdlife.accounting {
         }
         
         dayClick(date: moment.Moment, ev: MouseEvent) {
-            showAccountingCreateDialog(date.format(), this.dialog, ev).then((...args) => {
+            showAccountingCreateDialog(date.format(), this.dialog, this.media, ev).then((...args) => {
                 return this.loadData();
             });
         }
 
         eventClick(event: IAccountingEventObject, jsEvent: MouseEvent, view: FullCalendar.ViewObject) {
-            showAccountingEditDialog(event.entity, this.dialog, jsEvent, () => this.childChangedRequestReloadData());
+            showAccountingEditDialog(event.entity, this.dialog, jsEvent, this.media, () => this.childChangedRequestReloadData());
         }
 
         eventDrop(event: IAccountingEventObject, duration: moment.Duration, rollback: () => void) {
@@ -63,12 +64,23 @@ namespace sdlife.accounting {
         }
 
         eventRender(event: IAccountingEventObject, element: JQuery) {
+            $(element).addTouch();
             if (event.entity.comment) {
                 element.append($(`
-<md-tooltip>${event.entity.comment.replace("\n", "<br/>")}</md-tooltip>`));
-
-                this.compile(element)(this.scope);
+                    <md-tooltip>${event.entity.comment
+                        .replace("\n", "<br/>")}</md-tooltip>`));
             }
+
+            element.append($(`<i class="top-right material-icons">delete</i>`).click(ev => {
+                ensure(this.dialog, ev, "确定要删除此条目吗？").then(() => {
+                    return this.loading = this.api.delete(event.entity.id);
+                }).then(() => {
+                    this.loadData();
+                });
+                ev.stopPropagation();
+            }));
+            
+            this.compile(element)(this.scope);
         }
 
         eventDragStop(event: IAccountingEventObject, ev: MouseEvent, ui: any, view: FullCalendar.ViewObject) {

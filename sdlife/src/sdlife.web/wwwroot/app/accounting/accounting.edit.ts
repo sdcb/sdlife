@@ -24,14 +24,7 @@
         }
 
         delete(event: MouseEvent) {
-            this.dialog.show(this.dialog.confirm()
-                .title("确定要删除此条数据吗？")
-                .ok("确认")
-                .cancel("取消")
-                .clickOutsideToClose(true)
-                .targetEvent(event)
-                .parent(event.srcElement)
-            ).then(() => {
+            ensure(this.dialog, event, "确定要删除此条数据吗？").then(() => {
                 return this.api.delete(this.input.id);
             }).then(() => {
                 this.onCommit();
@@ -64,6 +57,7 @@
         entity: IAccountingEntity,
         dialog: ng.material.IDialogService,
         ev: MouseEvent,
+        media: ng.material.IMedia, 
         onCommit: () => any) {
         let thisDialog: ng.material.IDialogOptions = {
             controller: AcountingEditDialog,
@@ -76,9 +70,9 @@
                 entity: entity,
                 onCommit: onCommit
             },
+            fullscreen: media("sm") || media("xs")
         };
         thisDialog.locals["thisDialog"] = thisDialog;
-        console.log(thisDialog);
         return dialog.show(thisDialog);
     }
 

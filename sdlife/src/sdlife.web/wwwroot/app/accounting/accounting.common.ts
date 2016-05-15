@@ -24,6 +24,20 @@ namespace sdlife.accounting {
         };
     });
 
+    export function ensure(
+        dialog: ng.material.IDialogService,
+        ev: Event,
+        title: string,
+        textContent: string = null) {
+        return dialog.show(dialog.confirm()
+            .title(title)
+            .textContent(textContent)
+            .ok("确定")
+            .cancel("取消")
+            .clickOutsideToClose(true)
+            .targetEvent(<MouseEvent>ev));
+    }
+
     export function mapEntityToCalendar(entity: IAccountingEntity): IAccountingEventObject {
         return {
             title: `\r\n${entity.title}: ¥${entity.amount.toFixed(1)}`, 
