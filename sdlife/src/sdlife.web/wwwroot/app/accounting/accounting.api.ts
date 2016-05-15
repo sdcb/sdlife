@@ -37,7 +37,7 @@ namespace sdlife.accounting {
         }
 
         delete(id: number) {
-            return this.$.post("/Accounting/Delete", { id: id });
+            return this.$.post(`/Accounting/Delete?id=${id}`, {});
         }
 
         searchTitle(title: string) {

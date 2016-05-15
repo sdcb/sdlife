@@ -44,6 +44,11 @@ namespace sdlife.web.Controllers
             return await _accounting.Update(dto);
         }
 
+        public async Task<AccountingDto> Delete(int id)
+        {
+            return await _accounting.Delete(id);
+        }
+
         public IQueryable<AccountingDto> MyAccountingInRange([FromBody]JObject body)
         {
             var from = body.Value<DateTime>("from");

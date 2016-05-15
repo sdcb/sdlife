@@ -157,6 +157,18 @@ namespace sdlife.web.Managers.Implements
                 .ToList().Select(x => (AccountingDto)x).AsQueryable();
         }
 
+        public async Task<AccountingDto> Delete(int id)
+        {
+            var result = await _db.Accounting
+                .Include(x => x.Title)
+                .Include(x => x.Comment)
+                .SingleAsync(x => x.Id == id).ConfigureAwait(false);
+
+            _db.Remove(result);
+            await _db.SaveChangesAsync().ConfigureAwait(false);
+            return result;
+        }
+
         #region private functions 
         private async Task<AccountingTitle> GetOrCreateTitle(string title)
         {

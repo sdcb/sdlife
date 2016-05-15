@@ -42,6 +42,10 @@ namespace sdlife.accounting {
                 this.eventSource.splice(0, this.eventSource.length, ...events);
             });
         }
+
+        childChangedRequestReloadData() {
+            return this.loadData();
+        }
         
         dayClick(date: moment.Moment, ev: MouseEvent) {
             showAccountingCreateDialog(date.format(), this.dialog, ev).then((...args) => {
@@ -50,9 +54,7 @@ namespace sdlife.accounting {
         }
 
         eventClick(event: IAccountingEventObject, jsEvent: MouseEvent, view: FullCalendar.ViewObject) {
-            showAccountingEditDialog(event.entity, this.dialog, jsEvent).then(() => {
-                return this.loadData();
-            });
+            showAccountingEditDialog(event.entity, this.dialog, jsEvent, () => this.childChangedRequestReloadData());
         }
 
         eventDrop(event: IAccountingEventObject, duration: moment.Duration, rollback: () => void) {
