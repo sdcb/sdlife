@@ -1,7 +1,11 @@
 ﻿/// <reference path="../../typings/tsd.d.ts" />
 
 namespace sdlife.accounting {
-    let module = angular.module(consts.moduleName);
+    export var consts = {
+        moduleName: "accounting",
+        version: new Date().getTime(),
+    };
+    let module = angular.module(consts.moduleName, ["ngMaterial", "ui.calendar", "ngMessages"]);
 
     class AccountingPage {
         eventSource = <IAccountingEventObject[]>[];

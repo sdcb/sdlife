@@ -11,11 +11,11 @@ var paths = {
     webroot: "./wwwroot/"
 };
 
-paths.js = paths.webroot + "js/**/*.js";
-paths.minJs = paths.webroot + "js/**/*.min.js";
+paths.js = paths.webroot + "app/**/*.js";
+paths.minJs = paths.webroot + "app/**/*.min.js";
 paths.css = paths.webroot + "css/**/*.css";
 paths.minCss = paths.webroot + "css/**/*.min.css";
-paths.concatJsDest = paths.webroot + "js/site.min.js";
+paths.concatJsDest = paths.webroot + "app/app.min.js";
 paths.concatCssDest = paths.webroot + "css/site.min.css";
 
 gulp.task("clean:js", function (cb) {

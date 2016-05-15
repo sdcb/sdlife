@@ -1,12 +1,7 @@
 ﻿/// <reference path="../../typings/tsd.d.ts" />
 
 namespace sdlife.accounting {
-    export var consts = {
-        moduleName: "accounting", 
-        version: new Date().getTime(), 
-    };
-
-    let module = angular.module(consts.moduleName, ["ngMaterial", "ui.calendar", "ngMessages"]);
+    let module = angular.module(consts.moduleName);
     moment.locale("zh-cn");
 
     module.filter("accountingDate", () => {
