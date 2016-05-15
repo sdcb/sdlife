@@ -1,7 +1,7 @@
 ﻿<form name="createForm" ng-submit="vm.commit(createForm.$valid)">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h2>New Accounting</h2>
+            <h2>记一笔 ({{vm.date.format("LL")}})</h2>
             <span flex></span>
             <md-button class="md-icon-button" ng-click="vm.cancel()">
                 <md-icon>close</md-icon>
@@ -21,24 +21,21 @@
                                  md-search-text="vm.$searchTitle"
                                  md-selected-item="vm.result.title"
                                  md-items="item in vm.searchTitle(vm.$searchTitle)"
-                                 md-floating-label="Title">
+                                 md-floating-label="内容">
                     <md-item-template>
                         <span md-highlight-text="vm.$searchTitle" md-highlight-flags="^i">{{item}}</span>
                     </md-item-template>
-                    <div ng-messages="createForm.autocompleteField.$error">
-                        <div ng-message="maxlength">Your entry is too long.</div>
-                    </div>
                 </md-autocomplete>
 
                 <md-input-container flex>
-                    <label>Amount</label>
-                    <input type="number" required min="0.1" max="9999999"
+                    <label>金额</label>
+                    <input type="number" required min="0.1" max="9999999" step="0.1"
                            md-select-on-focus 
                            ng-model="vm.result.amount" />
                 </md-input-container>
 
                 <md-input-container>
-                    <label>Time</label>
+                    <label>时间</label>
                     <input type="time" required 
                            ng-model="vm.result.time" />
                 </md-input-container>
@@ -46,7 +43,7 @@
 
 
             <md-input-container>
-                <label>Comment</label>
+                <label>备注</label>
                 <textarea md-maxlength="4000" rows="3" md-select-on-focus ng-model="vm.result.comment"></textarea>
             </md-input-container>
         </div>
@@ -54,10 +51,10 @@
     <md-dialog-actions layout="row">
         <span flex></span>
         <md-button ng-click="vm.cancel()" md-autofocus>
-            Cancel
+            取消
         </md-button>
         <md-button type="submit">
-            Create
+            提交
         </md-button>
     </md-dialog-actions>
 </form>

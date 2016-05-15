@@ -2,10 +2,12 @@
 
 namespace sdlife.accounting {
     export var consts = {
-        moduleName: "accounting"
+        moduleName: "accounting", 
+        version: "20160515", 
     };
 
     angular.module(consts.moduleName, ["ngMaterial", "ui.calendar", "ngMessages"]);
+    moment.locale("zh-cn");
 
     export function mapEntityToCalendar(entity: IAccountingEntity): IAccountingEventObject {
         return {

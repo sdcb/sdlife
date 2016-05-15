@@ -9,6 +9,7 @@ namespace sdlife.accounting {
         calendarConfig = <IAccountingCalendarConfig>{
             height: 450,
             editable: true,
+            lang: "zh-cn", 
             header: {
                 left: "month",
                 center: "title",

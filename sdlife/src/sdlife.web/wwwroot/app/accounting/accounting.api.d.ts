@@ -28,6 +28,7 @@
             center: string, 
             right: string
         }, 
+        lang?: "zh-cn", 
         dayClick: (date: moment.Moment, ev: MouseEvent) => void, 
         eventDrop: (event: IAccountingEventObject, duration: moment.Duration, rollback: () => void) => void, 
         eventResize: (event: IAccountingEventObject) => void, 
