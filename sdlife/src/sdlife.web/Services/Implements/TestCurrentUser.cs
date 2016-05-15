@@ -21,7 +21,7 @@ namespace sdlife.web.Services.Implements
         {
             get
             {
-                return 1;
+                return 7;
             }
         }
 

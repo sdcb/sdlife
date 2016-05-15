@@ -10,7 +10,7 @@ namespace sdlife.accounting {
     moment.locale("zh-cn");
 
     module.filter("accountingDate", () => {
-        return (dateOrMoment: moment.Moment|Date) => {
+        return (dateOrMoment: moment.Moment|Date|string) => {
             let time = moment(dateOrMoment);
             if (time.isSame(moment(), "day")) {
                 return "今天";
