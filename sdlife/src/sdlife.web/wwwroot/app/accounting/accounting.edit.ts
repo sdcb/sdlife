@@ -60,6 +60,7 @@
         media: ng.material.IMedia, 
         onCommit: () => any) {
         let thisDialog: ng.material.IDialogOptions = {
+            autoWrap: true, 
             controller: AcountingEditDialog,
             templateUrl: `/app/accounting/accounting.edit.html?${consts.version}`,
             controllerAs: "vm",
@@ -70,7 +71,7 @@
                 entity: entity,
                 onCommit: onCommit
             },
-            fullscreen: media("sm") || media("xs")
+            fullscreen: isSmallDevice(media)
         };
         thisDialog.locals["thisDialog"] = thisDialog;
         return dialog.show(thisDialog);

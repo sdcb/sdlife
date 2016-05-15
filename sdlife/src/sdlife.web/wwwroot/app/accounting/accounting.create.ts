@@ -59,7 +59,7 @@
             locals: {
                 date: date
             }, 
-            fullscreen: media("xs") || media("md")
+            fullscreen: isSmallDevice(media)
         });
     }
     

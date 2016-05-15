@@ -65,20 +65,32 @@ namespace sdlife.accounting {
 
         eventRender(event: IAccountingEventObject, element: JQuery) {
             $(element).addTouch();
+
             if (event.entity.comment) {
-                element.append($(`
-                    <md-tooltip>${event.entity.comment
-                        .replace("\n", "<br/>")}</md-tooltip>`));
+                element.append($(`<md-tooltip>${event.entity.comment.replace("\n", "<br/>")}</md-tooltip>`));
             }
 
-            element.append($(`<i class="top-right material-icons">delete</i>`).click(ev => {
-                ensure(this.dialog, ev, "确定要删除此条目吗？").then(() => {
-                    return this.loading = this.api.delete(event.entity.id);
-                }).then(() => {
-                    this.loadData();
-                });
-                ev.stopPropagation();
-            }));
+            if (!isSmallDevice(this.media)) {
+                element.append($(`<i class="top-right material-icons">delete</i>`).click(ev => {
+                    ensure(this.dialog, ev, "确定要删除此条目吗？").then(() => {
+                        return this.loading = this.api.delete(event.entity.id);
+                    }).then(() => this.loadData());
+                    ev.stopPropagation();
+                }));
+            }
+
+            if (isSmallDevice(this.media)) {
+                element.find(".fc-time").remove();
+                element.find(".fc-title").html("")
+                    .append($("<span></span>").text(event.entity.title))
+                    .append("<br/>")
+                    .append($("<span></span>").text(`¥${event.entity.amount.toFixed(1)}`));
+            } else {
+                element.find(".fc-title").html("")
+                    .append("<br/>")
+                    .append($("<span></span>").text(
+                        `${event.entity.title}: ¥${event.entity.amount.toFixed(1)}`));
+            }
             
             this.compile(element)(this.scope);
         }

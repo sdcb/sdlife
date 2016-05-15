@@ -24,6 +24,10 @@ namespace sdlife.accounting {
         };
     });
 
+    export function isSmallDevice(media: ng.material.IMedia) {
+        return media("xs");
+    }
+
     export function ensure(
         dialog: ng.material.IDialogService,
         ev: Event,
@@ -40,7 +44,7 @@ namespace sdlife.accounting {
 
     export function mapEntityToCalendar(entity: IAccountingEntity): IAccountingEventObject {
         return {
-            title: `\r\n${entity.title}: ¥${entity.amount.toFixed(1)}`, 
+            title: "", 
             start: entity.time, 
             allDay: false, 
             entity: entity
