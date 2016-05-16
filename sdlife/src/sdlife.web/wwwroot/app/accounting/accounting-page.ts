@@ -75,7 +75,7 @@ namespace sdlife.accounting {
             }
 
             if (!isSmallDevice(this.media)) {
-                element.append($(`<i class="top-right material-icons">delete</i>`).click(ev => {
+                element.append($(`<span class="top-right calendar-delete-button">✕&nbsp;</span>`).click(ev => {
                     ensure(this.dialog, ev, "确定要删除此条目吗？").then(() => {
                         return this.loading = this.api.delete(event.entity.id);
                     }).then(() => this.loadData());
@@ -83,20 +83,25 @@ namespace sdlife.accounting {
                 }));
             }
 
-            if (isSmallDevice(this.media)) {
-                element.find(".fc-time").remove();
+            element.find(".fc-time").remove();            
+            if (this.isSmallDevice()) {
                 element.find(".fc-title").html("")
                     .append($("<span></span>").text(event.entity.title))
                     .append("<br/>")
                     .append($("<span></span>").text(`¥${event.entity.amount.toFixed(1)}`));
             } else {
-                element.find(".fc-title").html("")
-                    .append("<br/>")
-                    .append($("<span></span>").text(
-                        `${event.entity.title}: ¥${event.entity.amount.toFixed(1)}`));
+                element.find(".fc-title")
+                    .html("")
+                    .append($("<span></span>")
+                        .text(`${event.entity.title}: ¥${event.entity.amount.toFixed(1)}`));
             }
             
+            
             this.compile(element)(this.scope);
+        }
+
+        isSmallDevice() {
+            return isSmallDevice(this.media);
         }
 
         eventDragStop(event: IAccountingEventObject, ev: MouseEvent, ui: any, view: FullCalendar.ViewObject) {
