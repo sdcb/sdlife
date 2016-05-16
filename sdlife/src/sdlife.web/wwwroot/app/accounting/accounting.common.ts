@@ -39,7 +39,7 @@ namespace sdlife.accounting {
 
     export function mapEntityToCalendar(entity: IAccountingEntity): IAccountingEventObject {
         return {
-            title: "", 
+            title: entity.title, 
             start: entity.time, 
             allDay: false, 
             entity: entity
