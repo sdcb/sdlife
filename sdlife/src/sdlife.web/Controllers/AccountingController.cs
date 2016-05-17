@@ -28,7 +28,7 @@ namespace sdlife.web.Controllers
         {
             return View();
         }
-
+        
         public async Task<AccountingDto> Create([FromBody]AccountingDto dto)
         {
             return await _accounting.Create(dto);
