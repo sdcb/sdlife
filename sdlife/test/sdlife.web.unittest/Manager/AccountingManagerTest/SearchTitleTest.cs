@@ -1,4 +1,7 @@
-﻿using sdlife.web.Managers.Implements;
+﻿using Microsoft.Extensions.DependencyInjection;
+using sdlife.web.Data;
+using sdlife.web.Managers;
+using sdlife.web.Managers.Implements;
 using sdlife.web.Models;
 using sdlife.web.Services.Implements;
 using sdlife.web.unittest.Common;
@@ -17,23 +20,27 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
         public async Task Basic()
         {
             // Action
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var now = DateTime.Now;
+
             var titles = new List<string> { "早餐", "零食", "阿里云" };
             var datas = titles.Select(x => new AccountingDto
             {
                 Amount = 2, 
                 Title = x, 
-                Time = _time.Now
+                Time = now
             });
             foreach (var data in datas)
             {
-                await _accounting.Create(data);
+                await accountingManager.Create(data);
             }
 
             // Action
-            var zc = await _accounting.SearchTitles("早", 20);
-            var ls = await _accounting.SearchTitles("零", 20);
-            var aly = await _accounting.SearchTitles("阿", 20);
-            var no = await _accounting.SearchTitles("无", 20);
+            var zc = await accountingManager.SearchTitles("早", 20);
+            var ls = await accountingManager.SearchTitles("零", 20);
+            var aly = await accountingManager.SearchTitles("阿", 20);
+            var no = await accountingManager.SearchTitles("无", 20);
 
             // Assert
             Assert.Contains("早餐", zc);
@@ -45,25 +52,30 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
         [Fact]
         public async Task FindMultpleBySingleWord()
         {
+            // Arrange
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var now = DateTime.Now;
+
             // Action
             var titles = new List<string> { "电脑", "电视", "电影" };
             var datas = titles.Select(x => new AccountingDto
             {
                 Amount = 2,
                 Title = x,
-                Time = _time.Now
+                Time = now
             });
             foreach (var data in datas)
             {
-                await _accounting.Create(data);
+                await accountingManager.Create(data);
             }
 
             // Action
-            var zc = await _accounting.SearchTitles("电", 20);
-            var no = await _accounting.SearchTitles("早", 20);
+            var zc = await accountingManager.SearchTitles("电", 20);
+            var no = await accountingManager.SearchTitles("早", 20);
 
             // Assert
-            Assert.True(zc.Count() == 3);
+            Assert.Equal(3, zc.Count());
             Assert.Contains("电脑", zc);
             Assert.Contains("电视", zc);
             Assert.Contains("电影", zc);
@@ -73,28 +85,33 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
         [Fact]
         public async Task SearchByPinYin()
         {
+            // Arrange
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var now = DateTime.Now;
+
             // Action
             var titles = new List<string> { "早餐", "中餐", "晚餐" };
             var datas = titles.Select(x => new AccountingDto
             {
                 Amount = 2,
                 Title = x,
-                Time = _time.Now
+                Time = now
             });
             foreach (var data in datas)
             {
-                await _accounting.Create(data);
+                await accountingManager.Create(data);
             }
 
             // Action
-            var wz = await _accounting.SearchTitles("Z", 20);
-            var ww = await _accounting.SearchTitles("W", 20);
-            var wd = await _accounting.SearchTitles("D", 20);
+            var wz = await accountingManager.SearchTitles("Z", 20);
+            var ww = await accountingManager.SearchTitles("W", 20);
+            var wd = await accountingManager.SearchTitles("D", 20);
 
             // Assert
-            Assert.True(wz.Count() == 2);
-            Assert.True(ww.Count() == 1);
-            Assert.True(wd.Count() == 0);
+            Assert.Equal(2, wz.Count);
+            Assert.Equal(1, ww.Count);
+            Assert.Equal(0, wd.Count);
             Assert.Contains("早餐", wz);
             Assert.Contains("中餐", wz);
         }
@@ -102,7 +119,11 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
         [Fact]
         public async Task MoreResultWillPutOnTop()
         {
-            // Action
+            // Arrange 
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var now = DateTime.Now;
+            
             var titles = new List<string>
             {
                 // 3个中餐（Z）
@@ -115,15 +136,15 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             {
                 Amount = 2,
                 Title = x,
-                Time = _time.Now
+                Time = now
             });
             foreach (var data in datas)
             {
-                await _accounting.Create(data);
+                await accountingManager.Create(data);
             }
 
             // Action
-            var wc = await _accounting.SearchTitles("Z", 20);
+            var wc = await accountingManager.SearchTitles("Z", 20);
 
             // Assert
             Assert.True(wc.Count() == 3);

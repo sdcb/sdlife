@@ -1,8 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using sdlife.web.Data;
+using sdlife.web.Managers;
 using sdlife.web.Managers.Implements;
 using sdlife.web.Models;
 using sdlife.web.Services.Implements;
 using sdlife.web.unittest.Common;
+using sdlife.web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +21,13 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
         [InlineData(3.5, "2016/5/14 10:44", "早餐")]
         public async Task CreateWontReportError(double money, string timeString, string title)
         {
+            // Arrange
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
             // Action
             var expectedEventTime = DateTime.Parse(timeString);
-            var created = await _accounting.Create(new ViewModels.AccountingDto
+            var created = await accountingManager.Create(new ViewModels.AccountingDto
             {
                 Amount = (decimal)money, 
                 Time = expectedEventTime,
@@ -27,7 +35,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             });
 
             // Action
-            var accounting = await _db.Accounting
+            var accounting = await db.Accounting
                 .Include(x => x.Title)
                 .SingleAsync(x => x.Id == created.Id);
 
@@ -45,16 +53,20 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
         public async Task CreateCommentCheck(string comment, bool hasComment, string expectedComment)
         {
             // Arrange
-            var created = await _accounting.Create(new ViewModels.AccountingDto
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var now = DateTime.Now;
+
+            var created = await accountingManager.Create(new ViewModels.AccountingDto
             {
                 Amount = 1,
-                Time = _time.Now,
+                Time = now,
                 Title = "早餐", 
                 Comment = comment
             });
 
             // Action
-            var accounting = await _db.Accounting
+            var accounting = await db.Accounting
                 .Include(x => x.Comment)
                 .SingleAsync(x => x.Id == created.Id);
 
@@ -77,15 +89,19 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
         public async Task CreateWithPinYinTest(string title, string expectedShortCut)
         {
             // Arrange
-            var created = await _accounting.Create(new ViewModels.AccountingDto
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var now = DateTime.Now;
+
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 1,
-                Time = _time.Now,
+                Time = now,
                 Title = title
             });
 
             // Action
-            var accounting = await _db.Accounting
+            var accounting = await db.Accounting
                 .Include(x => x.Title)
                 .SingleAsync(x => x.Id == created.Id);
 

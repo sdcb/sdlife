@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using sdlife.web.Data;
+using sdlife.web.Managers;
 using sdlife.web.Managers.Implements;
 using sdlife.web.Models;
 using sdlife.web.Services.Implements;
@@ -17,8 +20,13 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
         [Fact]
         public async Task SimpleUpdate()
         {
+            // Arrange 
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var now = DateTime.Now;
+
             // Action
-            var created = await _accounting.Create(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -27,20 +35,20 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
             // Action
             var title = "I love lgl";
-            await _accounting.Update(new AccountingDto
+            await accountingManager.Update(new AccountingDto
             {
                 Id = created.Id, 
                 Amount = 500, 
-                Time = _time.Now, 
+                Time = now, 
                 Comment = title, 
                 Title = title
             });
 
             // Assert
-            var data = await _db.Accounting
+            var data = await db.Accounting
                 .SingleAsync(x => x.Id == created.Id);
             Assert.Equal(500, data.Amount);
-            Assert.Equal(_time.Now, data.EventTime);
+            Assert.Equal(now, data.EventTime);
             Assert.Equal(title, data.Title.Title);
             Assert.NotNull(data.Comment);
             Assert.Equal(title, data.Comment.Comment);
@@ -49,8 +57,13 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
         [Fact]
         public async Task UpdateWillEffectShortCut()
         {
+            // Arrange 
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var now = DateTime.Now;
+
             // Action
-            var created = await _accounting.Create(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -59,17 +72,18 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
             // Action
             var title = "晚餐";
-            await _accounting.Update(new AccountingDto
+            await accountingManager.Update(new AccountingDto
             {
                 Id = created.Id,
                 Amount = 500,
-                Time = _time.Now,
+                Time = now,
                 Comment = title,
                 Title = title
             });
 
             // Assert
-            var data = await _db.Accounting
+            var data = await db.Accounting
+                .Include(x => x.Title)
                 .SingleAsync(x => x.Id == created.Id);
             Assert.Equal(data.Title.ShortCut, "WC");
         }
@@ -77,8 +91,13 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
         [Fact]
         public async Task UpdateTime()
         {
+            // Arrange 
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var now = DateTime.Now;
+
             // Action
-            var created = await _accounting.Create(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -86,19 +105,24 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             });
 
             // Action
-            await _accounting.UpdateTime(created.Id, _time.Now);
+            await accountingManager.UpdateTime(created.Id, now);
 
             // Assert
-            var data = await _db.Accounting
+            var data = await db.Accounting
                 .SingleAsync(x => x.Id == created.Id);
-            Assert.Equal(data.EventTime, _time.Now);
+            Assert.Equal(data.EventTime, now);
         }
 
         [Fact]
         public async Task UpdateCanDeleteComment()
         {
+            // Arrange 
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var now = DateTime.Now;
+
             // Action
-            var created = await _accounting.Create(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -108,10 +132,10 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
             // Action
             created.Comment = " ";
-            await _accounting.Update(created);
+            await accountingManager.Update(created);
 
             // Assert
-            var data = await _db.Accounting
+            var data = await db.Accounting
                 .SingleAsync(x => x.Id == created.Id);
             Assert.Null(data.Comment);
         }
@@ -119,8 +143,12 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
         [Fact]
         public async Task UpdateCanUpdateComment()
         {
-            // Action
-            var created = await _accounting.Create(new AccountingDto
+            // Arrange 
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var now = DateTime.Now;
+
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -130,10 +158,10 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
             // Action
             created.Comment = "Nice";
-            await _accounting.Update(created);
+            await accountingManager.Update(created);
 
             // Assert
-            var data = await _db.AccountingComment.ToListAsync();
+            var data = await db.AccountingComment.ToListAsync();
             Assert.Equal("Nice", data[0].Comment);
         }
     }

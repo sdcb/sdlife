@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using sdlife.web.Data;
+using sdlife.web.Managers;
 using sdlife.web.Managers.Implements;
 using sdlife.web.Models;
+using sdlife.web.Services;
 using sdlife.web.Services.Implements;
 using sdlife.web.unittest.Common;
 using System;
@@ -12,28 +15,25 @@ using Xunit;
 
 namespace sdlife.web.unittest.Manager.AccountingManagerTest
 {
-    public abstract class TestBase 
+    public abstract class TestBase
     {
-        protected AccountingManager _accounting;
-        protected ApplicationDbContext _db;
-        protected TestTimeService _time;
+        protected IServiceProvider ServiceProvider { get; }
 
         public TestBase()
         {
-            var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseInMemoryDatabase();
+            var service = new ServiceCollection();
+            service.AddDbContext<ApplicationDbContext>(b => b.UseInMemoryDatabase());
+            service.AddTransient<ITimeService, TestTimeService>();
+            service.AddTransient<ICurrentUser, TestCurrentUser>();
+            service.AddTransient<IAccountingManager, AccountingManager>();
+            service.AddTransient<IPinYinConverter, PinYinConverter>();
 
-            _db = new ApplicationDbContext(optionsBuilder.Options);
-            var currentUser = new TestCurrentUser();
-            _time = new TestTimeService();
-            var pinYin = new PinYinConverter();
-
-            _accounting = new AccountingManager(_db, currentUser, _time, pinYin);
-
-            _db.Accounting.RemoveRange(_db.Accounting.ToList());
-            _db.AccountingTitle.RemoveRange(_db.AccountingTitle.ToList());
-            _db.AccountingComment.RemoveRange(_db.AccountingComment.ToList());
-            _db.SaveChanges();
+            ServiceProvider = service.BuildServiceProvider();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            db.RemoveRange(db.Accounting);
+            db.RemoveRange(db.AccountingComment);
+            db.RemoveRange(db.AccountingTitle);
+            db.SaveChanges();
         }
     }
 }
