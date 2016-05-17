@@ -53,7 +53,7 @@ namespace sdlife.web.Controllers
         {
             var from = body.Value<DateTime>("from");
             var to = body.Value<DateTime>("to");
-            var data = _accounting.MyAccountingInRange(from, to);
+            var data = _accounting.UserAccountingInRange(from, to, _user.UserId);
             return data;
         }
 

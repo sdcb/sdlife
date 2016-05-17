@@ -15,7 +15,7 @@ namespace sdlife.web.Managers
         Task<AccountingDto> Update(AccountingDto dto);
 
         Task<decimal> MyTotalAmountInRange(DateTime start, DateTime end);
-        IQueryable<AccountingDto> MyAccountingInRange(DateTime from, DateTime to);
+        IQueryable<AccountingDto> UserAccountingInRange(DateTime start, DateTime end, int userId);
         Task Delete(int id);
     }
 }

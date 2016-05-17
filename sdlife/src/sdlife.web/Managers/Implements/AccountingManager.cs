@@ -138,12 +138,12 @@ namespace sdlife.web.Managers.Implements
             return entity;
         }
 
-        public IQueryable<AccountingDto> MyAccountingInRange(DateTime start, DateTime end)
+        public IQueryable<AccountingDto> UserAccountingInRange(DateTime start, DateTime end, int userId)
         {
             //return _db.Accounting
-            //    .Where(x => 
-            //        x.EventTime >= start && 
-            //        x.EventTime < end && 
+            //    .Where(x =>
+            //        x.EventTime >= start &&
+            //        x.EventTime < end &&
             //        x.CreateUserId == _user.UserId)
             //    .ToDto();
             return _db.Accounting
@@ -152,7 +152,7 @@ namespace sdlife.web.Managers.Implements
                 .Where(x =>
                     x.EventTime >= start &&
                     x.EventTime < end &&
-                    x.CreateUserId == _user.UserId)
+                    x.CreateUserId == userId)
                 .ToList().Select(x => (AccountingDto)x).AsQueryable();
         }
 
