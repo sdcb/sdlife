@@ -39,9 +39,6 @@ namespace sdlife.web.Data
             builder.Entity<Accounting>()
                 .Property(x => x.EventTime)
                 .HasDefaultValueSql("SYSDATETIME()");
-            builder.Entity<Accounting>()
-                .Property(x => x.CreateTime)
-                .HasDefaultValueSql("SYSDATETIME()");
 
             builder.Entity<AccountingTitle>()
                 .HasIndex(x => x.Title)

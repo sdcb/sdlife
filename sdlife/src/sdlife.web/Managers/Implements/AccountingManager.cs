@@ -38,7 +38,6 @@ namespace sdlife.web.Managers.Implements
                 Amount = dto.Amount,
                 CreateUserId = _user.UserId,
                 EventTime = dto.Time,
-                CreateTime = _time.Now,
                 Title = titleEntity,
             };
 
@@ -196,8 +195,6 @@ namespace sdlife.web.Managers.Implements
         {
             var newOne = new AccountingTitle
             {
-                CreateTime = DateTime.Now,
-                CreateUserId = _user.UserId,
                 Title = title,
                 ShortCut = _pinYin.GetStringCapitalPinYin(title)
             };

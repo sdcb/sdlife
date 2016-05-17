@@ -40,7 +40,6 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 .SingleAsync(x => x.Id == created.Id);
 
             // Assert
-            Assert.Equal(TestTimeService.StaticNow, accounting.CreateTime);
             Assert.Equal(expectedEventTime, accounting.EventTime);
             Assert.Equal(title, accounting.Title.Title);
             Assert.Equal((decimal)money, accounting.Amount);

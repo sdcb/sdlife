@@ -18,10 +18,6 @@ namespace sdlife.web.Models
         [MaxLength(20)]
         public string ShortCut { get; set; }
 
-        public DateTime CreateTime { get; set; } = DateTime.Now;
-
-        public int CreateUserId { get; set; }
-
         public HashSet<Accounting> Accountings { get; set; } = new HashSet<Accounting>();
 
         public User CreateUser { get; set; }
