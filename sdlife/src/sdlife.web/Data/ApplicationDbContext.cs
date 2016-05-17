@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using sdlife.web.Models;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace sdlife.web.Models
+namespace sdlife.web.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User, Role, int>
     {
-        public ApplicationDbContext()
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
         {
         }
 
@@ -31,6 +32,7 @@ namespace sdlife.web.Models
             builder.Entity<IdentityUserRole<int>>().ToTable("UserRole");
             builder.Entity<IdentityUserClaim<int>>().ToTable("UserClaim");
             builder.Entity<IdentityRoleClaim<int>>().ToTable("RoleClaim");
+            builder.Entity<IdentityUserToken<int>>().ToTable("UserToken");
 
             builder.Entity<Accounting>()
                 .HasIndex(x => x.EventTime)

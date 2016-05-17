@@ -1,23 +1,23 @@
-using System;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations;
-using sdlife.web.Models;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using sdlife.web.Data;
 
-namespace sdlife.web.Migrations
+namespace sdlife.web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160512093403_AccountEventTime")]
-    partial class AccountEventTime
+    [Migration("20160516144017_0000")]
+    partial class _0000
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
+                .HasAnnotation("ProductVersion", "1.0.0-rc2-20901")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -30,10 +30,12 @@ namespace sdlife.web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAnnotation("Relational:TableName", "RoleClaim");
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RoleClaim");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -46,10 +48,12 @@ namespace sdlife.web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAnnotation("Relational:TableName", "UserClaim");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserClaim");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -61,10 +65,12 @@ namespace sdlife.web.Migrations
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.HasAnnotation("Relational:TableName", "UserLogin");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserLogin");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<int>", b =>
                 {
                     b.Property<int>("UserId");
 
@@ -72,7 +78,26 @@ namespace sdlife.web.Migrations
 
                     b.HasKey("UserId", "RoleId");
 
-                    b.HasAnnotation("Relational:TableName", "UserRole");
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRole");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserToken<int>", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("UserToken");
                 });
 
             modelBuilder.Entity("sdlife.web.Models.Accounting", b =>
@@ -84,22 +109,28 @@ namespace sdlife.web.Migrations
 
                     b.Property<DateTime>("CreateTime")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("Relational:GeneratedValueSql", "SYSDATETIME()");
+                        .HasDefaultValueSql("SYSDATETIME()");
 
                     b.Property<int>("CreateUserId");
 
                     b.Property<DateTime>("EventTime")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("Relational:GeneratedValueSql", "SYSDATETIME()");
+                        .HasDefaultValueSql("SYSDATETIME()");
 
                     b.Property<int>("TitleId");
 
                     b.HasKey("Id")
                         .HasAnnotation("SqlServer:Clustered", false);
 
+                    b.HasIndex("CreateUserId");
+
                     b.HasIndex("EventTime")
                         .IsUnique()
                         .HasAnnotation("SqlServer:Clustered", true);
+
+                    b.HasIndex("TitleId");
+
+                    b.ToTable("Accounting");
                 });
 
             modelBuilder.Entity("sdlife.web.Models.AccountingComment", b =>
@@ -111,6 +142,10 @@ namespace sdlife.web.Migrations
                         .HasAnnotation("MaxLength", 4000);
 
                     b.HasKey("AccountingId");
+
+                    b.HasIndex("AccountingId");
+
+                    b.ToTable("AccountingComment");
                 });
 
             modelBuilder.Entity("sdlife.web.Models.AccountingTitle", b =>
@@ -122,14 +157,24 @@ namespace sdlife.web.Migrations
 
                     b.Property<int>("CreateUserId");
 
+                    b.Property<string>("ShortCut")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 20);
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasAnnotation("MaxLength", 20);
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreateUserId");
+
+                    b.HasIndex("ShortCut");
+
                     b.HasIndex("Title")
                         .IsUnique();
+
+                    b.ToTable("AccountingTitle");
                 });
 
             modelBuilder.Entity("sdlife.web.Models.Role", b =>
@@ -149,9 +194,9 @@ namespace sdlife.web.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
-                        .HasAnnotation("Relational:Name", "RoleNameIndex");
+                        .HasName("RoleNameIndex");
 
-                    b.HasAnnotation("Relational:TableName", "Role");
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("sdlife.web.Models.User", b =>
@@ -195,51 +240,57 @@ namespace sdlife.web.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
-                        .HasAnnotation("Relational:Name", "EmailIndex");
+                        .HasName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
-                        .HasAnnotation("Relational:Name", "UserNameIndex");
+                        .HasName("UserNameIndex");
 
-                    b.HasAnnotation("Relational:TableName", "User");
+                    b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("sdlife.web.Models.Role")
                         .WithMany()
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<int>", b =>
                 {
                     b.HasOne("sdlife.web.Models.User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<int>", b =>
                 {
                     b.HasOne("sdlife.web.Models.User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<int>", b =>
                 {
                     b.HasOne("sdlife.web.Models.Role")
                         .WithMany()
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("sdlife.web.Models.User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("sdlife.web.Models.Accounting", b =>
                 {
                     b.HasOne("sdlife.web.Models.User")
                         .WithMany()
-                        .HasForeignKey("CreateUserId");
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("sdlife.web.Models.AccountingTitle")
                         .WithMany()
@@ -250,14 +301,16 @@ namespace sdlife.web.Migrations
                 {
                     b.HasOne("sdlife.web.Models.Accounting")
                         .WithOne()
-                        .HasForeignKey("sdlife.web.Models.AccountingComment", "AccountingId");
+                        .HasForeignKey("sdlife.web.Models.AccountingComment", "AccountingId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("sdlife.web.Models.AccountingTitle", b =>
                 {
                     b.HasOne("sdlife.web.Models.User")
                         .WithMany()
-                        .HasForeignKey("CreateUserId");
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

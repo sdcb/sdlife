@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.Http;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using sdlife.web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +12,20 @@ namespace sdlife.web.Services.Implements
     public class CurrentUser : ICurrentUser
     {
         private readonly HttpContext _httpContext;
+        private readonly UserManager<User> _userManager;
 
-        public CurrentUser(IHttpContextAccessor httpContext)
+        public CurrentUser(IHttpContextAccessor httpContext, 
+            UserManager<User> userManager)
         {
             _httpContext = httpContext.HttpContext;
+            _userManager = userManager;
         }
 
         public bool IsSignedIn
         {
             get
             {
-                return _httpContext.User.IsSignedIn();
+                return _httpContext.User.Identity.IsAuthenticated;
             }
         }
 
@@ -28,7 +33,7 @@ namespace sdlife.web.Services.Implements
         {
             get
             {
-                return int.Parse(_httpContext.User.GetUserId());
+                return int.Parse(_userManager.GetUserId(_httpContext.User));
             }
         }
 
@@ -36,7 +41,7 @@ namespace sdlife.web.Services.Implements
         {
             get
             {
-                return _httpContext.User.GetUserName();
+                return _userManager.GetUserName(_httpContext.User);
             }
         }
 

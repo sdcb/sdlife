@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
 using sdlife.web.Models;
 using sdlife.web.Managers;
 using sdlife.web.ViewModels;
 using sdlife.web.Services;
 using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 namespace sdlife.web.Controllers
 {

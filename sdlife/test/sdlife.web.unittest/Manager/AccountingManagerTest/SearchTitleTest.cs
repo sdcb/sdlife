@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.Entity;
-using sdlife.web.Managers.Implements;
+﻿using sdlife.web.Managers.Implements;
 using sdlife.web.Models;
 using sdlife.web.Services.Implements;
 using sdlife.web.unittest.Common;

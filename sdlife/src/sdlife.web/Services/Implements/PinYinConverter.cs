@@ -27,9 +27,7 @@ namespace sdlife.web.Services.Implements
                 char.IsPunctuation(ch) || char.IsSeparator(ch))
                 return ch.ToString();
 
-#if DNXCORE50
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-#endif
             var gbBytes = Encoding.GetEncoding("GB2312").GetBytes(ch.ToString());
             var gbCode = gbBytes[0] * 256 + gbBytes[1] - 65536;
 
