@@ -84,8 +84,6 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
         [Theory]
         [InlineData("中餐", "ZC")]
-        [InlineData("阿里云", "ALY")]
-        [InlineData("打车", "DC")]
         public async Task CreateWithPinYinTest(string title, string expectedShortCut)
         {
             // Arrange
