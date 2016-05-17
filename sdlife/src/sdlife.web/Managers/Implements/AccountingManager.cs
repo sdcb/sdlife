@@ -156,7 +156,7 @@ namespace sdlife.web.Managers.Implements
                 .ToList().Select(x => (AccountingDto)x).AsQueryable();
         }
 
-        public async Task<AccountingDto> Delete(int id)
+        public async Task Delete(int id)
         {
             var result = await _db.Accounting
                 .Include(x => x.Title)
@@ -164,8 +164,15 @@ namespace sdlife.web.Managers.Implements
                 .SingleAsync(x => x.Id == id).ConfigureAwait(false);
 
             _db.Remove(result);
+            
+            var titleRefCount = await _db.Accounting
+                .CountAsync(x => x.Id != id && x.TitleId == result.TitleId).ConfigureAwait(false);
+            if (titleRefCount == 0)
+            {
+                _db.Remove(result.Title);
+            }
+            
             await _db.SaveChangesAsync().ConfigureAwait(false);
-            return result;
         }
 
         #region private functions 

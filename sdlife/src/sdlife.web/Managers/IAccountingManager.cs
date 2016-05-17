@@ -16,6 +16,6 @@ namespace sdlife.web.Managers
 
         Task<decimal> MyTotalAmountInRange(DateTime start, DateTime end);
         IQueryable<AccountingDto> MyAccountingInRange(DateTime from, DateTime to);
-        Task<AccountingDto> Delete(int id);
+        Task Delete(int id);
     }
 }
