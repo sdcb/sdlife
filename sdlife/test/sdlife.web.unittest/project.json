@@ -4,7 +4,6 @@
   },
   "dependencies": {
     "dotnet-test-xunit": "1.0.0-*",
-    "Microsoft.Extensions.Logging.Testing": "1.0.0-*",
     "Microsoft.EntityFrameworkCore.InMemory": "1.0.0-rc2-final",
     "sdlife.web": "1.0.0-*",
     "XUnit": "2.1.0"
