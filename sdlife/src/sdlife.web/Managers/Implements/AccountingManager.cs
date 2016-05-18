@@ -169,15 +169,12 @@ namespace sdlife.web.Managers.Implements
         public async Task Delete(int id)
         {
             var result = await _db.Accounting
-                .Include(x => x.Title)
+                .Include(x => x.Title).ThenInclude(x => x.Accountings)
                 .Include(x => x.Comment)
                 .SingleAsync(x => x.Id == id).ConfigureAwait(false);
 
             _db.Remove(result);
-            
-            var titleRefCount = await _db.Accounting
-                .CountAsync(x => x.Id != id && x.TitleId == result.TitleId).ConfigureAwait(false);
-            if (titleRefCount == 0)
+            if (result.Title.Accountings.Count == 1)
             {
                 _db.Remove(result.Title);
             }
