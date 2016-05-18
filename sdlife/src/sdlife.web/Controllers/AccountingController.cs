@@ -60,7 +60,7 @@ namespace sdlife.web.Controllers
         public async Task<IEnumerable<string>> SearchTitle([FromBody]JObject body)
         {
             var query = body.Value<string>("query");
-            var data = await _accounting.SearchTitles(query);
+            var data = await _accounting.SearchSpendingTitles(query);
             return data;
         }
     }

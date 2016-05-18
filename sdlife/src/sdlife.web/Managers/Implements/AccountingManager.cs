@@ -62,10 +62,21 @@ namespace sdlife.web.Managers.Implements
             return entity;
         }
 
-        public async Task<List<string>> SearchTitles(string titleQuery, int limit)
+        public async Task<List<string>> SearchIncomeTitles(string titleQuery, int limit)
+        {
+            return await SearchTitlesInternal(titleQuery, true, limit).ConfigureAwait(false);
+        }
+
+        public async Task<List<string>> SearchSpendingTitles(string titleQuery, int limit = 20)
+        {
+            return await SearchTitlesInternal(titleQuery, false, limit).ConfigureAwait(false);
+        }
+
+        private async Task<List<string>> SearchTitlesInternal(string titleQuery, bool isIncome, int limit)
         {
             return await _db.AccountingTitle
                 .Include(x => x.Accountings)
+                .Where(x => x.IsIncome == isIncome)
                 .Where(x => x.Title.StartsWith(titleQuery) || x.ShortCut.StartsWith(titleQuery))
                 .OrderByDescending(x => x.Accountings.Count())
                 .Select(x => x.Title)

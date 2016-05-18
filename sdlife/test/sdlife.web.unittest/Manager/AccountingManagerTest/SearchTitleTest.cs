@@ -37,10 +37,10 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             }
 
             // Action
-            var zc = await accountingManager.SearchTitles("早", 20);
-            var ls = await accountingManager.SearchTitles("零", 20);
-            var aly = await accountingManager.SearchTitles("阿", 20);
-            var no = await accountingManager.SearchTitles("无", 20);
+            var zc = await accountingManager.SearchSpendingTitles("早", 20);
+            var ls = await accountingManager.SearchSpendingTitles("零", 20);
+            var aly = await accountingManager.SearchSpendingTitles("阿", 20);
+            var no = await accountingManager.SearchSpendingTitles("无", 20);
 
             // Assert
             Assert.Contains("早餐", zc);
@@ -71,8 +71,8 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             }
 
             // Action
-            var zc = await accountingManager.SearchTitles("电", 20);
-            var no = await accountingManager.SearchTitles("早", 20);
+            var zc = await accountingManager.SearchSpendingTitles("电", 20);
+            var no = await accountingManager.SearchSpendingTitles("早", 20);
 
             // Assert
             Assert.Equal(3, zc.Count());
@@ -104,9 +104,9 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             }
 
             // Action
-            var wz = await accountingManager.SearchTitles("Z", 20);
-            var ww = await accountingManager.SearchTitles("W", 20);
-            var wd = await accountingManager.SearchTitles("D", 20);
+            var wz = await accountingManager.SearchSpendingTitles("Z", 20);
+            var ww = await accountingManager.SearchSpendingTitles("W", 20);
+            var wd = await accountingManager.SearchSpendingTitles("D", 20);
 
             // Assert
             Assert.Equal(2, wz.Count);
@@ -144,7 +144,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             }
 
             // Action
-            var wc = await accountingManager.SearchTitles("Z", 20);
+            var wc = await accountingManager.SearchSpendingTitles("Z", 20);
 
             // Assert
             Assert.True(wc.Count() == 3);
