@@ -105,7 +105,7 @@ namespace sdlife.web.Managers.Implements
         public async Task<AccountingDto> Update(AccountingDto dto)
         {
             var entity = await _db.Accounting
-                .Include(x => x.Title).ThenInclude(x => x.Accountings)
+                .Include(x => x.Title)
                 .Include(x => x.Comment)
                 .Where(x => x.Id == dto.Id)
                 .SingleAsync().ConfigureAwait(false);
@@ -114,7 +114,10 @@ namespace sdlife.web.Managers.Implements
             {
                 var oldTitle = entity.Title;
                 entity.Title = await GetOrCreateTitle(dto.Title).ConfigureAwait(false);
-                if (oldTitle.Accountings.Count == 1)
+                                
+                var titleRefCount = await _db.Accounting
+                    .CountAsync(x => x.Id != entity.Id && x.TitleId == entity.TitleId).ConfigureAwait(false);
+                if (titleRefCount == 0)
                 {
                     _db.Remove(oldTitle);
                 }
@@ -174,12 +177,15 @@ namespace sdlife.web.Managers.Implements
         public async Task Delete(int id)
         {
             var result = await _db.Accounting
-                .Include(x => x.Title).ThenInclude(x => x.Accountings)
+                .Include(x => x.Title)
                 .Include(x => x.Comment)
                 .SingleAsync(x => x.Id == id).ConfigureAwait(false);
 
             _db.Remove(result);
-            if (result.Title.Accountings.Count == 1)
+            var titleRefCount = await _db.Accounting
+                .CountAsync(x => x.Id != id && x.TitleId == result.TitleId)
+                .ConfigureAwait(false);
+            if (titleRefCount == 0)
             {
                 _db.Remove(result.Title);
             }
@@ -215,18 +221,6 @@ namespace sdlife.web.Managers.Implements
 
             await _db.SaveChangesAsync().ConfigureAwait(false);
             return newOne;
-        }
-
-        private async Task<List<AccountingTitle>> DeleteUnreferencedTitle()
-        {
-            var titles = await _db.AccountingTitle
-                .Where(x => x.Accountings.Count == 0)
-                .ToListAsync().ConfigureAwait(false);
-
-            _db.RemoveRange(titles);
-            await _db.SaveChangesAsync().ConfigureAwait(false);
-
-            return titles;
         }
         #endregion
     }
