@@ -18,8 +18,8 @@ namespace sdlife.web.Models
         [MaxLength(20)]
         public string ShortCut { get; set; }
 
-        public HashSet<Accounting> Accountings { get; set; } = new HashSet<Accounting>();
+        public bool IsIncome { get; set; }
 
-        public User CreateUser { get; set; }
+        public HashSet<Accounting> Accountings { get; set; } = new HashSet<Accounting>();
     }
 }

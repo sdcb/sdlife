@@ -10,8 +10,6 @@ namespace sdlife.web.Models
     public class User : IdentityUser<int>
     {
         public HashSet<Accounting> Accountings { get; set; } = new HashSet<Accounting>();
-
-        public HashSet<AccountingTitle> AccountingTitles { get; set; } = new HashSet<AccountingTitle>();
     }
 
     public class Role : IdentityRole<int>
