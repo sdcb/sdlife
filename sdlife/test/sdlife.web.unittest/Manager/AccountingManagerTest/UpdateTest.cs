@@ -141,6 +141,65 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
         }
 
         [Fact]
+        public async Task UpdateCanDeleteTitle()
+        {
+            // Arrange 
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            // Action
+            var created = await accountingManager.Create(new AccountingDto
+            {
+                Amount = 2,
+                Time = DateTime.Now,
+                Title = "test",
+                Comment = "I love lgl"
+            });
+
+            // Action
+            created.Title = "life";
+            await accountingManager.Update(created);
+
+            // Assert
+            var data = await db.AccountingTitle
+                .FirstOrDefaultAsync(x => x.Title == "test");
+            Assert.Null(data);
+        }
+
+        [Fact]
+        public async Task UpdateWontDeleteTitleWhenRef2()
+        {
+            // Arrange 
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            // Action
+            var created = await accountingManager.Create(new AccountingDto
+            {
+                Amount = 2,
+                Time = DateTime.Now,
+                Title = "test",
+                Comment = "I love lgl"
+            });
+            var create2 = await accountingManager.Create(new AccountingDto
+            {
+                Amount = 2,
+                Time = DateTime.Now,
+                Title = "test",
+                Comment = "I love lgl"
+            });
+
+            // Action
+            created.Title = "life";
+            await accountingManager.Update(created);
+
+            // Assert
+            var data = await db.AccountingTitle
+                .FirstOrDefaultAsync(x => x.Title == "test");
+            Assert.NotNull(data);
+        }
+
+        [Fact]
         public async Task UpdateCanUpdateComment()
         {
             // Arrange 

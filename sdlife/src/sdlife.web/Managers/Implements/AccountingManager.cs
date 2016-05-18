@@ -105,14 +105,19 @@ namespace sdlife.web.Managers.Implements
         public async Task<AccountingDto> Update(AccountingDto dto)
         {
             var entity = await _db.Accounting
-                .Include(x => x.Title)
+                .Include(x => x.Title).ThenInclude(x => x.Accountings)
                 .Include(x => x.Comment)
                 .Where(x => x.Id == dto.Id)
                 .SingleAsync().ConfigureAwait(false);
 
             if (entity.Title.Title != dto.Title)
             {
+                var oldTitle = entity.Title;
                 entity.Title = await GetOrCreateTitle(dto.Title).ConfigureAwait(false);
+                if (oldTitle.Accountings.Count == 1)
+                {
+                    _db.Remove(oldTitle);
+                }
             }
 
             if (entity.EventTime != dto.Time)
