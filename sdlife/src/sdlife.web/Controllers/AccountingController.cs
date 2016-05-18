@@ -29,14 +29,9 @@ namespace sdlife.web.Controllers
             return View();
         }
         
-        public async Task<AccountingDto> CreateSpend([FromBody]AccountingDto dto)
+        public async Task<AccountingDto> Create([FromBody]AccountingDto dto)
         {
-            return await _accounting.CreateSpending(dto);
-        }
-
-        public async Task<AccountingDto> CreateIncome([FromBody]AccountingDto dto)
-        {
-            return await _accounting.CreateIncome(dto);
+            return await _accounting.Create(dto);
         }
 
         public async Task UpdateTime(int id, [FromBody]DateTime time)
@@ -46,7 +41,7 @@ namespace sdlife.web.Controllers
 
         public async Task<AccountingDto> Update([FromBody]AccountingDto dto)
         {
-            return await _accounting.UpdateSpending(dto);
+            return await _accounting.Update(dto);
         }
 
         public async Task Delete(int id)

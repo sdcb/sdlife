@@ -2,7 +2,13 @@
     class AcountingCreateDialog {
         $searchTitle = "";
         loading: ng.IPromise<any>;
-        isIncome = false;
+        result = {
+            amount: 0,
+            comment: null,
+            time: moment().startOf("minute").toDate(),
+            isIncome: false, 
+            title: ""
+        };
 
         create() {
             let time = moment(this.result.time);
@@ -15,14 +21,10 @@
                     .second(moment().second())
                     .millisecond(moment().millisecond())
                     .format(),
+                isIncome: this.result.isIncome, 
                 title: this.result.title || this.$searchTitle
             };
-
-            if (this.isIncome) {
-                return this.api.createIncome(data);
-            } else {
-                return this.api.createSpend(data);
-            }
+            return this.api.create(data);
         }
 
         commit(valid: boolean) {
@@ -37,13 +39,6 @@
         searchTitle(title: string) {
             return this.api.searchTitle(title);
         }
-
-        result = {
-            amount: 0,
-            comment: null,
-            time: moment().startOf("minute").toDate(),
-            title: ""
-        };
 
         static $inject = ["$mdDialog", "date", "api"];
         constructor(

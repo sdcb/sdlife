@@ -7,6 +7,7 @@
         title: string;
         amount: number;
         time: string;
+        isIncome: boolean;
         comment?: string;
     }
 

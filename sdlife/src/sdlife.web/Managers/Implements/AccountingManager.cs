@@ -29,19 +29,9 @@ namespace sdlife.web.Managers.Implements
             _pinYin = pinYin;
         }
 
-        public async Task<AccountingDto> CreateSpending(AccountingDto dto)
+        public async Task<AccountingDto> Create(AccountingDto dto)
         {
-            return await CreateInternal(dto, false);
-        }
-
-        public async Task<AccountingDto> CreateIncome(AccountingDto dto)
-        {
-            return await CreateInternal(dto, true);
-        }
-
-        private async Task<AccountingDto> CreateInternal(AccountingDto dto, bool isIncome)
-        {
-            var titleEntity = await GetOrCreateTitle(dto.Title, isIncome).ConfigureAwait(false);
+            var titleEntity = await GetOrCreateTitle(dto.Title, dto.IsIncome).ConfigureAwait(false);
 
             var entity = new Accounting
             {
@@ -112,17 +102,7 @@ namespace sdlife.web.Managers.Implements
             return amount;
         }
 
-        public async Task<AccountingDto> UpdateSpending(AccountingDto dto)
-        {
-            return await UpdateInternal(dto, false);
-        }
-
-        public async Task<AccountingDto> UpdateIncome(AccountingDto dto)
-        {
-            return await UpdateInternal(dto, true);
-        }
-
-        public async Task<AccountingDto> UpdateInternal(AccountingDto dto, bool isIncome)
+        public async Task<AccountingDto> Update(AccountingDto dto)
         {
             var entity = await _db.Accounting
                 .Include(x => x.Title)
@@ -133,7 +113,7 @@ namespace sdlife.web.Managers.Implements
             if (entity.Title.Title != dto.Title)
             {
                 var oldTitle = entity.Title;
-                entity.Title = await GetOrCreateTitle(dto.Title, isIncome).ConfigureAwait(false);
+                entity.Title = await GetOrCreateTitle(dto.Title, dto.IsIncome).ConfigureAwait(false);
 
                 var titleRefCount = await _db.Accounting
                     .CountAsync(x => x.Id != entity.Id && x.TitleId == entity.TitleId).ConfigureAwait(false);
@@ -190,6 +170,7 @@ namespace sdlife.web.Managers.Implements
                     Amount = accounting.Amount,
                     Comment = comment == null ? null : comment.Comment,
                     Time = accounting.EventTime,
+                    IsIncome = title.IsIncome, 
                     Title = title.Title
                 };
         }

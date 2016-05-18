@@ -16,6 +16,8 @@ namespace sdlife.web.Dtos
 
         public DateTime Time { get; set; }
 
+        public bool IsIncome { get; set; }
+
         public string Comment { get; set; }
 
         public static implicit operator AccountingDto(Accounting x)
@@ -26,6 +28,7 @@ namespace sdlife.web.Dtos
                 Amount = x.Amount,
                 Comment = x.Comment?.Comment,
                 Time = x.EventTime,
+                IsIncome = x.Title.IsIncome, 
                 Title = x.Title.Title
             };
         }
@@ -41,6 +44,7 @@ namespace sdlife.web.Dtos
                 Amount = x.Amount,
                 Comment = x.Comment.Comment,
                 Time = x.EventTime,
+                IsIncome = x.Title.IsIncome, 
                 Title = x.Title.Title
             });
         }

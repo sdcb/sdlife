@@ -25,7 +25,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var user = ServiceProvider.GetService<ICurrentUser>();
-            var created = await accountingManager.CreateSpending(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = new DateTime(2015, 1, 1),
@@ -50,7 +50,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var user = ServiceProvider.GetService<ICurrentUser>();
-            var created = await accountingManager.CreateSpending(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = new DateTime(2017, 1, 1),
@@ -73,7 +73,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var user = ServiceProvider.GetService<ICurrentUser>();
-            var created = await accountingManager.CreateSpending(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = new DateTime(2015, 1, 1),

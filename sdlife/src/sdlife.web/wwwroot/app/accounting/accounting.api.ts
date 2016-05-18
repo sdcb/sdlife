@@ -20,14 +20,8 @@ namespace sdlife.accounting {
             });
         }
 
-        createSpend(dto: IAccountingDto) {
-            return this.$.post<IAccountingEntity>("/Accounting/CreateSpend", dto).then(cb => {
-                return cb.data;
-            });
-        }
-
-        createIncome(dto: IAccountingDto) {
-            return this.$.post<IAccountingEntity>("/Accounting/CreateIncome", dto).then(cb => {
+        create(dto: IAccountingDto) {
+            return this.$.post<IAccountingEntity>("/Accounting/Create", dto).then(cb => {
                 return cb.data;
             });
         }

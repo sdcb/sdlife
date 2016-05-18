@@ -23,7 +23,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             // Arrange 
             var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            var created = await accountingManager.CreateSpending(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -44,7 +44,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             // Arrange 
             var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            var created = await accountingManager.CreateSpending(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -65,13 +65,13 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             // Arrange 
             var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            var created = await accountingManager.CreateSpending(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test"
             });
-            var created2 = await accountingManager.CreateSpending(new AccountingDto
+            var created2 = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -92,7 +92,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             // Arrange 
             var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            var created = await accountingManager.CreateSpending(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,

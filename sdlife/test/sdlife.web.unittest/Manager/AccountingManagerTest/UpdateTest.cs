@@ -26,7 +26,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var now = DateTime.Now;
 
             // Action
-            var created = await accountingManager.CreateSpending(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -35,7 +35,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
             // Action
             var title = "I love lgl";
-            await accountingManager.UpdateSpending(new AccountingDto
+            await accountingManager.Update(new AccountingDto
             {
                 Id = created.Id, 
                 Amount = 500, 
@@ -63,7 +63,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var now = DateTime.Now;
 
             // Action
-            var created = await accountingManager.CreateSpending(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -72,7 +72,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
             // Action
             var title = "晚餐";
-            await accountingManager.UpdateSpending(new AccountingDto
+            await accountingManager.Update(new AccountingDto
             {
                 Id = created.Id,
                 Amount = 500,
@@ -97,7 +97,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var now = DateTime.Now;
 
             // Action
-            var created = await accountingManager.CreateSpending(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -122,7 +122,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var now = DateTime.Now;
 
             // Action
-            var created = await accountingManager.CreateSpending(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -132,7 +132,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
             // Action
             created.Comment = " ";
-            await accountingManager.UpdateSpending(created);
+            await accountingManager.Update(created);
 
             // Assert
             var data = await db.Accounting
@@ -148,7 +148,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             // Action
-            var created = await accountingManager.CreateSpending(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -158,7 +158,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
             // Action
             created.Title = "life";
-            await accountingManager.UpdateSpending(created);
+            await accountingManager.Update(created);
 
             // Assert
             var data = await db.AccountingTitle
@@ -174,14 +174,14 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             // Action
-            var created = await accountingManager.CreateSpending(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test",
                 Comment = "I love lgl"
             });
-            var create2 = await accountingManager.CreateSpending(new AccountingDto
+            var create2 = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -191,7 +191,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
             // Action
             created.Title = "life";
-            await accountingManager.UpdateSpending(created);
+            await accountingManager.Update(created);
 
             // Assert
             var data = await db.AccountingTitle
@@ -207,7 +207,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var now = DateTime.Now;
 
-            var created = await accountingManager.CreateSpending(new AccountingDto
+            var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -217,7 +217,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
             // Action
             created.Comment = "Nice";
-            await accountingManager.UpdateSpending(created);
+            await accountingManager.Update(created);
 
             // Assert
             var data = await db.AccountingComment.ToListAsync();

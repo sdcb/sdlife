@@ -2,12 +2,11 @@
     class AcountingEditDialog {
         $searchTitle = "";
         loading: ng.IPromise<any>;
-        isIncome = false;
         editTime: Date;
 
-        commit(valid: boolean) {
+        update() {
             let time = moment(this.editTime);
-            this.loading = this.api.update({
+            let data = {
                 id: this.input.id,
                 amount: this.input.amount,
                 comment: this.input.comment,
@@ -17,8 +16,14 @@
                     .second(moment().second())
                     .millisecond(moment().millisecond())
                     .format(),
+                isIncome: this.isIncome, 
                 title: this.input.title || this.$searchTitle
-            }).then((data) => {
+            };
+            return this.api.update(data);
+        }
+
+        commit(valid: boolean) {
+            this.loading = this.update().then((data) => {
                 this.dialog.hide(data);
                 this.onCommit();
             });
