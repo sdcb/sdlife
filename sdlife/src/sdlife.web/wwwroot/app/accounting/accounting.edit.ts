@@ -3,6 +3,7 @@
         $searchTitle = "";
         loading: ng.IPromise<any>;
         editTime: Date;
+        isIncome = true;
 
         commit(valid: boolean) {
             let time = moment(this.editTime);
@@ -50,6 +51,7 @@
             public onCommit: () => any
         ) {
             this.editTime = moment(this.input.time).startOf("minute").toDate();
+            console.log(this);
         }
     }
 
