@@ -11,7 +11,15 @@
     </md-toolbar>
     <md-dialog-content>
         <div class="md-dialog-content" layout="column">
-            <div layout="row" flex="10">
+            <div layout="row">
+                <md-input-container flex>
+                    <label>收入/支出</label>
+                    <md-select ng-model="vm.isIncome">
+                        <md-option ng-value="true">收入</md-option>
+                        <md-option ng-value="false">支出</md-option>
+                    </md-select>
+                </md-input-container>
+
                 <md-autocomplete flex required
                                  md-no-cache="true"
                                  md-input-name="autocompleteField"
@@ -33,14 +41,14 @@
                            ng-model="vm.result.amount" />
                 </md-input-container>
 
-                <md-input-container flex>
+                <md-input-container>
                     <label>时间</label>
                     <input type="time" required 
                            ng-model="vm.result.time" />
                 </md-input-container>
             </div>
 
-            <md-input-container flex="5">
+            <md-input-container>
                 <label>备注</label>
                 <textarea md-maxlength="4000" rows="3"
                           md-select-on-focus

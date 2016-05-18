@@ -6,7 +6,7 @@ using sdlife.web.Managers.Implements;
 using sdlife.web.Models;
 using sdlife.web.Services.Implements;
 using sdlife.web.unittest.Common;
-using sdlife.web.ViewModels;
+using sdlife.web.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +27,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
             // Action
             var expectedEventTime = DateTime.Parse(timeString);
-            var created = await accountingManager.Create(new ViewModels.AccountingDto
+            var created = await accountingManager.CreateSpending(new AccountingDto
             {
                 Amount = (decimal)money, 
                 Time = expectedEventTime,
@@ -56,7 +56,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var now = DateTime.Now;
 
-            var created = await accountingManager.Create(new ViewModels.AccountingDto
+            var created = await accountingManager.CreateSpending(new AccountingDto
             {
                 Amount = 1,
                 Time = now,
@@ -90,7 +90,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var now = DateTime.Now;
 
-            var created = await accountingManager.Create(new AccountingDto
+            var created = await accountingManager.CreateSpending(new AccountingDto
             {
                 Amount = 1,
                 Time = now,

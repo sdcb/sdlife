@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace sdlife.web.ViewModels
+namespace sdlife.web.Dtos
 {
     public class AccountingDto
     {

@@ -2,8 +2,8 @@
     class AcountingEditDialog {
         $searchTitle = "";
         loading: ng.IPromise<any>;
+        isIncome = false;
         editTime: Date;
-        isIncome = true;
 
         commit(valid: boolean) {
             let time = moment(this.editTime);
@@ -24,6 +24,14 @@
             });
         }
 
+        cancel() {
+            this.dialog.cancel();
+        }
+
+        searchTitle(title: string) {
+            return this.api.searchTitle(title);
+        }
+
         delete(event: MouseEvent) {
             ensure(this.dialog, event, "确定要删除此条数据吗？").then(() => {
                 return this.api.delete(this.input.id);
@@ -32,14 +40,6 @@
             }).catch(() => {
                 this.dialog.show(this.me);
             });
-        }
-
-        cancel() {
-            this.dialog.cancel();
-        }
-
-        searchTitle(title: string) {
-            return this.api.searchTitle(title);
         }
 
         static $inject = ["$mdDialog", "entity", "api", "thisDialog", "onCommit"];

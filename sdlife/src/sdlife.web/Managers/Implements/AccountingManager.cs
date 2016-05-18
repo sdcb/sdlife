@@ -2,7 +2,7 @@
 using sdlife.web.Data;
 using sdlife.web.Models;
 using sdlife.web.Services;
-using sdlife.web.ViewModels;
+using sdlife.web.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +29,19 @@ namespace sdlife.web.Managers.Implements
             _pinYin = pinYin;
         }
 
-        public async Task<AccountingDto> Create(AccountingDto dto)
+        public async Task<AccountingDto> CreateSpending(AccountingDto dto)
         {
-            var titleEntity = await GetOrCreateTitle(dto.Title).ConfigureAwait(false);
+            return await CreateInternal(dto, false);
+        }
+
+        public async Task<AccountingDto> CreateIncome(AccountingDto dto)
+        {
+            return await CreateInternal(dto, true);
+        }
+
+        private async Task<AccountingDto> CreateInternal(AccountingDto dto, bool isIncome)
+        {
+            var titleEntity = await GetOrCreateTitle(dto.Title, isIncome).ConfigureAwait(false);
 
             var entity = new Accounting
             {
@@ -102,7 +112,17 @@ namespace sdlife.web.Managers.Implements
             return amount;
         }
 
-        public async Task<AccountingDto> Update(AccountingDto dto)
+        public async Task<AccountingDto> UpdateSpending(AccountingDto dto)
+        {
+            return await UpdateInternal(dto, false);
+        }
+
+        public async Task<AccountingDto> UpdateIncome(AccountingDto dto)
+        {
+            return await UpdateInternal(dto, true);
+        }
+
+        public async Task<AccountingDto> UpdateInternal(AccountingDto dto, bool isIncome)
         {
             var entity = await _db.Accounting
                 .Include(x => x.Title)
@@ -113,8 +133,8 @@ namespace sdlife.web.Managers.Implements
             if (entity.Title.Title != dto.Title)
             {
                 var oldTitle = entity.Title;
-                entity.Title = await GetOrCreateTitle(dto.Title).ConfigureAwait(false);
-                                
+                entity.Title = await GetOrCreateTitle(dto.Title, isIncome).ConfigureAwait(false);
+
                 var titleRefCount = await _db.Accounting
                     .CountAsync(x => x.Id != entity.Id && x.TitleId == entity.TitleId).ConfigureAwait(false);
                 if (titleRefCount == 0)
@@ -194,10 +214,10 @@ namespace sdlife.web.Managers.Implements
         }
 
         #region private functions 
-        private async Task<AccountingTitle> GetOrCreateTitle(string title)
+        private async Task<AccountingTitle> GetOrCreateTitle(string title, bool isIncome)
         {
             var result = await _db.AccountingTitle
-                .Where(x => x.Title == title)
+                .Where(x => x.Title == title && x.IsIncome == isIncome)
                 .FirstOrDefaultAsync().ConfigureAwait(false);
 
             if (result != null)
@@ -206,16 +226,17 @@ namespace sdlife.web.Managers.Implements
             }
             else
             {
-                return await CreateTitle(title).ConfigureAwait(false);
+                return await CreateTitle(title, isIncome).ConfigureAwait(false);
             }
         }
 
-        private async Task<AccountingTitle> CreateTitle(string title)
+        private async Task<AccountingTitle> CreateTitle(string title, bool isIncome)
         {
             var newOne = new AccountingTitle
             {
                 Title = title,
-                ShortCut = _pinYin.GetStringCapitalPinYin(title)
+                ShortCut = _pinYin.GetStringCapitalPinYin(title), 
+                IsIncome = isIncome, 
             };
             _db.Add(newOne);
 

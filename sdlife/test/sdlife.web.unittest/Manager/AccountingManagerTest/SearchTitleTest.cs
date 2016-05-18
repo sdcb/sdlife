@@ -5,7 +5,7 @@ using sdlife.web.Managers.Implements;
 using sdlife.web.Models;
 using sdlife.web.Services.Implements;
 using sdlife.web.unittest.Common;
-using sdlife.web.ViewModels;
+using sdlife.web.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +33,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             });
             foreach (var data in datas)
             {
-                await accountingManager.Create(data);
+                await accountingManager.CreateSpending(data);
             }
 
             // Action
@@ -67,7 +67,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             });
             foreach (var data in datas)
             {
-                await accountingManager.Create(data);
+                await accountingManager.CreateSpending(data);
             }
 
             // Action
@@ -100,7 +100,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             });
             foreach (var data in datas)
             {
-                await accountingManager.Create(data);
+                await accountingManager.CreateSpending(data);
             }
 
             // Action
@@ -140,7 +140,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             });
             foreach (var data in datas)
             {
-                await accountingManager.Create(data);
+                await accountingManager.CreateSpending(data);
             }
 
             // Action

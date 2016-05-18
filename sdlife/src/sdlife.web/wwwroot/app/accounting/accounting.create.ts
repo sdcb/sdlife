@@ -1,17 +1,12 @@
 ﻿namespace sdlife.accounting {
     class AcountingCreateDialog {
-        result = {
-            amount: 0, 
-            comment: null, 
-            time: moment().startOf("minute").toDate(), 
-            title: ""
-        };
         $searchTitle = "";
         loading: ng.IPromise<any>;
+        isIncome = false;
 
-        commit(valid: boolean) {
+        create() {
             let time = moment(this.result.time);
-            this.loading = this.api.create({
+            let data = {
                 amount: this.result.amount,
                 comment: this.result.comment,
                 time: moment(this.date)
@@ -21,9 +16,18 @@
                     .millisecond(moment().millisecond())
                     .format(),
                 title: this.result.title || this.$searchTitle
-            }).then((data) => {
-                this.dialog.hide(data);
-            });
+            };
+
+            if (this.isIncome) {
+                return this.api.createIncome(data);
+            } else {
+                return this.api.createSpend(data);
+            }
+        }
+
+        commit(valid: boolean) {
+            this.loading = this.create()
+                .then(data => this.dialog.hide(data));
         }
 
         cancel() {
@@ -33,6 +37,13 @@
         searchTitle(title: string) {
             return this.api.searchTitle(title);
         }
+
+        result = {
+            amount: 0,
+            comment: null,
+            time: moment().startOf("minute").toDate(),
+            title: ""
+        };
 
         static $inject = ["$mdDialog", "date", "api"];
         constructor(

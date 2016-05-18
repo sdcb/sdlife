@@ -6,7 +6,7 @@ using sdlife.web.Managers.Implements;
 using sdlife.web.Models;
 using sdlife.web.Services.Implements;
 using sdlife.web.unittest.Common;
-using sdlife.web.ViewModels;
+using sdlife.web.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +23,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             // Arrange 
             var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            var created = await accountingManager.Create(new AccountingDto
+            var created = await accountingManager.CreateSpending(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -44,7 +44,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             // Arrange 
             var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            var created = await accountingManager.Create(new AccountingDto
+            var created = await accountingManager.CreateSpending(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -65,13 +65,13 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             // Arrange 
             var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            var created = await accountingManager.Create(new AccountingDto
+            var created = await accountingManager.CreateSpending(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test"
             });
-            var created2 = await accountingManager.Create(new AccountingDto
+            var created2 = await accountingManager.CreateSpending(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
@@ -92,7 +92,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             // Arrange 
             var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            var created = await accountingManager.Create(new AccountingDto
+            var created = await accountingManager.CreateSpending(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using sdlife.web.Models;
 using sdlife.web.Managers;
-using sdlife.web.ViewModels;
+using sdlife.web.Dtos;
 using sdlife.web.Services;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -29,9 +29,14 @@ namespace sdlife.web.Controllers
             return View();
         }
         
-        public async Task<AccountingDto> Create([FromBody]AccountingDto dto)
+        public async Task<AccountingDto> CreateSpend([FromBody]AccountingDto dto)
         {
-            return await _accounting.Create(dto);
+            return await _accounting.CreateSpending(dto);
+        }
+
+        public async Task<AccountingDto> CreateIncome([FromBody]AccountingDto dto)
+        {
+            return await _accounting.CreateIncome(dto);
         }
 
         public async Task UpdateTime(int id, [FromBody]DateTime time)
@@ -41,7 +46,7 @@ namespace sdlife.web.Controllers
 
         public async Task<AccountingDto> Update([FromBody]AccountingDto dto)
         {
-            return await _accounting.Update(dto);
+            return await _accounting.UpdateSpending(dto);
         }
 
         public async Task Delete(int id)
@@ -49,18 +54,15 @@ namespace sdlife.web.Controllers
             await _accounting.Delete(id);
         }
 
-        public IQueryable<AccountingDto> MyAccountingInRange([FromBody]JObject body)
+        public IQueryable<AccountingDto> MyAccountingInRange([FromBody]AccountingQuery query)
         {
-            var from = body.Value<DateTime>("from");
-            var to = body.Value<DateTime>("to");
-            var data = _accounting.UserAccountingInRange(from, to, _user.UserId);
+            var data = _accounting.UserAccountingInRange(query.From, query.To, _user.UserId);
             return data;
         }
 
-        public async Task<IEnumerable<string>> SearchTitle([FromBody]JObject body)
+        public async Task<IEnumerable<string>> SearchTitle([FromBody]SearchQueryDto query)
         {
-            var query = body.Value<string>("query");
-            var data = await _accounting.SearchSpendingTitles(query);
+            var data = await _accounting.SearchSpendingTitles(query.Query);
             return data;
         }
     }
