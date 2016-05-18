@@ -150,20 +150,20 @@ namespace sdlife.web.Managers.Implements
 
         public IQueryable<AccountingDto> UserAccountingInRange(DateTime start, DateTime end, int userId)
         {
-            //return _db.Accounting
-            //    .Where(x =>
-            //        x.EventTime >= start &&
-            //        x.EventTime < end &&
-            //        x.CreateUserId == _user.UserId)
-            //    .ToDto();
-            return _db.Accounting
-                .Include(x => x.Comment)
-                .Include(x => x.Title)
-                .Where(x =>
-                    x.EventTime >= start &&
-                    x.EventTime < end &&
-                    x.CreateUserId == userId)
-                .ToList().Select(x => (AccountingDto)x).AsQueryable();
+            return
+                from accounting in _db.Accounting
+                join title in _db.AccountingTitle on accounting.TitleId equals title.Id 
+                join comment in _db.AccountingComment on accounting.Id equals comment.AccountingId into commentGroup
+                from comment in commentGroup.DefaultIfEmpty()
+                where accounting.EventTime >= start && accounting.EventTime < end && accounting.CreateUserId == userId
+                select new AccountingDto
+                {
+                    Id = accounting.Id,
+                    Amount = accounting.Amount,
+                    Comment = comment == null ? null : comment.Comment,
+                    Time = accounting.EventTime,
+                    Title = title.Title
+                };
         }
 
         public async Task Delete(int id)
@@ -178,7 +178,7 @@ namespace sdlife.web.Managers.Implements
             {
                 _db.Remove(result.Title);
             }
-            
+
             await _db.SaveChangesAsync().ConfigureAwait(false);
         }
 
