@@ -37,16 +37,21 @@
         }
 
         searchTitle(title: string) {
-            return this.api.searchTitle(title);
+            return this.api.searchAutoTitles(title, this.result.isIncome);
         }
 
-        static $inject = ["$mdDialog", "date", "api"];
+        static $inject = ["$scope", "$mdDialog", "date", "api"];
         constructor(
+            public scope: ng.IScope, 
             public dialog: ng.material.IDialogService,
             public date: string,
             public api: AccountingApi
         ) {
             console.log(this);
+            scope.$watch(() => this.result.isIncome, () => {
+                this.$searchTitle = "";
+                this.result.title = "";
+            });
         }
     }
 

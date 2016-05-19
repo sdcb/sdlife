@@ -40,10 +40,22 @@ namespace sdlife.accounting {
             return this.$.post(`/Accounting/Delete?id=${id}`, {});
         }
 
-        searchTitle(title: string) {
-            return this.$.post<string[]>("/Accounting/SearchTitle", { query: title }).then(cb => {
+        searchSpendingTitles(title: string) {
+            return this.$.post<string[]>("/Accounting/searchSpendingTitles", { query: title }).then(cb => {
                 return cb.data;
             });
+        }
+
+        searchIncomeTitles(title: string) {
+            return this.$.post<string[]>("/Accounting/searchIncomeTitles", { query: title }).then(cb => {
+                return cb.data;
+            });
+        }
+
+        searchAutoTitles(title: string, isIncome: boolean) {
+            return isIncome ?
+                this.searchIncomeTitles(title) :
+                this.searchSpendingTitles(title);
         }
     }
 

@@ -7,17 +7,17 @@
         update() {
             let time = moment(this.editTime);
             let data = {
-                id: this.input.id,
-                amount: this.input.amount,
-                comment: this.input.comment,
+                id: this.result.id,
+                amount: this.result.amount,
+                comment: this.result.comment,
                 time: moment(this.editTime)
                     .hour(time.hour())
                     .minute(time.minute())
                     .second(moment().second())
                     .millisecond(moment().millisecond())
                     .format(),
-                isIncome: this.input.isIncome, 
-                title: this.input.title || this.$searchTitle
+                isIncome: this.result.isIncome, 
+                title: this.result.title || this.$searchTitle
             };
             return this.api.update(data);
         }
@@ -34,12 +34,12 @@
         }
 
         searchTitle(title: string) {
-            return this.api.searchTitle(title);
+            return this.api.searchAutoTitles(title, this.result.isIncome);
         }
 
         delete(event: MouseEvent) {
             ensure(this.dialog, event, "确定要删除此条数据吗？").then(() => {
-                return this.api.delete(this.input.id);
+                return this.api.delete(this.result.id);
             }).then(() => {
                 this.onCommit();
             }).catch(() => {
@@ -50,12 +50,12 @@
         static $inject = ["$mdDialog", "entity", "api", "thisDialog", "onCommit"];
         constructor(
             public dialog: ng.material.IDialogService,
-            public input: IAccountingEntity,
+            public result: IAccountingEntity,
             public api: AccountingApi,
             public me: ng.material.IDialogOptions,
             public onCommit: () => any
         ) {
-            this.editTime = moment(this.input.time).startOf("minute").toDate();
+            this.editTime = moment(this.result.time).startOf("minute").toDate();
             console.log(this);
         }
     }

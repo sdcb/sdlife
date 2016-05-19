@@ -55,9 +55,15 @@ namespace sdlife.web.Controllers
             return data;
         }
 
-        public async Task<IEnumerable<string>> SearchTitle([FromBody]SearchQueryDto query)
+        public async Task<IEnumerable<string>> SearchSpendingTitles([FromBody]SearchQueryDto query)
         {
             var data = await _accounting.SearchSpendingTitles(query.Query);
+            return data;
+        }
+
+        public async Task<IEnumerable<string>> SearchIncomeTitles([FromBody]SearchQueryDto query)
+        {
+            var data = await _accounting.SearchIncomeTitles(query.Query);
             return data;
         }
     }

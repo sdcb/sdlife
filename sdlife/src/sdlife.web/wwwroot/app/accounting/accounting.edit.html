@@ -14,7 +14,7 @@
             <div layout="row">
                 <md-input-container flex>
                     <label>收入/支出</label>
-                    <md-select ng-model="vm.input.isIncome" disabled="disabled">
+                    <md-select ng-model="vm.result.isIncome" disabled="disabled">
                         <md-option ng-value="true">收入</md-option>
                         <md-option ng-value="false">支出</md-option>
                     </md-select>
@@ -27,7 +27,7 @@
                                  md-input-minlength="1"
                                  md-input-maxlength="20"
                                  md-search-text="vm.$searchTitle"
-                                 md-selected-item="vm.input.title"
+                                 md-selected-item="vm.result.title"
                                  md-items="item in vm.searchTitle(vm.$searchTitle)"
                                  md-floating-label="标题">
                     <md-item-template>
@@ -38,7 +38,7 @@
                 <md-input-container flex>
                     <label>金额</label>
                     <input type="number" required min="0.5" max="9999999" step="0.5"
-                           ng-model="vm.input.amount" />
+                           ng-model="vm.result.amount" />
                 </md-input-container>
 
                 <md-input-container>
@@ -52,7 +52,7 @@
                 <label>备注</label>
                 <textarea md-maxlength="4000" rows="3" 
                           md-select-on-focus 
-                          ng-model="vm.input.comment"></textarea>
+                          ng-model="vm.result.comment"></textarea>
             </md-input-container>
         </div>
     </md-dialog-content>
