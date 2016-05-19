@@ -1,4 +1,6 @@
 ﻿<div flex>
     <loading size="160" promise="vm.loading"></loading>
     <div ui-calendar="vm.calendarConfig" ng-model="vm.eventSources"></div>
+
+    <create-icon on-created="vm.onCreated()"></create-icon>
 </div>

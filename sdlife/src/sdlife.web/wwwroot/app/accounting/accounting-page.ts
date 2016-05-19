@@ -48,6 +48,10 @@ namespace sdlife.accounting {
             });
         }
 
+        onCreated() {
+            return this.loadData();
+        }
+
         childChangedRequestReloadData() {
             return this.loadData();
         }
