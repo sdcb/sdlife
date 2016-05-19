@@ -16,7 +16,7 @@
                     .second(moment().second())
                     .millisecond(moment().millisecond())
                     .format(),
-                isIncome: this.isIncome, 
+                isIncome: this.input.isIncome, 
                 title: this.input.title || this.$searchTitle
             };
             return this.api.update(data);
