@@ -8,6 +8,7 @@ using sdlife.web.Dtos;
 using sdlife.web.Services;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace sdlife.web.Controllers
 {
