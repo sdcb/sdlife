@@ -46,35 +46,17 @@ namespace sdlife.accounting {
         };
     }
 
-    function generateColor(current: number, total: number) {
-        let i = current / 6;
-        let j = current % 6;
-
-        let hue = i / (total / 6) / 6 + j / 6;
-        let saturation = 1;
-        let lightness = 0.3 + i / (total / 6) / 3;
-        return `hsl(${hue * 360}, ${saturation * 100}%, ${lightness * 100}%)`;
-    }
-
     export function addColorToEventObjects(data: IAccountingEventObject[]) {
-        let totalColorIds = 0;
-        let obj = <{
-            [item: string]: number
-        }>{};
-
-        for (let item of data) {
-            let colorId = obj[item.title];
-            if (!colorId) {
-                obj[item.title] = totalColorIds;
-                totalColorIds += 1;
-            }
-        }
-
-        for (let item of data) {
-            let colorId = obj[item.title];
-            item.color = generateColor(colorId, totalColorIds);
-        }
-
-        return data;
+        let max = Math.max(...data.map(x => Math.abs(x.entity.amount)));
+        let min = Math.min(...data.map(x => Math.abs(x.entity.amount)));
+        return data.map(x => {
+            let percent = (Math.abs(x.entity.amount) - min) / max;
+            let lightness = 0.7 - percent * 0.5;
+            let saturation = 1;
+            let hue = x.entity.isIncome ? 0.4 : 0.1;
+            x.color = `hsl(${hue * 360}, ${saturation * 100}%, ${lightness * 100}%)`;
+            console.log(x.color);
+            return x;
+        });
     }
 }
