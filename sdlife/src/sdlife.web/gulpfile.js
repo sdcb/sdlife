@@ -23,6 +23,7 @@ paths.concatCssDest = paths.webroot + "css/site.min.css";
 paths.libJs = [
     "jquery/dist/jquery.min.js",
     "angular/angular.min.js",
+    "angoolar-component-router/js/vendor/002_angular_1_router.tail.js",
     "jquery.ui.touch/jquery.ui.touch.js",
     "angular-aria/angular-aria.min.js",
     "angular-messages/angular-messages.min.js",

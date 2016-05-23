@@ -4,5 +4,5 @@
         version: new Date().getTime(),
     };
 
-    let module = angular.module(consts.moduleName, ["ngMaterial", "ui.calendar", "ngMessages"]);
+    let module = angular.module(consts.moduleName, ["ngMaterial", "ui.calendar", "ngMessages", "ngComponentRouter"]);
 }
