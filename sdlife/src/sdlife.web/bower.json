@@ -12,7 +12,7 @@
     "moment": "*",
     "angular-ui-calendar": "*",
     "jquery.ui.touch": "*",
-    "angoolar-component-router": "0.12.0"
+    "angular-component-router": "0.2.1"
   },
   "resolutions": {
     "angular": "^1.4.8",
