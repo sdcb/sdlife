@@ -18,10 +18,11 @@
         <link href="~/css/site.min.css" asp-append-version="true" rel="stylesheet" />
     </environment>
 </head>
-<body ng-app="accounting">
-    <accounting-page></accounting-page>
+<body ng-app="sdlife">
+    @*<accounting-page></accounting-page>*@
+    <login-page></login-page>
 
-    <environment names="Development">
+    <environment names="Development2">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/angular/angular.js"></script>
         <script src="~/lib/jquery.ui.touch/jquery.ui.touch.js"></script>
@@ -37,6 +38,8 @@
         <script src="~/lib/fullcalendar/dist/lang/zh-cn.js"></script>
         <script src="~/lib/angular-ui-calendar/src/calendar.js"></script>
 
+        <script src="~/app/common/app.js"></script>
+
         <script src="~/app/accounting/accounting-page.js"></script>
         <script src="~/app/accounting/accounting.createicon.js"></script>
         <script src="~/app/accounting/accounting.common.js"></script>
@@ -44,9 +47,11 @@
         <script src="~/app/accounting/accounting.create.js"></script>
         <script src="~/app/accounting/accounting.edit.js"></script>
         <script src="~/app/accounting/loading.js"></script>
+
+        <script src="~/app/login/login-page.js"></script>
     </environment>
 
-    <environment names="Production,Development2">
+    <environment names="Production,Development">
         <script src="~/lib/lib.min.js" asp-append-version="true"></script>
         <script src="~/app/app.min.js" asp-append-version="true"></script>
     </environment>

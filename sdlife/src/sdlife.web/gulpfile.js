@@ -5,7 +5,8 @@ var gulp = require("gulp"),
     rimraf = require("rimraf"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
-    uglify = require("gulp-uglify");
+    uglify = require("gulp-uglify"), 
+    fs = require("fs");    
 
 var paths = {
     webroot: "./wwwroot/"
@@ -53,7 +54,13 @@ gulp.task("clean:css", function (cb) {
 gulp.task("clean", ["clean:js", "clean:css"]);
 
 gulp.task("min:js", function () {
-    return gulp.src([paths.js, "!" + paths.minJs], { base: "." })
+    var cshtml = fs.readFileSync("Views/Home/Index.cshtml", "utf8");
+    var regex = /<script src=\"~\/app\/(.+).js"><\/script>/g;
+    var scripts = cshtml.match(regex).map(function (tag) {
+        var jsFile = tag.replace(regex, "$1");
+        return "./wwwroot/app/" + jsFile + ".js";
+    });
+    return gulp.src(scripts, { base: "." })
         .pipe(concat(paths.concatJsDest))
         .pipe(uglify())
         .pipe(gulp.dest("."));

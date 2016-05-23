@@ -19,7 +19,7 @@ namespace sdlife.web.Controllers
 
         public IActionResult Index()
         {
-            return RedirectToAction("Index", "Accounting");
+            return View();
         }
 
         public IActionResult Error()
@@ -27,21 +27,22 @@ namespace sdlife.web.Controllers
             return View();
         }
 
-        public async Task<object> CreateTestAccount()
+        public async Task<User> CreateTestUser()
         {
-            var userName = Guid.NewGuid().ToString();
-            var ok = await _userManager.CreateAsync(new User
+            var user = new User
             {
-                UserName = userName,
-                Email = userName + "@qq.com", 
-            }, "Passw0rd!");
-            if (ok.Succeeded)
+                UserName = "test", 
+                Email = "test@qq.com", 
+            };
+            var findedUser = await _userManager.FindByNameAsync(user.UserName);
+            if (findedUser != null)
             {
-                return await _userManager.FindByNameAsync(userName);
+                return findedUser;
             }
             else
             {
-                return ok.Errors;
+                await _userManager.CreateAsync(user);
+                return await _userManager.FindByNameAsync(user.UserName);
             }
         }
     }
