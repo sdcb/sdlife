@@ -5,7 +5,6 @@ namespace sdlife.accounting {
     export class AccountingApi {
         static $inject = ["$http"];
         constructor(public $: angular.IHttpService) {
-            $.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
         }
 
         loadInMonth(month: moment.Moment) {

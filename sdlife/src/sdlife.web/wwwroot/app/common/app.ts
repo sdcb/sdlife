@@ -4,11 +4,11 @@
         version: new Date().getTime(),
     };
 
-    let module = angular.module(consts.moduleName, ["ngMaterial", "ui.calendar", "ngMessages", "ngComponentRouter"]);
+    let app = angular.module(consts.moduleName, ["ngMaterial", "ui.calendar", "ngMessages", "ngComponentRouter"]);
 
-    module.value("$routerRootComponent", "sdlifeApp");
+    app.value("$routerRootComponent", "sdlifeApp");    
 
-    module.component("sdlifeApp", {
+    app.component("sdlifeApp", {
         controller: () => { }, 
         controllerAs: "vm", 
         templateUrl: "/app/common/app.html", 
@@ -18,4 +18,21 @@
             { path: "/**", redirectTo: ["Book"] }
         ]
     });
+
+    app.factory("authHttpInterceptor", ["$q", ($q: ng.IQService) => {
+        let interceptor = <ng.IHttpInterceptor>{
+            responseError: (rejection) => {
+                if (rejection.status === 401) {
+                    location.href = "/#/login";
+                }
+                return $q.reject(rejection);
+            }
+        };
+        return interceptor;
+    }]);
+
+    app.config(["$httpProvider", ($httpProvider: ng.IHttpProvider) => {
+        $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+        $httpProvider.interceptors.push("authHttpInterceptor");
+    }]);
 }
