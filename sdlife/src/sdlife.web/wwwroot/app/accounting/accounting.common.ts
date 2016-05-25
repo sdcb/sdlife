@@ -53,9 +53,8 @@ namespace sdlife.accounting {
             let percent = (Math.abs(x.entity.amount) - min) / max;
             let lightness = 0.7 - percent * 0.5;
             let saturation = 1;
-            let hue = x.entity.isIncome ? 0.4 : 0.1;
+            let hue = x.entity.isIncome ? 0.4 : 0;
             x.color = `hsl(${hue * 360}, ${saturation * 100}%, ${lightness * 100}%)`;
-            console.log(x.color);
             return x;
         });
     }

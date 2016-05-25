@@ -27,7 +27,6 @@ namespace sdlife.login {
 
         goPrevPage() {
             if (this.prevPage) {
-                console.log(this.prevPage);
                 return this.$router.navigateByUrl(this.prevPage.urlPath);
             } else {
                 this.$router.navigateByUrl("/");
