@@ -79,6 +79,9 @@
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
 
+
+
+/*记帐页面*/
 .top-right {
     position: absolute;
     top: 0;
@@ -95,4 +98,21 @@
 
 md-tooltip .md-content {
     height: auto;
+}
+
+
+
+/* 登陆页面 */
+.login-content md-card {
+    z-index: 0;
+}
+
+.login-content:before {
+    height: 50%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: hsl(200, 100%, 60%);
+    content: "";
 }

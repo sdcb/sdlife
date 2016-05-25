@@ -1,1 +1,28 @@
-﻿login page
+﻿<div class="login-content" style="min-height: 100%" layout="row" layout-align="center center">
+    <md-card class="md-whiteframe-18dp" flex="35" flex-md="50" flex-sm="70" flex-xs="100">
+        <md-toolbar>
+            <h2 class="md-toolbar-tools">
+                <span>登陆</span>
+            </h2>
+        </md-toolbar>
+        <md-content class="md-padding" layout="column">
+            <md-input-container>
+                <label>用户名</label>
+                <input type="text" ng-model="username" />
+            </md-input-container>
+            <md-input-container>
+                <label>密码</label>
+                <input type="password" ng-model="password" />
+            </md-input-container>
+            <div layout="row" layout-align="center center" style="padding-top: 20px;">
+                <md-button class="md-raised md-primary">
+                    登陆
+                </md-button>
+                <div class="flex"></div>
+                <md-button md-no-ink>
+                    忘记密码？
+                </md-button>
+            </div>
+        </md-content>
+    </md-card>
+</div>
