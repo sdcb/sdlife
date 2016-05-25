@@ -11,15 +11,31 @@ namespace sdlife.login {
         };
 
         loading: ng.IPromise<any>;
+        prevPage: ng.ComponentInstruction;
+        $router: ng.Router;
 
         commit() {
-            this.loading = this.api.login(this.input).then(() => {
-            }).catch(() => {
+            this.loading = this.api.login(this.input).catch(() => {
                 this.$mdToast.show(this.$mdToast.simple()
                     .textContent("用户名或密码错误!")
                     .position("top right")
                     .hideDelay(3000));
+            }).then(() => {
+                this.goPrevPage();
             });
+        }
+
+        goPrevPage() {
+            if (this.prevPage) {
+                console.log(this.prevPage);
+                return this.$router.navigateByUrl(this.prevPage.urlPath);
+            } else {
+                this.$router.navigateByUrl("/");
+            }
+        }
+
+        $routerOnActivate(next, prevPage: ng.ComponentInstruction) {
+            this.prevPage = prevPage;
         }
 
         static $inject = ["login.api", "$mdToast"];
@@ -33,5 +49,8 @@ namespace sdlife.login {
         controller: LoginPage,
         controllerAs: "vm",
         templateUrl: `/app/login/login-page.html?v=${consts.version}`,
+        bindings: {
+            $router: "<"
+        }
     });
 }

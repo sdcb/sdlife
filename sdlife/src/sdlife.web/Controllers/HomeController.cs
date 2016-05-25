@@ -41,7 +41,7 @@ namespace sdlife.web.Controllers
             }
             else
             {
-                await _userManager.CreateAsync(user);
+                await _userManager.CreateAsync(user, "Passw0rd!");
                 return await _userManager.FindByNameAsync(user.UserName);
             }
         }
