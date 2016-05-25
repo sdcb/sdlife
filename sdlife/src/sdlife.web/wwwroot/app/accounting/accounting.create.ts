@@ -40,7 +40,7 @@
             return this.api.searchAutoTitles(title, this.result.isIncome);
         }
 
-        static $inject = ["$scope", "$mdDialog", "date", "api"];
+        static $inject = ["$scope", "$mdDialog", "date", "accounting.api"];
         constructor(
             public scope: ng.IScope, 
             public dialog: ng.material.IDialogService,

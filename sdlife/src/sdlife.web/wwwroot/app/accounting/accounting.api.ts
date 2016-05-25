@@ -59,5 +59,5 @@ namespace sdlife.accounting {
         }
     }
 
-    module.service("api", AccountingApi);
+    module.service("accounting.api", AccountingApi);
 }

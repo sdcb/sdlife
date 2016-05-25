@@ -47,7 +47,7 @@
             });
         }
 
-        static $inject = ["$mdDialog", "entity", "api", "thisDialog", "onCommit"];
+        static $inject = ["$mdDialog", "entity", "accounting.api", "thisDialog", "onCommit"];
         constructor(
             public dialog: ng.material.IDialogService,
             public result: IAccountingEntity,

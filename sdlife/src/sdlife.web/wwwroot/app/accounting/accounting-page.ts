@@ -25,7 +25,7 @@ namespace sdlife.accounting {
 
         loading: ng.IPromise<any>;
 
-        static $inject = ["$compile", "$scope", "api", "$mdDialog", "$mdMedia"];
+        static $inject = ["$compile", "$scope", "accounting.api", "$mdDialog", "$mdMedia"];
         constructor(
             public compile: ng.ICompileService, 
             public scope: ng.IScope, 
