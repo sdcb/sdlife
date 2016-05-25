@@ -69,7 +69,7 @@
         let thisDialog: ng.material.IDialogOptions = {
             autoWrap: true, 
             controller: AcountingEditDialog,
-            templateUrl: `/app/accounting/accounting.edit.html?${consts.version}`,
+            templateUrl: "/app/accounting/accounting.edit.html",
             controllerAs: "vm",
 
             clickOutsideToClose: false,

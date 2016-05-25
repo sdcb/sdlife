@@ -1,7 +1,6 @@
 ﻿namespace sdlife {
     export var consts = {
-        moduleName: "sdlife",
-        version: new Date().getTime(),
+        moduleName: "sdlife"
     };
 
     let app = angular.module(consts.moduleName, ["ngMaterial", "ui.calendar", "ngMessages", "ngComponentRouter"]);

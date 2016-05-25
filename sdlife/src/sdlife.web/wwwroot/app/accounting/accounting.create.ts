@@ -62,7 +62,7 @@
         ev: MouseEvent) {
         return dialog.show(<ng.material.IDialogOptions>{
             controller: AcountingCreateDialog,
-            templateUrl: `/app/accounting/accounting.create.html?${consts.version}`, 
+            templateUrl: "/app/accounting/accounting.create.html", 
             controllerAs: "vm",
 
             clickOutsideToClose: false,

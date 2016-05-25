@@ -26,6 +26,6 @@
         bindings: {
             onCreated: "&"
         }, 
-        templateUrl: `/app/accounting/accounting.createicon.html?${consts.version}`, 
+        templateUrl: "/app/accounting/accounting.createicon.html", 
     });
 }

@@ -5,7 +5,9 @@ var gulp = require("gulp"),
     rimraf = require("rimraf"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
-    uglify = require("gulp-uglify"), 
+    uglify = require("gulp-uglify"),
+    htmlmin = require("gulp-htmlmin"), 
+    templateCache = require("gulp-angular-templatecache"),
     fs = require("fs");    
 
 var paths = {
@@ -74,6 +76,21 @@ gulp.task("min:libJs", function () {
         .pipe(gulp.dest("."));
 });
 
+gulp.task("min:templateCache", function () {
+    return gulp.src("wwwroot/app/**/*.html")
+        .pipe(htmlmin({
+            collapseWhitespace: true, 
+            collapseBooleanAttributes: true,
+            removeComments: true, 
+        }))
+        .pipe(templateCache({
+            module: "sdlife",
+            root: "/app/"
+        }))
+        .pipe(concat("wwwroot/app/app.tpl.min.js"))
+        .pipe(gulp.dest("."));
+});
+
 gulp.task("min:css", function () {
     return gulp.src([paths.css, "!" + paths.minCss])
         .pipe(concat(paths.concatCssDest))
@@ -88,4 +105,4 @@ gulp.task("min:libCss", function () {
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min", ["min:js", "min:libJs", "min:css", "min:libCss"]);
+gulp.task("min", ["min:js", "min:libJs", "min:css", "min:libCss", "min:templateCache"]);
