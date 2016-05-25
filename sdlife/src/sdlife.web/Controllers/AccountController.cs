@@ -25,8 +25,7 @@ namespace sdlife.web.Controllers
             _signInManager = signInManager;
         }
         
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginDto loginDto)
+        public async Task<IActionResult> Login([FromBody]LoginDto loginDto)
         {
             var user = await _userManager.FindByNameOrEmailAsync(loginDto.UserName);
             if (user == null)

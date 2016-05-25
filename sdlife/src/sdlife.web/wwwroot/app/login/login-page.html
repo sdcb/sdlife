@@ -7,13 +7,14 @@
             </h2>
         </md-toolbar>
         <md-content class="md-padding" >
+            <loading promise="vm.loading" size="100"></loading>
             <form name="loginForm" layout="column" ng-submit="vm.commit()">
                 <md-input-container>
                     <label>用户名</label>
                     <md-icon class="material-icons">person</md-icon>
                     <input type="text"
                            required
-                           ng-model="vm.input.username" />
+                           ng-model="vm.input.userName" />
                 </md-input-container>
                 <md-input-container>
                     <label>密码</label>
@@ -22,6 +23,11 @@
                            required
                            ng-model="vm.input.password" />
                 </md-input-container>
+
+                <md-switch ng-model="vm.input.rememberMe" aria-label="Remember Me">
+                    记住我
+                </md-switch>
+                
                 <div layout="row" layout-align="center center" style="padding-top: 20px;">
                     <md-button type="submit" class="md-raised md-primary">
                         登陆
