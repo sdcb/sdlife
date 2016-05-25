@@ -1,6 +1,4 @@
-﻿/// <reference path="../../typings/tsd.d.ts" />
-
-namespace sdlife.accounting {
+﻿namespace sdlife.accounting {
     let module = angular.module(consts.moduleName);
 
     class LoadingController {
@@ -21,7 +19,7 @@ namespace sdlife.accounting {
 
     module.component("loading", {
         controller: LoadingController,
-        templateUrl: "/app/accounting/loading.html",
+        templateUrl: "/app/common/widgets/loading.html",
         controllerAs: "vm",
         bindings: {
             size: "<", 
