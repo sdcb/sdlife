@@ -8,7 +8,7 @@ using sdlife.web.Models;
 
 namespace sdlife.web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : SdlifeBaseController
     {
         public readonly UserManager<User> _userManager;
 

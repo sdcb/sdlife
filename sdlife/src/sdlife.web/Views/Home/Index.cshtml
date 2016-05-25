@@ -20,6 +20,7 @@
 </head>
 <body ng-app="sdlife">
     <sdlife-app></sdlife-app>
+    @Html.AntiForgeryToken()
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -54,6 +55,5 @@
         <script src="~/lib/lib.min.js" asp-append-version="true"></script>
         <script src="~/app/app.min.js" asp-append-version="true"></script>
     </environment>
-    
 </body>
 </html>

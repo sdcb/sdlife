@@ -5,18 +5,23 @@ namespace sdlife.login {
 
     class LoginPage {
         input = {
-            username: "", 
+            username: "",
             password: ""
         };
 
         commit() {
             console.log(this.input);
         }
+
+        static $inject = ["$http"];
+        constructor($http: ng.IHttpService) {   
+            
+        }
     }
 
     module.component("loginPage", {
         controller: LoginPage,
         controllerAs: "vm",
-        templateUrl: "/app/login/login-page.html",
+        templateUrl: `/app/login/login-page.html?v=${consts.version}`,
     });
 }

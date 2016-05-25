@@ -47,7 +47,11 @@ namespace sdlife.web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, Role>()
+            services.AddIdentity<User, Role>(x =>
+            {
+                x.User.RequireUniqueEmail = true;
+            })
+                .AddUserManager<SdlifeUserManager>()
                 .AddEntityFrameworkStores<ApplicationDbContext, int>()
                 .AddDefaultTokenProviders();
 

@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace sdlife.web.Controllers
 {
     [Authorize]
-    public class AccountingController : Controller
+    public class AccountingController : SdlifeBaseController
     {
         private readonly IAccountingManager _accounting;
         private readonly ICurrentUser _user;

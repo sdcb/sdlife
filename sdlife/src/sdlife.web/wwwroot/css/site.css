@@ -107,7 +107,7 @@ md-tooltip .md-content {
     z-index: 0;
 }
 
-.login-content:before {
+.login-content-half {
     height: 50%;
     width: 100%;
     position: absolute;
