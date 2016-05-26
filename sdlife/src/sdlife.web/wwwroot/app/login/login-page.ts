@@ -47,7 +47,7 @@ namespace sdlife.login {
     app.component("loginPage", {
         controller: LoginPage,
         controllerAs: "vm",
-        templateUrl: `/app/login/login-page.html?v=${consts.version}`,
+        templateUrl: "/app/login/login-page.html",
         bindings: {
             $router: "<"
         }
