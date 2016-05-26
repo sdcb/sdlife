@@ -4,8 +4,7 @@ namespace sdlife.accounting {
     let module = angular.module(consts.moduleName);
 
     class AccountingPage {
-        eventSource = <IAccountingEventObject[]>[];
-        eventSources = [this.eventSource];
+        eventSources = [<IAccountingEventObject[]>[]];
         calendarConfig = <IAccountingCalendarConfig>{
             height: "auto",
             editable: true,
@@ -40,7 +39,7 @@ namespace sdlife.accounting {
             this.currentMonth = date || this.currentMonth;
             return this.loading = this.api.loadInMonth(this.currentMonth).then(dto => {
                 let events = addColorToEventObjects(dto.map(x => mapEntityToCalendar(x)));
-                this.eventSource.splice(0, this.eventSource.length, ...events);
+                this.eventSources[0] = events;
             });
         }
 
