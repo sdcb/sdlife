@@ -59,7 +59,7 @@ namespace sdlife.web.Controllers
             return FromIdentityResult(result);
         }
 
-        public IActionResult FromIdentityResult(IdentityResult result)
+        private IActionResult FromIdentityResult(IdentityResult result)
         {
             if (result.Succeeded)
             {
