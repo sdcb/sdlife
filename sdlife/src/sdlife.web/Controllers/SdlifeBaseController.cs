@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace sdlife.web.Controllers
 {
-    [AutoValidateAntiforgeryToken]
     public class SdlifeBaseController : Controller
     {
     }
