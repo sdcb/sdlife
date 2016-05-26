@@ -7,7 +7,7 @@ namespace sdlife.accounting {
         eventSource = <IAccountingEventObject[]>[];
         eventSources = [this.eventSource];
         calendarConfig = <IAccountingCalendarConfig>{
-            height: 450,
+            height: "auto",
             editable: true,
             lang: "zh-cn", 
             header: {

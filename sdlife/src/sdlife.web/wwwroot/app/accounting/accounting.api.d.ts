@@ -22,7 +22,7 @@
     }
 
     export interface IAccountingCalendarConfig {
-        height: number, 
+        height?: string, 
         editable: boolean, 
         header: {
             left: string, 
