@@ -56,7 +56,6 @@
             public onCommit: () => any
         ) {
             this.editTime = moment(this.result.time).startOf("minute").toDate();
-            console.log(this);
         }
     }
 

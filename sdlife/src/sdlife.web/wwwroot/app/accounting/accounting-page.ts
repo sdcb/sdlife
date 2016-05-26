@@ -104,7 +104,6 @@ namespace sdlife.accounting {
         }
 
         eventDragStop(event: IAccountingEventObject, ev: MouseEvent, ui: any, view: FullCalendar.ViewObject) {
-            console.log(ev.toElement);
         }
     }
 

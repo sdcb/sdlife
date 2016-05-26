@@ -47,7 +47,6 @@
             public date: string,
             public api: AccountingApi
         ) {
-            console.log(this);
             scope.$watch(() => this.result.isIncome, () => {
                 this.$searchTitle = "";
                 this.result.title = "";
