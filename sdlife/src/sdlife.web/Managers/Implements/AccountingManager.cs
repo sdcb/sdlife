@@ -194,6 +194,16 @@ namespace sdlife.web.Managers.Implements
             await _db.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        public async Task UpdateTitleShortCuts()
+        {
+            var data = await _db.AccountingTitle.ToListAsync().ConfigureAwait(false);
+            foreach (var item in data)
+            {
+                item.ShortCut = _pinYin.GetStringCapitalPinYin(item.Title);
+            }
+            await _db.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         #region private functions 
         private async Task<AccountingTitle> GetOrCreateTitle(string title, bool isIncome)
         {
@@ -224,6 +234,7 @@ namespace sdlife.web.Managers.Implements
             await _db.SaveChangesAsync().ConfigureAwait(false);
             return newOne;
         }
+        
         #endregion
     }
 }

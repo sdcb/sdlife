@@ -15,6 +15,8 @@ namespace sdlife.web.Managers
         Task UpdateTime(int accountId, DateTime time);
         Task<AccountingDto> Update(AccountingDto dto);
 
+        Task UpdateTitleShortCuts();
+
         Task<decimal> MyTotalAmountInRange(DateTime start, DateTime end);
         IQueryable<AccountingDto> UserAccountingInRange(DateTime start, DateTime end, int userId);
         Task Delete(int id);
