@@ -91,7 +91,7 @@
 
   "publishOptions": {
     "include": [
-      "wwwroot",
+      "wwwroot/min",
       "Views",
       "appsettings*.json",
       "web.config"

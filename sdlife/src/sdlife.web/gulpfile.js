@@ -16,11 +16,11 @@ var paths = {
 
 paths.js = paths.webroot + "app/**/*.js";
 paths.minJs = paths.webroot + "app/**/*.min.js";
-paths.concatJsDest = paths.webroot + "app/app.min.js";
+paths.concatJsDest = paths.webroot + "min/app.min.js";
 
 paths.css = paths.webroot + "css/**/*.css";
 paths.minCss = paths.webroot + "css/**/*.min.css";
-paths.concatCssDest = paths.webroot + "css/site.min.css";
+paths.concatCssDest = paths.webroot + "min/site.min.css";
 
 paths.libJs = [
     "jquery/dist/jquery.min.js",
@@ -37,14 +37,14 @@ paths.libJs = [
     "fullcalendar/dist/lang/zh-cn.js",
     "angular-ui-calendar/src/calendar.js"
 ].map(function (x) { return paths.webroot + "lib/" + x; });
-paths.concatLibJsDest = paths.webroot + "lib/lib.min.js";
+paths.concatLibJsDest = paths.webroot + "min/lib.min.js";
 
 paths.libCss = [
     "angular/angular-csp.css",
     "angular-material/angular-material.min.css",
     "fullcalendar/dist/fullcalendar.min.css"
 ].map(function (x) { return paths.webroot + "lib/" + x; });
-paths.concatLibCssDest = paths.webroot + "lib/lib.min.css";
+paths.concatLibCssDest = paths.webroot + "min/lib.min.css";
 
 gulp.task("clean:js", function (cb) {
     rimraf(paths.concatJsDest, cb);
@@ -87,7 +87,7 @@ gulp.task("min:templateCache", function () {
             module: "sdlife",
             root: "/app/"
         }))
-        .pipe(concat("wwwroot/app/app.tpl.min.js"))
+        .pipe(concat("wwwroot/min/app.tpl.min.js"))
         .pipe(gulp.dest("."));
 });
 
