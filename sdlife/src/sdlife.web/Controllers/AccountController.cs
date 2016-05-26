@@ -43,9 +43,32 @@ namespace sdlife.web.Controllers
             return Ok();
         }
 
-        public int DoWork()
+        public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordDto changePasswordDto)
         {
-            return 3;
+            var user = await _userManager.GetUserAsync(User);
+            var result = await _userManager.ChangePasswordAsync(user, 
+                changePasswordDto.CurrentPassword, 
+                changePasswordDto.NewPassword);
+            return FromIdentityResult(result);
+        }
+
+        public async Task<IActionResult> Register([FromBody]CreateUserDto createUserDto)
+        {
+            var user = (User)createUserDto;
+            var result = await _userManager.CreateAsync(user, createUserDto.Password);
+            return FromIdentityResult(result);
+        }
+
+        public IActionResult FromIdentityResult(IdentityResult result)
+        {
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Errors);
+            }
         }
     }
 }
