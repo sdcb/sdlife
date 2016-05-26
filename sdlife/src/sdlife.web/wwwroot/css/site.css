@@ -92,7 +92,8 @@
 }
 
     .calendar-delete-button:hover {
-        color: red;
+        color: chartreuse;
+        font-weight: bolder;
     }
 
 md-tooltip .md-content {

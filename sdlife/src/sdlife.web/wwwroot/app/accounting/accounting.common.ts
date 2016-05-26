@@ -47,13 +47,27 @@ namespace sdlife.accounting {
     }
 
     export function addColorToEventObjects(data: IAccountingEventObject[]) {
-        let max = Math.max(...data.map(x => Math.abs(x.entity.amount)));
-        let min = Math.min(...data.map(x => Math.abs(x.entity.amount)));
+        let incomes = data.filter(x => x.entity.isIncome);
+        let spends = data.filter(x => !x.entity.isIncome);
+        let incomeMax = Math.max(...incomes.map(x => Math.abs(x.entity.amount)));
+        let incomeMin = Math.min(...incomes.map(x => Math.abs(x.entity.amount)));
+        let spendMax = Math.max(...spends.map(x => Math.abs(x.entity.amount)));
+        let spendMin = Math.min(...spends.map(x => Math.abs(x.entity.amount)));
         return data.map(x => {
-            let percent = (Math.abs(x.entity.amount) - min) / max;
-            let lightness = 0.7 - percent * 0.5;
+            let hue: number;
+            let lightness: number;
+
+            if (x.entity.isIncome) {
+                let percent = (Math.abs(x.entity.amount) - incomeMin) / incomeMax;
+                hue = 0.7;
+                lightness = 0.8 - percent * 0.5;
+            } else {
+                let percent = (Math.abs(x.entity.amount) - spendMin) / spendMax;
+                hue = 0;
+                lightness = 0.8 - percent * 0.6;
+            }
             let saturation = 1;
-            let hue = x.entity.isIncome ? 0.4 : 0;
+            
             x.color = `hsl(${hue * 360}, ${saturation * 100}%, ${lightness * 100}%)`;
             return x;
         });
