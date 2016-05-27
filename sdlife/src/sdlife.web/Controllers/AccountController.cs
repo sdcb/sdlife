@@ -43,6 +43,11 @@ namespace sdlife.web.Controllers
             return Ok();
         }
 
+        public async Task Logout()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
         public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordDto changePasswordDto)
         {
             var user = await _userManager.GetUserAsync(User);
