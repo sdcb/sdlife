@@ -35,5 +35,10 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             db.RemoveRange(db.AccountingTitle);
             db.SaveChanges();
         }
+
+        protected ICurrentUser User
+        {
+            get { return ServiceProvider.GetService<ICurrentUser>(); }
+        }
     }
 }

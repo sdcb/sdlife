@@ -29,14 +29,14 @@ namespace sdlife.web.Managers.Implements
             _pinYin = pinYin;
         }
 
-        public async Task<AccountingDto> Create(AccountingDto dto)
+        public async Task<AccountingDto> Create(AccountingDto dto, int createUserId)
         {
             var titleEntity = await GetOrCreateTitle(dto.Title, dto.IsIncome).ConfigureAwait(false);
 
             var entity = new Accounting
             {
                 Amount = dto.Amount,
-                CreateUserId = _user.UserId,
+                CreateUserId = createUserId,
                 EventTime = dto.Time,
                 Title = titleEntity,
             };
@@ -92,14 +92,6 @@ namespace sdlife.web.Managers.Implements
 
             entity.EventTime = time;
             await _db.SaveChangesAsync().ConfigureAwait(false);
-        }
-
-        public async Task<decimal> MyTotalAmountInRange(DateTime start, DateTime end)
-        {
-            var amount = await _db.Accounting
-                .Where(x => x.EventTime >= start && x.EventTime < end)
-                .SumAsync(x => x.Amount).ConfigureAwait(false);
-            return amount;
         }
 
         public async Task<AccountingDto> Update(AccountingDto dto)

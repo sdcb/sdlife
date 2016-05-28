@@ -33,7 +33,7 @@ namespace sdlife.web.Controllers
         
         public async Task<AccountingDto> Create([FromBody]AccountingDto dto)
         {
-            return await _accounting.Create(dto);
+            return await _accounting.Create(dto, _user.UserId);
         }
 
         public async Task UpdateTime(int id, [FromBody]DateTime time)

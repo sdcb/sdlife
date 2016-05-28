@@ -30,7 +30,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Amount = 2,
                 Time = new DateTime(2015, 1, 1),
                 Title = "test"
-            });
+            }, User.UserId);
 
             // Action
             var real = accountingManager.UserAccountingInRange(
@@ -55,7 +55,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Amount = 2,
                 Time = new DateTime(2017, 1, 1),
                 Title = "test"
-            });
+            }, User.UserId);
 
             // Action
             var real = accountingManager.UserAccountingInRange(
@@ -78,7 +78,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Amount = 2,
                 Time = new DateTime(2015, 1, 1),
                 Title = "test"
-            });
+            }, User.UserId);
 
             // Action
             var real = accountingManager.UserAccountingInRange(

@@ -32,7 +32,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Amount = (decimal)money, 
                 Time = expectedEventTime,
                 Title = title
-            });
+            }, User.UserId);
 
             // Action
             var accounting = await db.Accounting
@@ -62,7 +62,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Time = now,
                 Title = "早餐", 
                 Comment = comment
-            });
+            }, User.UserId);
 
             // Action
             var accounting = await db.Accounting
@@ -95,7 +95,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Amount = 1,
                 Time = now,
                 Title = title
-            });
+            }, User.UserId);
 
             // Action
             var accounting = await db.Accounting

@@ -33,7 +33,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             });
             foreach (var data in datas)
             {
-                await accountingManager.Create(data);
+                await accountingManager.Create(data, User.UserId);
             }
 
             // Action
@@ -67,7 +67,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             });
             foreach (var data in datas)
             {
-                await accountingManager.Create(data);
+                await accountingManager.Create(data, User.UserId);
             }
 
             // Action
@@ -100,7 +100,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             });
             foreach (var data in datas)
             {
-                await accountingManager.Create(data);
+                await accountingManager.Create(data, User.UserId);
             }
 
             // Action
@@ -140,7 +140,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             });
             foreach (var data in datas)
             {
-                await accountingManager.Create(data);
+                await accountingManager.Create(data, User.UserId);
             }
 
             // Action

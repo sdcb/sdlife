@@ -31,7 +31,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test"
-            });
+            }, User.UserId);
 
             // Action
             var title = "I love lgl";
@@ -68,7 +68,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "早餐"
-            });
+            }, User.UserId);
 
             // Action
             var title = "晚餐";
@@ -102,7 +102,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "早餐"
-            });
+            }, User.UserId);
 
             // Action
             await accountingManager.UpdateTime(created.Id, now);
@@ -128,7 +128,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Time = DateTime.Now,
                 Title = "test", 
                 Comment = "I love lgl"
-            });
+            }, User.UserId);
 
             // Action
             created.Comment = " ";
@@ -154,7 +154,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Time = DateTime.Now,
                 Title = "test",
                 Comment = "I love lgl"
-            });
+            }, User.UserId);
 
             // Action
             created.Title = "life";
@@ -180,14 +180,14 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Time = DateTime.Now,
                 Title = "test",
                 Comment = "I love lgl"
-            });
+            }, User.UserId);
             var create2 = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test",
                 Comment = "I love lgl"
-            });
+            }, User.UserId);
 
             // Action
             created.Title = "life";
@@ -213,7 +213,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Time = DateTime.Now,
                 Title = "test",
                 Comment = "I love lgl"
-            });
+            }, User.UserId);
 
             // Action
             created.Comment = "Nice";

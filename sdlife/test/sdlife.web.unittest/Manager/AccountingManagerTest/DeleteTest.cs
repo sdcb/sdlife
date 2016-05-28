@@ -28,7 +28,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test"
-            });
+            }, User.UserId);
 
             // Action
             await accountingManager.Delete(created.Id);
@@ -49,7 +49,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test"
-            });
+            }, User.UserId);
 
             // Action
             await accountingManager.Delete(created.Id);
@@ -70,13 +70,13 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test"
-            });
+            }, User.UserId);
             var created2 = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test"
-            });
+            }, User.UserId);
 
             // Action
             await accountingManager.Delete(created.Id);
@@ -97,7 +97,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test"
-            });
+            }, User.UserId);
 
             // Action
             await accountingManager.Delete(created.Id);
