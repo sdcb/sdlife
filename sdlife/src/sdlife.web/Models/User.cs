@@ -9,7 +9,14 @@ namespace sdlife.web.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class User : IdentityUser<int>
     {
-        public HashSet<Accounting> Accountings { get; set; } = new HashSet<Accounting>();
+        public HashSet<Accounting> Accountings { get; set; } 
+            = new HashSet<Accounting>();
+
+        public HashSet<AccountingUserAuthorization> AccountingUserAuthorizationFrom { get; set; }
+            = new HashSet<AccountingUserAuthorization>();
+
+        public HashSet<AccountingUserAuthorization> AccountingUserAuthorizationTarget { get; set; }
+            = new HashSet<AccountingUserAuthorization>();
     }
 
     public class Role : IdentityRole<int>
