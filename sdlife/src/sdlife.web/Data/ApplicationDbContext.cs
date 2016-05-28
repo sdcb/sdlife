@@ -49,6 +49,9 @@ namespace sdlife.web.Data
                 .HasMany(x => x.Accountings)
                 .WithOne(x => x.Title)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<AccountingUserAuthorization>()
+                .HasKey(x => new { x.UserId, x.AuthorizedUserId });
         }
 
         public DbSet<Accounting> Accounting { get; set; }
@@ -56,5 +59,7 @@ namespace sdlife.web.Data
         public DbSet<AccountingTitle> AccountingTitle { get; set; }
 
         public DbSet<AccountingComment> AccountingComment { get; set; }
+
+        public DbSet<AccountingUserAuthorization> AccountingUserAuthorization { get; set; }
     }
 }

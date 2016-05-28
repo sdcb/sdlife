@@ -33,6 +33,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             db.RemoveRange(db.Accounting);
             db.RemoveRange(db.AccountingComment);
             db.RemoveRange(db.AccountingTitle);
+            db.RemoveRange(db.AccountingUserAuthorization);
             db.SaveChanges();
         }
 

@@ -19,5 +19,8 @@ namespace sdlife.web.Managers
         
         IQueryable<AccountingDto> UserAccountingInRange(DateTime start, DateTime end, int userId);
         Task Delete(int id);
+
+        Task<bool> CheckUserAuthorization(int userId, int targetUserId, AccountingAuthorizeLevel level);
+        Task SetUserAuthroize(int userId, int authorizedUserId, AccountingAuthorizeLevel level);
     }
 }

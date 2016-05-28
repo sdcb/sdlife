@@ -196,6 +196,49 @@ namespace sdlife.web.Managers.Implements
             await _db.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        public async Task<bool> CheckUserAuthorization(int userId, int targetUserId, AccountingAuthorizeLevel level)
+        {
+            return await _db.AccountingUserAuthorization
+                .AnyAsync(x =>
+                x.UserId == targetUserId &&
+                x.AuthorizedUserId == userId &&
+                ((x.Level & level)  == level)).ConfigureAwait(false);
+        }
+
+        public async Task SetUserAuthroize(int userId, int authorizedUserId, AccountingAuthorizeLevel level)
+        {
+            var existAuthorization = await _db.AccountingUserAuthorization
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.AuthorizedUserId == authorizedUserId)
+                .ConfigureAwait(false);
+
+            if (level != AccountingAuthorizeLevel.None)
+            {
+                if (existAuthorization == null)
+                {
+                    existAuthorization = new AccountingUserAuthorization
+                    {
+                        UserId = userId,
+                        AuthorizedUserId = authorizedUserId,
+                        Level = level
+                    };
+                    _db.Add(existAuthorization);
+                }
+                else
+                {
+                    existAuthorization.Level = level;
+                }
+            }
+            else
+            {
+                if (existAuthorization != null)
+                {
+                    _db.Remove(existAuthorization);
+                }
+            }
+
+            await _db.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         #region private functions 
         private async Task<AccountingTitle> GetOrCreateTitle(string title, bool isIncome)
         {
@@ -226,7 +269,7 @@ namespace sdlife.web.Managers.Implements
             await _db.SaveChangesAsync().ConfigureAwait(false);
             return newOne;
         }
-        
+
         #endregion
     }
 }
