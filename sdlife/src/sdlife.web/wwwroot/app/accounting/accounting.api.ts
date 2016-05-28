@@ -12,7 +12,7 @@ namespace sdlife.accounting {
             let from = time.clone().startOf("month");
             let to = from.clone().add(1, "month");
 
-            return this.$.post<IAccountingEntity[]>("/Accounting/MyAccountingInRange", {
+            return this.$.post<IAccountingEntity[]>("/Accounting/Get", {
                 from: from,
                 to: to
             }).then(cb => {
