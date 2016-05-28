@@ -51,9 +51,9 @@ namespace sdlife.web.Controllers
             await _accounting.Delete(id);
         }
 
-        public IQueryable<AccountingDto> MyAccountingInRange([FromBody]AccountingQuery query)
+        public async Task<IQueryable<AccountingDto>> MyAccountingInRange([FromBody]AccountingQuery query)
         {
-            var data = _accounting.UserAccountingInRange(query.From, query.To, _user.UserId);
+            var data = await _accounting.UserAccountingInRange(query.From, query.To, _user.UserId);
             return data;
         }
 

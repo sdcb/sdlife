@@ -148,9 +148,9 @@ namespace sdlife.web.Managers.Implements
             return entity;
         }
 
-        public IQueryable<AccountingDto> UserAccountingInRange(DateTime start, DateTime end, int userId)
+        public async Task<IQueryable<AccountingDto>> UserAccountingInRange(DateTime start, DateTime end, int userId)
         {
-            return
+            var query = 
                 from accounting in _db.Accounting
                 join title in _db.AccountingTitle on accounting.TitleId equals title.Id 
                 join comment in _db.AccountingComment on accounting.Id equals comment.AccountingId into commentGroup
@@ -165,6 +165,39 @@ namespace sdlife.web.Managers.Implements
                     IsIncome = title.IsIncome, 
                     Title = title.Title
                 };
+            if (_user.UserId == userId)
+            {
+                return query;
+            }
+            else
+            {
+                var access = await GetUserAccess(_user.UserId, userId).ConfigureAwait(false);
+                if (access == AccountingAuthorizeLevel.QueryAll)
+                {
+                    return query;
+                }
+                else if (access == AccountingAuthorizeLevel.QueryIncomes)
+                {
+                    return query.Where(x => x.IsIncome);
+                }
+                else if (access == AccountingAuthorizeLevel.QuerySpendings)
+                {
+                    return query.Where(x => !x.IsIncome);
+                }
+                else
+                {
+                    return new List<AccountingDto>().AsQueryable();
+                }
+            }
+        }
+
+        private async Task<AccountingAuthorizeLevel> GetUserAccess(int userId, int targetUserId)
+        {
+            return await _db.AccountingUserAuthorization
+                .Where(x => x.AuthorizedUserId == userId && x.UserId == targetUserId)
+                .Select(x => x.Level)
+                .FirstOrDefaultAsync()
+                .ConfigureAwait(false);
         }
 
         public async Task Delete(int id)

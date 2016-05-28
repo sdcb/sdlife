@@ -17,7 +17,7 @@ namespace sdlife.web.Managers
 
         Task UpdateTitleShortCuts();
         
-        IQueryable<AccountingDto> UserAccountingInRange(DateTime start, DateTime end, int userId);
+        Task<IQueryable<AccountingDto>> UserAccountingInRange(DateTime start, DateTime end, int userId);
         Task Delete(int id);
 
         Task<bool> CheckUserAuthorization(int userId, int targetUserId, AccountingAuthorizeLevel level);

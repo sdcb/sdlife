@@ -33,9 +33,9 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             }, User.UserId);
 
             // Action
-            var real = accountingManager.UserAccountingInRange(
+            var real = (await accountingManager.UserAccountingInRange(
                 new DateTime(2014, 1, 1), 
-                new DateTime(2016, 1, 1), user.UserId).Single();
+                new DateTime(2016, 1, 1), user.UserId)).Single();
 
             // Assert
             Assert.Equal(2, real.Amount);
@@ -58,9 +58,9 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             }, User.UserId);
 
             // Action
-            var real = accountingManager.UserAccountingInRange(
+            var real = (await accountingManager.UserAccountingInRange(
                 new DateTime(2014, 1, 1),
-                new DateTime(2016, 1, 1), user.UserId).ToList().FirstOrDefault();
+                new DateTime(2016, 1, 1), user.UserId)).ToList().FirstOrDefault();
 
             // Assert
             Assert.Null(real);
@@ -81,12 +81,98 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             }, User.UserId);
 
             // Action
-            var real = accountingManager.UserAccountingInRange(
+            var real = (await accountingManager.UserAccountingInRange(
                 new DateTime(2014, 1, 1),
-                new DateTime(2016, 1, 1), user.UserId + 1).ToList().FirstOrDefault();
+                new DateTime(2016, 1, 1), user.UserId + 1)).ToList().FirstOrDefault();
 
             // Assert
             Assert.Null(real);
+        }
+
+        [Fact]
+        public async Task WithAccessCanGetOthers()
+        {
+            // Arrange 
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var user = ServiceProvider.GetService<ICurrentUser>();
+            var currentUserId = user.UserId;
+            var otherUserId = user.UserId + 1;
+            var created = await accountingManager.Create(new AccountingDto
+            {
+                Amount = 2,
+                Time = new DateTime(2015, 1, 1),
+                Title = "test"
+            }, otherUserId);
+            await accountingManager.SetUserAuthroize(otherUserId, currentUserId, AccountingAuthorizeLevel.QueryAll);
+
+            // Action
+            var real = (await accountingManager.UserAccountingInRange(
+                new DateTime(2014, 1, 1),
+                new DateTime(2016, 1, 1), otherUserId)).ToList().FirstOrDefault();
+
+            // Assert
+            Assert.NotNull(real);
+        }
+
+        [Fact]
+        public async Task WithoutAccessCannotGetOthers()
+        {
+            // Arrange 
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var user = ServiceProvider.GetService<ICurrentUser>();
+            var currentUserId = user.UserId;
+            var otherUserId = user.UserId + 1;
+            var created = await accountingManager.Create(new AccountingDto
+            {
+                Amount = 2,
+                Time = new DateTime(2015, 1, 1),
+                Title = "test"
+            }, otherUserId);
+
+            // Action
+            var real = (await accountingManager.UserAccountingInRange(
+                new DateTime(2014, 1, 1),
+                new DateTime(2016, 1, 1), otherUserId)).ToList().FirstOrDefault();
+
+            // Assert
+            Assert.Null(real);
+        }
+
+        [Fact]
+        public async Task WithPartAccessCanOnlyGetPartOthers()
+        {
+            // Arrange 
+            var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
+            var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var user = ServiceProvider.GetService<ICurrentUser>();
+            var currentUserId = user.UserId;
+            var otherUserId = user.UserId + 1;
+            var income = await accountingManager.Create(new AccountingDto
+            {
+                Amount = 2,
+                Time = new DateTime(2015, 1, 1),
+                Title = "income", 
+                IsIncome = true, 
+            }, otherUserId);
+            var spending = await accountingManager.Create(new AccountingDto
+            {
+                Amount = 2,
+                Time = new DateTime(2015, 1, 1),
+                Title = "spending",
+                IsIncome = false,
+            }, otherUserId);
+            await accountingManager.SetUserAuthroize(otherUserId, currentUserId, AccountingAuthorizeLevel.QueryIncomes);
+
+            // Action
+            var real = (await accountingManager.UserAccountingInRange(
+                new DateTime(2014, 1, 1),
+                new DateTime(2016, 1, 1), otherUserId)).ToList();
+
+            // Assert
+            Assert.Equal(1, real.Count);
+            Assert.Equal("income", real[0].Title);
         }
     }
 }

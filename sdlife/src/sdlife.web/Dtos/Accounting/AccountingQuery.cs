@@ -11,5 +11,7 @@ namespace sdlife.web.Dtos
         public DateTime From { get; set; }
 
         public DateTime To { get; set; }
+
+        public int? UserId { get; set; }
     }
 }
