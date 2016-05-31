@@ -53,7 +53,7 @@ namespace sdlife.web.Controllers
 
         public async Task<IQueryable<AccountingDto>> Get([FromBody]AccountingQuery query)
         {
-            var data = await _accounting.UserAccountingInRange(query.From, query.To, _user.UserId);
+            var data = await _accounting.UserAccountingInRange(query.From, query.To, query.UserId ?? _user.UserId);
             return data;
         }
 

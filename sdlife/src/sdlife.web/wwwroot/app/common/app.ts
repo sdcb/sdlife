@@ -14,6 +14,7 @@
         $routeConfig: [
             { path: "/login", component: "login-page", name: "Login" }, 
             { path: "/book", component: "accounting-page", name: "Book" }, 
+            { path: "/book/:userId", component: "accounting-page-for-friend", name: "BookFriend" }, 
             { path: "/**", redirectTo: ["Book"] }
         ]
     });

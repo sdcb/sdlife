@@ -1,5 +1,5 @@
 ﻿<md-button aria-label="{{vm.menu.title | nospace}}"
-           ng-click="vm.focusSection()">
+           ng-link="vm.menu.state">
     {{vm.menu.title}}
     <span class="md-visually-hidden "
           ng-if="vm.isSelected()">

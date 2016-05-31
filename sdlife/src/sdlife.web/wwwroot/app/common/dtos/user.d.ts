@@ -1,6 +1,6 @@
 ﻿declare namespace sdlife {
     interface IUserDto {
-        Id: number;
+        id: number;
         userName: string;
         email: string;
     }

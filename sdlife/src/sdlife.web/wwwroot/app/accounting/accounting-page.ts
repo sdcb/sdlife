@@ -3,7 +3,8 @@
 namespace sdlife.accounting {
     let module = angular.module(consts.moduleName);
 
-    class AccountingPage {
+    export class AccountingPage {
+        userId: number;
         eventSources = [<IAccountingEventObject[]>[]];
         calendarConfig = <IAccountingCalendarConfig>{
             height: "auto",
@@ -22,22 +23,17 @@ namespace sdlife.accounting {
             eventClick: (event, jsEvent, view) => this.eventClick(event, jsEvent, view)
         }
 
-        loading: ng.IPromise<any>;
-
-        static $inject = ["$compile", "$scope", "accounting.api", "$mdDialog", "$mdMedia"];
-        constructor(
-            public compile: ng.ICompileService, 
-            public scope: ng.IScope, 
-            public api: AccountingApi,
-            public dialog: ng.material.IDialogService, 
-            public media: ng.material.IMedia
-        ) {
+        $routerOnActivate(next) {
+            console.log(next);
+            this.userId = next.params.userId;
         }
+
+        loading: ng.IPromise<any>;
 
         currentMonth: moment.Moment;
         loadData(date: moment.Moment = null) {
             this.currentMonth = date || this.currentMonth;
-            return this.loading = this.api.loadInMonth(this.currentMonth).then(dto => {
+            return this.loading = this.api.loadInMonth(this.currentMonth, this.userId).then(dto => {
                 let events = addColorToEventObjects(dto.map(x => mapEntityToCalendar(x)));
                 this.eventSources[0] = events;
             });
@@ -103,7 +99,14 @@ namespace sdlife.accounting {
             return isSmallDevice(this.media);
         }
 
-        eventDragStop(event: IAccountingEventObject, ev: MouseEvent, ui: any, view: FullCalendar.ViewObject) {
+        static $inject = ["$compile", "$scope", "accounting.api", "$mdDialog", "$mdMedia"];
+        constructor(
+            public compile: ng.ICompileService,
+            public scope: ng.IScope,
+            public api: AccountingApi,
+            public dialog: ng.material.IDialogService,
+            public media: ng.material.IMedia
+        ) {
         }
     }
 

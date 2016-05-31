@@ -4,7 +4,7 @@
     class SdlifeMenuComponent {
         accountingFriendSubMenus = new MenuFolder("我的朋友", []);
         menus = <Array<IMenuItem>>[
-            new MenuItem("我", "/"),
+            new MenuItem("我", ["Book"]),
             this.accountingFriendSubMenus
         ];
 
@@ -25,8 +25,8 @@
 
         setupAccountingUsers() {
             this.api.authorizedUsers().then(users => {
-                this.accountingFriendSubMenus.subMenus = users.map(x => {
-                    return new MenuItem(x.email, x.userName);
+                this.accountingFriendSubMenus.subMenus = users.map(user => {
+                    return new MenuItem(user.email, ["BookFriend", {userId: user.id}]);
                 });
             });
         }
@@ -49,7 +49,7 @@
     }
 
     class MenuItemComponent {
-
+        menu: IMenuItem;
     }
 
     app.component("sdlifeMenu", {
@@ -81,7 +81,7 @@
     interface IMenuItem {
         type: string,
         title: string,
-        state?: string,
+        state?: Array<any>,
         subMenus?: IMenuItem[],
         visible: () => boolean
     }
@@ -104,7 +104,7 @@
 
     class MenuItem extends MenuItemBase implements IMenuItem {
         type = "item";
-        constructor(public title: string, public state: string) {
+        constructor(public title: string, public state: Array<any>) {
             super();
         }
     }
