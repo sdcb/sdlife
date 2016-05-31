@@ -18,6 +18,12 @@
         ]
     });
 
+    app.filter("nospace", () => {
+        return (v: string) => {
+            return v ? v.replace(/ /g, "") : "";
+        };
+    })
+
     app.factory("authHttpInterceptor", ["$q", ($q: ng.IQService) => {
         let interceptor = <ng.IHttpInterceptor>{
             responseError: (rejection) => {

@@ -272,6 +272,14 @@ namespace sdlife.web.Managers.Implements
             await _db.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        public IQueryable<User> AuthorizedUsers(int userId)
+        {
+            return _db.AccountingUserAuthorization
+                .Include(x => x.User)
+                .Where(x => x.AuthorizedUserId == userId)
+                .Select(x => x.User);
+        }
+
         #region private functions 
         private async Task<AccountingTitle> GetOrCreateTitle(string title, bool isIncome)
         {

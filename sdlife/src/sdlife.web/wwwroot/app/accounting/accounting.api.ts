@@ -57,6 +57,12 @@ namespace sdlife.accounting {
                 this.searchIncomeTitles(title) :
                 this.searchSpendingTitles(title);
         }
+
+        authorizedUsers() {
+            return this.$.post<Array<IUserDto>>("/Accounting/AuthorizedUsers", {}).then(cb => {
+                return cb.data;
+            });
+        }
     }
 
     module.service("accounting.api", AccountingApi);

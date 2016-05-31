@@ -9,14 +9,16 @@
 
     <md-content role="navigation">
         <ul class="side-menu">
-            <li ng-repeat="section in vm.menu.sections" class="parent-list-item"
+            <li ng-repeat="menu in vm.menus" class="parent-list-item"
                 ng-class="{'parentActive' : vm.isSectionSelected(section)}">
-                <h2 class="menu-heading" ng-if="section.type === 'heading'"
-                    id="heading_{{ section.name | nospace }}">
-                    {{section}}
-                </h2>
-                <menu-link section="section" ng-if="section.type === 'link'"></menu-link>
-                <menu-toggle section="section" ng-if="section.type === 'toggle'"></menu-toggle>
+                <menu-item menu="menu" 
+                           ng-if="menu.type === 'item'">
+                </menu-item>
+                <menu-folder menu="menu" 
+                             is-open="vm.isFolderOpen(menu)"
+                             toggle="vm.toggleFolder(menu)"
+                             ng-if="menu.type === 'folder' && menu.visible()">
+                </menu-folder>
             </li>
         </ul>
     </md-content>

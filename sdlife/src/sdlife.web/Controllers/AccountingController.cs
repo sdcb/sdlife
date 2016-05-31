@@ -68,5 +68,16 @@ namespace sdlife.web.Controllers
             var data = await _accounting.SearchIncomeTitles(query.Query);
             return data;
         }
+
+        public IQueryable<object> AuthorizedUsers()
+        {
+            return _accounting.AuthorizedUsers(_user.UserId)
+                .Select(x => new 
+                {
+                    Id = x.Id, 
+                    UserName = x.UserName, 
+                    Email = x.Email
+                });
+        }
     }
 }
