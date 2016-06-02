@@ -7,20 +7,13 @@
             new MenuItem("我", ["Book"]),
             this.accountingFriendSubMenus
         ];
-
-        currentFolder: IMenuItem;
-
+        
         isFolderOpen(folder: IMenuItem) {
-            return this.currentFolder === folder;
+            return folder.open;
         }
 
         toggleFolder(folder: IMenuItem) {
-            console.log(folder);
-            if (folder !== this.currentFolder) {
-                this.currentFolder = folder;
-            } else {
-                this.currentFolder = null;
-            }
+            folder.open = !folder.open;
         }
 
         setupAccountingUsers() {
@@ -81,6 +74,7 @@
     interface IMenuItem {
         type: string,
         title: string,
+        open?: boolean, 
         state?: Array<any>,
         subMenus?: IMenuItem[],
         visible: () => boolean
@@ -110,6 +104,7 @@
     }
 
     class MenuFolder extends MenuItemBase implements IMenuItem {
+        open = true;
         type = "folder";
         constructor(public title: string, public subMenus: IMenuItem[]) {
             super();
