@@ -39,8 +39,7 @@
 
     app.config(["$httpProvider", ($httpProvider: ng.IHttpProvider) => {
         $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-        //let xsrfToken = $("[name=__RequestVerificationToken]").val();
-        //$httpProvider.defaults.headers.post["RequestVerificationToken"] = xsrfToken;
-        //$httpProvider.interceptors.push("authHttpInterceptor");
+        $httpProvider.defaults.headers.post["RequestVerificationToken"] = () => localStorage.getItem("csrf");
+        $httpProvider.interceptors.push("authHttpInterceptor");
     }]);
 }

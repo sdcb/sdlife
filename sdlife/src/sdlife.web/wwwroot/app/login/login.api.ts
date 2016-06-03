@@ -11,6 +11,12 @@ namespace sdlife.login {
         login(dto: ILoginDto) {
             return this.$.post("/Account/Login", dto);
         }
+
+        refreshCsrf() {
+            return this.$.post("/Account/RefreshCsrf", {}).then(resp => {
+                return resp.data;
+            });
+        }
     }
 
     export interface ILoginDto {

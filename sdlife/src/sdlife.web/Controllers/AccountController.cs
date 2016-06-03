@@ -73,9 +73,9 @@ namespace sdlife.web.Controllers
             _antiforgery.SetCookieTokenAndHeader(HttpContext);
         }
 
-        public AntiforgeryTokenSet CsrfToken()
+        public string RefreshCsrf()
         {
-            return _antiforgery.GetTokens(HttpContext);
+            return _antiforgery.GetTokens(HttpContext).RequestToken;
         }
 
         private IActionResult FromIdentityResult(IdentityResult result)
