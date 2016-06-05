@@ -5,7 +5,7 @@ namespace sdlife.accounting {
     moment.locale("zh-cn");
 
     module.filter("accountingDate", () => {
-        return (dateOrMoment: moment.Moment|Date|string) => {
+        return (dateOrMoment: moment.Moment | Date | string) => {
             let time = moment(dateOrMoment);
             if (time.isSame(moment(), "day")) {
                 return "今天";
@@ -39,37 +39,40 @@ namespace sdlife.accounting {
 
     export function mapEntityToCalendar(entity: IAccountingEntity): IAccountingEventObject {
         return {
-            title: entity.title, 
-            start: entity.time, 
-            allDay: false, 
+            title: entity.title,
+            start: entity.time,
+            allDay: false,
             entity: entity
         };
     }
 
     export function addColorToEventObjects(data: IAccountingEventObject[]) {
-        let incomes = data.filter(x => x.entity.isIncome);
-        let spends = data.filter(x => !x.entity.isIncome);
-        let incomeMax = Math.max(...incomes.map(x => Math.abs(x.entity.amount)));
-        let incomeMin = Math.min(...incomes.map(x => Math.abs(x.entity.amount)));
-        let spendMax = Math.max(...spends.map(x => Math.abs(x.entity.amount)));
-        let spendMin = Math.min(...spends.map(x => Math.abs(x.entity.amount)));
-        return data.map(x => {
-            let hue: number;
-            let lightness: number;
+        const saturation = 1;
 
-            if (x.entity.isIncome) {
-                let percent = (Math.abs(x.entity.amount) - incomeMin) / incomeMax;
-                hue = 0.7;
-                lightness = 0.8 - percent * 0.5;
-            } else {
-                let percent = (Math.abs(x.entity.amount) - spendMin) / spendMax;
-                hue = 0;
-                lightness = 0.8 - percent * 0.6;
-            }
-            let saturation = 1;
-            
-            x.color = `hsl(${hue * 360}, ${saturation * 100}%, ${lightness * 100}%)`;
-            return x;
+        function unique<T>(arr: Array<T>) {
+            return [...new Set(arr)];
+        }
+
+        let incomes = data.filter(x => x.entity.isIncome);
+        let incomesSorted = unique(incomes.map(x => x.entity.amount)).sort((a, b) => a - b);
+        incomes.forEach(v => {
+            let index = incomesSorted.indexOf(v.entity.amount);
+            let percent = index / incomesSorted.length;
+            const hue = 0.7;
+            let lightness = 0.8 - percent * 0.5;
+            v.color = `hsl(${hue * 360}, ${saturation * 100}%, ${lightness * 100}%)`;
         });
+        
+        let spends = data.filter(x => !x.entity.isIncome);
+        let spendsSorted = unique(spends.map(x => x.entity.amount)).sort((a, b) => a - b);
+        spends.forEach(v => {
+            let index = spendsSorted.indexOf(v.entity.amount);
+            let percent = index / spendsSorted.length;
+            const hue = 0;
+            let lightness = 0.8 - percent * 0.6;
+            v.color = `hsl(${hue * 360}, ${saturation * 100}%, ${lightness * 100}%)`;
+        });
+
+        return data;
     }
 }

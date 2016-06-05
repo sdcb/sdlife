@@ -24,7 +24,6 @@ namespace sdlife.accounting {
         }
 
         $routerOnActivate(next) {
-            console.log(next);
             this.userId = next.params.userId;
         }
 
