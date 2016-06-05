@@ -1,4 +1,5 @@
-﻿/// <reference path="../../typings/tsd.d.ts" />
+﻿/// <reference path="../../lib/rxjs/ts/rx.all.d.ts" />
+/// <reference path="../../typings/tsd.d.ts" />
 
 namespace sdlife.accounting {
     let module = angular.module(consts.moduleName);
@@ -48,11 +49,13 @@ namespace sdlife.accounting {
 
     export function addColorToEventObjects(data: IAccountingEventObject[]) {
         const saturation = 1;
-
+        
         function unique<T>(arr: Array<T>) {
-            return [...new Set(arr)];
+            return Rx.Observable.fromArray(arr)
+                .distinct()
+                .toArray();
         }
-
+        
         let incomes = data.filter(x => x.entity.isIncome);
         let incomesSorted = unique(incomes.map(x => x.entity.amount)).sort((a, b) => a - b);
         incomes.forEach(v => {
