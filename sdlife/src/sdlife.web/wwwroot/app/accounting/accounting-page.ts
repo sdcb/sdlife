@@ -98,14 +98,22 @@ namespace sdlife.accounting {
             return isSmallDevice(this.media);
         }
 
-        static $inject = ["$compile", "$scope", "accounting.api", "$mdDialog", "$mdMedia"];
+        static $inject = ["$compile", "$scope", "accounting.api", "$mdDialog", "$mdMedia", "$timeout"];
         constructor(
             public compile: ng.ICompileService,
             public scope: ng.IScope,
             public api: AccountingApi,
             public dialog: ng.material.IDialogService,
-            public media: ng.material.IMedia
+            public media: ng.material.IMedia, 
+            public timeout: ng.ITimeoutService
         ) {
+            scope.$watch(() => this.isSmallDevice(), () => {
+                let v = this.eventSources[0];
+                this.eventSources[0] = [];
+                timeout(() => {
+                    this.eventSources[0] = v;
+                }, 0);
+            });
         }
     }
 
