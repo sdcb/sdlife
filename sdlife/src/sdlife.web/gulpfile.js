@@ -36,7 +36,7 @@ paths.libJs = [
     "fullcalendar/dist/fullcalendar.min.js",
     "fullcalendar/dist/lang/zh-cn.js",
     "angular-ui-calendar/src/calendar.js",
-    "rxjs/dist/rx.all.min.js"
+    "lodash/dist/lodash.min.js"
 ].map(function (x) { return paths.webroot + "lib/" + x; });
 paths.concatLibJsDest = paths.webroot + "min/lib.min.js";
 

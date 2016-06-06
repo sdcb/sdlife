@@ -1,7 +1,4 @@
-﻿/// <reference path="../../lib/rxjs/ts/rx.all.d.ts" />
-/// <reference path="../../typings/tsd.d.ts" />
-
-namespace sdlife.accounting {
+﻿namespace sdlife.accounting {
     let module = angular.module(consts.moduleName);
     moment.locale("zh-cn");
 
@@ -50,14 +47,8 @@ namespace sdlife.accounting {
     export function addColorToEventObjects(data: IAccountingEventObject[]) {
         const saturation = 1;
         
-        function unique<T>(arr: Array<T>) {
-            return Rx.Observable.fromArray(arr)
-                .distinct()
-                .toArray();
-        }
-        
         let incomes = data.filter(x => x.entity.isIncome);
-        let incomesSorted = unique(incomes.map(x => x.entity.amount)).sort((a, b) => a - b);
+        let incomesSorted = _.chain(incomes.map(x => x.entity.amount)).uniq().sortBy().value();
         incomes.forEach(v => {
             let index = incomesSorted.indexOf(v.entity.amount);
             let percent = index / incomesSorted.length;
@@ -67,12 +58,12 @@ namespace sdlife.accounting {
         });
         
         let spends = data.filter(x => !x.entity.isIncome);
-        let spendsSorted = unique(spends.map(x => x.entity.amount)).sort((a, b) => a - b);
+        let spendsSorted = _.chain(spends.map(x => x.entity.amount)).uniq().sortBy().value();
         spends.forEach(v => {
             let index = spendsSorted.indexOf(v.entity.amount);
             let percent = index / spendsSorted.length;
             const hue = 0;
-            let lightness = 0.8 - percent * 0.6;
+            let lightness = 0.9 - percent * 0.7;
             v.color = `hsl(${hue * 360}, ${saturation * 100}%, ${lightness * 100}%)`;
         });
 
