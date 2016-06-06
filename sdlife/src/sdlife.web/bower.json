@@ -9,8 +9,9 @@
     "moment": "2.13.0",
     "angular-ui-calendar": "1.0.1",
     "jquery.ui.touch": "*",
-    "angular-component-router": "0.2.1", 
-    "lodash": "4.13.1"
+    "angular-component-router": "0.2.1",
+    "lodash": "4.13.1", 
+    "es6-shim": "0.35.1"
   },
   "resolutions": {
     "angular": "^1.4.8",
