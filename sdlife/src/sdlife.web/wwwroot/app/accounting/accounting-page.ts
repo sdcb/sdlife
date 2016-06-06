@@ -82,7 +82,7 @@ namespace sdlife.accounting {
                 element.find(".fc-title").html("")
                     .append($("<span></span>").text(event.entity.title))
                     .append("<br/>")
-                    .append($("<span></span>").text(`¥${event.entity.amount.toFixed(1)}`));
+                    .append($("<span></span>").text(`${event.entity.amount.toFixed(1)}`));
             } else {
                 element.find(".fc-title")
                     .html("")
