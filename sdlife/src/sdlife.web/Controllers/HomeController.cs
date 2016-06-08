@@ -26,24 +26,5 @@ namespace sdlife.web.Controllers
         {
             return View();
         }
-
-        public async Task<User> CreateTestUser()
-        {
-            var user = new User
-            {
-                UserName = "test", 
-                Email = "test@qq.com", 
-            };
-            var findedUser = await _userManager.FindByNameAsync(user.UserName);
-            if (findedUser != null)
-            {
-                return findedUser;
-            }
-            else
-            {
-                await _userManager.CreateAsync(user, "Passw0rd!");
-                return await _userManager.FindByNameAsync(user.UserName);
-            }
-        }
     }
 }
