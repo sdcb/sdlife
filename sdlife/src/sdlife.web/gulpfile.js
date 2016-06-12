@@ -33,7 +33,6 @@ paths.libJs = [
     "angular-animate/angular-animate.min.js",
     "angular-material/angular-material.min.js",
     "moment/min/moment.min.js",
-    "moment/locale/zh-cn.js",
     "fullcalendar/dist/fullcalendar.min.js",
     "fullcalendar/dist/lang/zh-cn.js",
     "angular-ui-calendar/src/calendar.js",
