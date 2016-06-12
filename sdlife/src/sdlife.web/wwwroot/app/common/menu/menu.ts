@@ -2,10 +2,11 @@
     let app = angular.module(consts.moduleName);
 
     class SdlifeMenuComponent {
-        accountingFriendSubMenus = new MenuFolder("我的朋友", []);
+        accountingMenu = [
+            new MenuItem("我", ["Book"])
+        ];
         menus = <Array<IMenuItem>>[
-            new MenuItem("我", ["Book"]),
-            this.accountingFriendSubMenus
+            new MenuFolder("记帐", this.accountingMenu)
         ];
         
         isFolderOpen(folder: IMenuItem) {
@@ -18,9 +19,9 @@
 
         setupAccountingUsers() {
             this.api.authorizedUsers().then(users => {
-                this.accountingFriendSubMenus.subMenus = users.map(user => {
+                this.accountingMenu.push(...users.map(user => {
                     return new MenuItem(user.email, ["BookFriend", {userId: user.id}]);
-                });
+                }));
             });
         }
 
