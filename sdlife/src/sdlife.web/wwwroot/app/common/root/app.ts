@@ -13,7 +13,7 @@
             $router: "<", 
         }, 
         $routeConfig: [
-            { path: "/book", component: "accounting-page", name: "Book" },
+            { path: "/book/me", component: "accounting-page", name: "Book" },
             { path: "/book/:userId", component: "accounting-page-for-friend", name: "BookFriend" }, 
             { path: "/**", redirectTo: ["Book"] }
         ]
