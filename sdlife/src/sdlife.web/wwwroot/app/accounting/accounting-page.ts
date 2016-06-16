@@ -18,7 +18,7 @@ namespace sdlife.accounting {
             dayClick: (day, ev) => this.dayClick(day, ev),
             eventDrop: (event, duration, rollback) => this.eventDrop(event, duration, rollback),
             eventResize: (_1, _2, revert) => revert(), 
-            viewRender: (view, el) => this.loadData(view.start.format(), view.end.format()), 
+            viewRender: (view, el) => this.viewRender(view, el), 
             eventRender: (event, element) => this.eventRender(event, element), 
             eventClick: (event, jsEvent, view) => this.eventClick(event, jsEvent, view)
         }
@@ -27,33 +27,33 @@ namespace sdlife.accounting {
             this.userId = next.params.userId;
         }
 
+        calendarView: FullCalendar.ViewObject;
         loading: ng.IPromise<any>;
-        from: string;
-        to: string;
-        loadData(from: string, to: string) {
-            this.from = from;
-            this.to = to;
+        loadDataInViewRange() {
+            let from = this.calendarView.start.format();
+            let to = this.calendarView.end.format();
             return this.loading = this.api.loadInRange(from, to, this.userId).then(dto => {
                 let events = addColorToEventObjects(dto.map(x => mapEntityToCalendar(x)));
                 return this.timeout(() => this.eventSources[0] = events, 0);
             });
         }
 
-        reloadData() {
-            return this.loadData(this.from, this.to);
-        }
-
         onCreated() {
-            return this.reloadData();
+            return this.loadDataInViewRange();
         }
 
         childChangedRequestReloadData() {
-            return this.reloadData();
+            return this.loadDataInViewRange();
+        }
+
+        viewRender(view: FullCalendar.ViewObject, el: JQuery) {
+            this.calendarView = view;
+            return this.loadDataInViewRange();
         }
         
         dayClick(date: moment.Moment, ev: MouseEvent) {
             showAccountingCreateDialog(date.format(), this.dialog, this.media, ev).then((...args) => {
-                return this.reloadData();
+                return this.loadDataInViewRange();
             });
         }
 
@@ -77,7 +77,7 @@ namespace sdlife.accounting {
                 element.append($(`<span class="top-right calendar-delete-button">✕&nbsp;</span>`).click(ev => {
                     ensure(this.dialog, ev, "确定要删除此条目吗？").then(() => {
                         return this.loading = this.api.delete(event.entity.id);
-                    }).then(() => this.reloadData());
+                    }).then(() => this.loadDataInViewRange());
                     ev.stopPropagation();
                 }));
             }
