@@ -9,7 +9,7 @@ namespace sdlife.accounting {
         calendarConfig = <IAccountingCalendarConfig>{
             height: "auto",
             editable: true,
-            lang: "zh-cn", 
+            lang: "zh-cn",
             header: {
                 left: "month, basicWeek, basicDay",
                 center: "title",
@@ -17,9 +17,9 @@ namespace sdlife.accounting {
             },
             dayClick: (day, ev) => this.dayClick(day, ev),
             eventDrop: (event, duration, rollback) => this.eventDrop(event, duration, rollback),
-            eventResize: (_1, _2, revert) => revert(), 
-            viewRender: (view, el) => this.viewRender(view, el), 
-            eventRender: (event, element) => this.eventRender(event, element), 
+            eventResize: (_1, _2, revert) => revert(),
+            viewRender: (view, el) => this.viewRender(view, el),
+            eventRender: (event, element) => this.eventRender(event, element),
             eventClick: (event, jsEvent, view) => this.eventClick(event, jsEvent, view)
         }
 
@@ -34,7 +34,10 @@ namespace sdlife.accounting {
             let to = this.calendarView.end.format();
             return this.loading = this.api.loadInRange(from, to, this.userId).then(dto => {
                 let events = addColorToEventObjects(dto.map(x => mapEntityToCalendar(x)));
-                return this.timeout(() => this.eventSources[0] = events, 0);
+                return this.timeout(0).then(() => {
+                    this.eventSources[0] = events;
+                    this.caculateTotalAmount();
+                });
             });
         }
 
@@ -50,7 +53,7 @@ namespace sdlife.accounting {
             this.calendarView = view;
             return this.loadDataInViewRange();
         }
-        
+
         dayClick(date: moment.Moment, ev: MouseEvent) {
             showAccountingCreateDialog(date.format(), this.dialog, this.media, ev).then((...args) => {
                 return this.loadDataInViewRange();
@@ -82,7 +85,7 @@ namespace sdlife.accounting {
                 }));
             }
 
-            element.find(".fc-time").remove();            
+            element.find(".fc-time").remove();
             if (this.isSmallDevice()) {
                 element.find(".fc-title").html("")
                     .append($("<span></span>").text(event.entity.title))
@@ -94,13 +97,44 @@ namespace sdlife.accounting {
                     .append($("<span></span>")
                         .text(`${event.entity.title}: ¥${event.entity.amount.toFixed(1)}`));
             }
-            
-            
+
+
             this.compile(element)(this.scope);
         }
 
         isSmallDevice() {
             return isSmallDevice(this.media);
+        }
+
+        totalInternal(isIncome: boolean) {
+            function inRange(value: string, range: { start: moment.Moment, end: moment.Moment }) {
+                return (
+                    range.start.isSameOrBefore(value) &&
+                    range.end.isAfter(value));
+            }
+
+            function totalAmountByFilter(books: IAccountingEventObject[], filter: (dto: IAccountingEventObject) => boolean) {
+                return _.chain(books)
+                    .filter(x => filter(x))
+                    .sumBy(x => x.entity.amount);
+            }
+
+            let range = currentViewRange(this.calendarView.calendar.getDate(), this.calendarView.name);
+            let filter = (dto: IAccountingEventObject) =>
+                inRange(dto.entity.time, range) && dto.entity.isIncome === isIncome;
+            return totalAmountByFilter(this.eventSources[0], filter).value();
+        }
+
+        totalIncome = 0;
+        totalSpend = 0;
+        caculateTotalAmount() {
+            this.totalIncome = this.totalInternal(true);
+            this.totalSpend = this.totalInternal(false);
+        }
+
+        period() {
+            let range = currentViewRange(this.calendarView.calendar.getDate(), this.calendarView.name);
+            return `${range.start.format("l")} - ${range.end.format("l")}`;
         }
 
         static $inject = ["$compile", "$scope", "accounting.api", "$mdDialog", "$mdMedia", "$timeout"];
@@ -109,7 +143,7 @@ namespace sdlife.accounting {
             public scope: ng.IScope,
             public api: AccountingApi,
             public dialog: ng.material.IDialogService,
-            public media: ng.material.IMedia, 
+            public media: ng.material.IMedia,
             public timeout: ng.ITimeoutService
         ) {
             scope.$watch(() => this.isSmallDevice(), () => {
@@ -120,6 +154,20 @@ namespace sdlife.accounting {
                 }, 0);
             });
         }
+    }
+
+    function currentViewRange(currentTime: moment.Moment, viewName: string) {
+        const durations = ["month", "week", "day"];
+        viewName = viewName.toLowerCase();
+        for (let duration of durations) {
+            if (_.includes(viewName, duration)) {
+                return {
+                    start: currentTime.clone().startOf(duration),
+                    end: currentTime.clone().startOf(duration).add(1, duration)
+                }
+            }
+        }
+        throw new Error("UNKNOWN viewName: " + viewName);
     }
 
     module.component("accountingPage", {

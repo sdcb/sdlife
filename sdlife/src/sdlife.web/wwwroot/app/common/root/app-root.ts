@@ -21,7 +21,13 @@
         return (v: string) => {
             return v ? v.replace(/ /g, "") : "";
         };
-    })
+    });
+
+    app.filter("money", () => {
+        return (v: number) => {
+            return `¥${v.toFixed(2)}`;
+        };
+    });
 
     app.factory("authHttpInterceptor", ["$q", ($q: ng.IQService) => {
         let interceptor = <ng.IHttpInterceptor>{

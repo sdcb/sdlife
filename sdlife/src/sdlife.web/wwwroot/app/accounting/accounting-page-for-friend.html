@@ -1,2 +1,7 @@
 ﻿<loading size="160" promise="vm.loading"></loading>
 <div ui-calendar="vm.calendarConfig" ng-model="vm.eventSources"></div>
+<div>
+    收入：<strong>{{vm.totalIncome | money}}</strong>
+    &nbsp;&nbsp;
+    支出：<strong>{{vm.totalSpend | money}}</strong>
+</div>
