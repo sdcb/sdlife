@@ -34,7 +34,7 @@ namespace sdlife.accounting {
             this.currentMonth = date || this.currentMonth;
             return this.loading = this.api.loadInMonth(this.currentMonth, this.userId).then(dto => {
                 let events = addColorToEventObjects(dto.map(x => mapEntityToCalendar(x)));
-                this.eventSources[0] = events;
+                return this.timeout(() => this.eventSources[0] = events, 0);
             });
         }
 
