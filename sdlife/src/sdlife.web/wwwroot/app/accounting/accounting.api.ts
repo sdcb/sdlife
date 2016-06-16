@@ -7,14 +7,10 @@ namespace sdlife.accounting {
         constructor(public $: angular.IHttpService) {
         }
 
-        loadInMonth(month: moment.Moment, userId: number) {
-            let time = month.clone();
-            let from = time.clone().startOf("month");
-            let to = from.clone().add(1, "month");
-
+        loadInRange(from: string, to: string, userId: number) {
             return this.$.post<IAccountingEntity[]>("/Accounting/Get", {
                 from: from,
-                to: to, 
+                to: to,
                 userId: userId
             }).then(cb => {
                 return cb.data;

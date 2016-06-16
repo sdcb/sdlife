@@ -11,14 +11,14 @@ namespace sdlife.accounting {
             editable: true,
             lang: "zh-cn", 
             header: {
-                left: "month",
+                left: "month, basicWeek, basicDay",
                 center: "title",
                 right: "today prev,next"
             },
             dayClick: (day, ev) => this.dayClick(day, ev),
             eventDrop: (event, duration, rollback) => this.eventDrop(event, duration, rollback),
             eventResize: (_1, _2, revert) => revert(), 
-            viewRender: (view, el) => this.loadData(view.calendar.getDate()), 
+            viewRender: (view, el) => this.loadData(view.start.format(), view.end.format()), 
             eventRender: (event, element) => this.eventRender(event, element), 
             eventClick: (event, jsEvent, view) => this.eventClick(event, jsEvent, view)
         }
@@ -28,27 +28,32 @@ namespace sdlife.accounting {
         }
 
         loading: ng.IPromise<any>;
-
-        currentMonth: moment.Moment;
-        loadData(date: moment.Moment = null) {
-            this.currentMonth = date || this.currentMonth;
-            return this.loading = this.api.loadInMonth(this.currentMonth, this.userId).then(dto => {
+        from: string;
+        to: string;
+        loadData(from: string, to: string) {
+            this.from = from;
+            this.to = to;
+            return this.loading = this.api.loadInRange(from, to, this.userId).then(dto => {
                 let events = addColorToEventObjects(dto.map(x => mapEntityToCalendar(x)));
                 return this.timeout(() => this.eventSources[0] = events, 0);
             });
         }
 
+        reloadData() {
+            return this.loadData(this.from, this.to);
+        }
+
         onCreated() {
-            return this.loadData();
+            return this.reloadData();
         }
 
         childChangedRequestReloadData() {
-            return this.loadData();
+            return this.reloadData();
         }
         
         dayClick(date: moment.Moment, ev: MouseEvent) {
             showAccountingCreateDialog(date.format(), this.dialog, this.media, ev).then((...args) => {
-                return this.loadData();
+                return this.reloadData();
             });
         }
 
@@ -72,7 +77,7 @@ namespace sdlife.accounting {
                 element.append($(`<span class="top-right calendar-delete-button">✕&nbsp;</span>`).click(ev => {
                     ensure(this.dialog, ev, "确定要删除此条目吗？").then(() => {
                         return this.loading = this.api.delete(event.entity.id);
-                    }).then(() => this.loadData());
+                    }).then(() => this.reloadData());
                     ev.stopPropagation();
                 }));
             }
