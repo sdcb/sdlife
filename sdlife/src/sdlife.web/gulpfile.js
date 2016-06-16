@@ -2,6 +2,7 @@
 "use strict";
 
 var gulp = require("gulp"),
+    gulpif = require("gulp-if"), 
     rimraf = require("rimraf"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
@@ -71,8 +72,10 @@ gulp.task("min:js", function () {
 
 gulp.task("min:libJs", function () {
     return gulp.src(paths.libJs, { base: "." })
+        .pipe(gulpif(function (file) {
+            return !/\.min\.js/.test(file.path);
+        }, uglify()))
         .pipe(concat(paths.concatLibJsDest))
-        //.pipe(uglify())
         .pipe(gulp.dest("."));
 });
 
