@@ -2,13 +2,15 @@
     let app = angular.module(consts.moduleName);
 
     class SdlifeMenuComponent {
+        router: ng.Router;
+
         accountingMenu = [
             new MenuItem("我", ["Book"])
         ];
         menus = <Array<IMenuItem>>[
             new MenuFolder("记帐", this.accountingMenu)
         ];
-        
+
         isFolderOpen(folder: IMenuItem) {
             return folder.open;
         }
@@ -20,7 +22,7 @@
         setupAccountingUsers() {
             this.api.authorizedUsers().then(users => {
                 this.accountingMenu.push(...users.map(user => {
-                    return new MenuItem(user.email, ["BookFriend", {userId: user.id}]);
+                    return new MenuItem(user.email, ["BookFriend", { userId: user.id }]);
                 }));
             });
         }
@@ -34,7 +36,12 @@
     class MenuFolderComponent {
         isOpen: boolean;
         menu: IMenuItem;
+        router: ng.Router;
         toggle() {
+        }
+
+        isActive() {
+            return false;
         }
 
         onclick() {
@@ -44,12 +51,20 @@
 
     class MenuItemComponent {
         menu: IMenuItem;
+        router: ng.Router;
+
+        isActive() {
+            return this.router.isRouteActive(this.router.generate(this.menu.state));
+        }
     }
 
     app.component("sdlifeMenu", {
         templateUrl: "/app/common/menu/menu.html",
         controller: SdlifeMenuComponent,
         controllerAs: "vm",
+        bindings: {
+            router: "<",
+        }
     });
 
     app.component("menuFolder", {
@@ -59,7 +74,8 @@
         bindings: {
             menu: "<",
             isOpen: "<",
-            toggle: "&"
+            toggle: "&",
+            router: "<",
         }
     });
 
@@ -68,17 +84,18 @@
         controller: MenuItemComponent,
         controllerAs: "vm",
         bindings: {
-            menu: "<"
+            menu: "<",
+            router: "<",
         }
     });
 
     interface IMenuItem {
         type: string,
         title: string,
-        open?: boolean, 
+        open?: boolean,
         state?: Array<any>,
         subMenus?: IMenuItem[],
-        visible: () => boolean
+        visible(): boolean,
     }
 
     class MenuItemBase {

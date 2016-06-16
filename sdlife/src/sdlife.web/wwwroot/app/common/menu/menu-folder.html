@@ -11,6 +11,6 @@
 </div>
 <ul ng-show="vm.isOpen" class="menu-toggle-list">
     <li ng-repeat="menu in vm.menu.subMenus">
-        <menu-item menu="menu"></menu-item>
+        <menu-item menu="menu" router="vm.router"></menu-item>
     </li>
 </ul>

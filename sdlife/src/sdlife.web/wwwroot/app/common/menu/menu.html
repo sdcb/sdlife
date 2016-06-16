@@ -9,12 +9,11 @@
 
     <md-content role="navigation">
         <ul class="side-menu">
-            <li ng-repeat="menu in vm.menus" class="parent-list-item"
-                ng-class="{'parentActive' : vm.isSectionSelected(section)}">
-                <menu-item menu="menu" 
+            <li ng-repeat="menu in vm.menus" class="parent-list-item">
+                <menu-item menu="menu" router="vm.router"
                            ng-if="menu.type === 'item'">
                 </menu-item>
-                <menu-folder menu="menu" 
+                <menu-folder menu="menu" router="vm.router"
                              is-open="vm.isFolderOpen(menu)"
                              toggle="vm.toggleFolder(menu)"
                              ng-if="menu.type === 'folder' && menu.visible()">
