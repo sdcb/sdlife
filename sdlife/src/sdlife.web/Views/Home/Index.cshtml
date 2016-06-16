@@ -21,7 +21,7 @@
     <link href="//fonts.googleapis.com/css?family=Roboto|Material+Icons" rel="stylesheet">
 </head>
 <body ng-app="sdlife">
-    <sdlife-app></sdlife-app>
+    <sdlife-app-root></sdlife-app-root>
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/angular/angular.js"></script>
@@ -39,7 +39,9 @@
         <script src="~/lib/angular-ui-calendar/src/calendar.js"></script>
 
         <script src="~/app/common/polyfill/polyfill.js"></script>
-        <script src="~/app/common/app.js"></script>
+
+        <script src="~/app/common/root/app-root.js"></script>
+        <script src="~/app/common/root/app.js"></script>
         <script src="~/app/common/widgets/loading.js"></script>
         <script src="~/app/common/menu/menu.js"></script>
 

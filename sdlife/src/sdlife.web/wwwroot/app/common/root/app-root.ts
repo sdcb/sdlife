@@ -5,17 +5,15 @@
 
     let app = angular.module(consts.moduleName, ["ngMaterial", "ui.calendar", "ngMessages", "ngComponentRouter"]);
 
-    app.value("$routerRootComponent", "sdlifeApp");    
+    app.value("$routerRootComponent", "sdlifeAppRoot");    
 
-    app.component("sdlifeApp", {
+    app.component("sdlifeAppRoot", {
         controller: () => { }, 
         controllerAs: "vm", 
-        templateUrl: "/app/common/app.html", 
+        templateUrl: "/app/common/root/app-root.html", 
         $routeConfig: [
             { path: "/login", component: "login-page", name: "Login" }, 
-            { path: "/book", component: "accounting-page", name: "Book" }, 
-            { path: "/book/:userId", component: "accounting-page-for-friend", name: "BookFriend" }, 
-            { path: "/**", redirectTo: ["Book"] }
+            { path: "/...", component: "sdlifeApp", name: "App" }, 
         ]
     });
 
