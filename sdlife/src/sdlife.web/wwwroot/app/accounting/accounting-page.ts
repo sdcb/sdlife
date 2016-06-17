@@ -5,6 +5,7 @@ namespace sdlife.accounting {
 
     export class AccountingPage {
         userId: number;
+        canCreate = true;
         eventSources = [<IAccountingEventObject[]>[]];
         calendarConfig = <IAccountingCalendarConfig>{
             height: "auto",
@@ -170,8 +171,28 @@ namespace sdlife.accounting {
         throw new Error("UNKNOWN viewName: " + viewName);
     }
 
+    class AccountingPageForFriend extends AccountingPage {
+        canCreate = false;
+
+        dayClick(date: moment.Moment, ev: MouseEvent) {
+        }
+
+        eventClick(event: IAccountingEventObject, jsEvent: MouseEvent, view: FullCalendar.ViewObject) {
+        }
+
+        eventDrop(event: IAccountingEventObject, duration: moment.Duration, rollback: () => void) {
+            rollback();
+        }
+    }
+
     module.component("accountingPage", {
         controller: AccountingPage,
+        controllerAs: "vm",
+        templateUrl: "/app/accounting/accounting-page.html",
+    });
+
+    module.component("accountingPageForFriend", {
+        controller: AccountingPageForFriend,
         controllerAs: "vm",
         templateUrl: "/app/accounting/accounting-page.html",
     });

@@ -6,4 +6,4 @@
     支出：<strong>{{vm.totalSpend | money}}</strong>
 </div>
 
-<create-icon on-created="vm.onCreated()"></create-icon>
+<create-icon ng-if="vm.canCreate" on-created="vm.onCreated()"></create-icon>
