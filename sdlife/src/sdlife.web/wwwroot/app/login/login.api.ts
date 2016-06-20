@@ -17,6 +17,13 @@ namespace sdlife.login {
                 return resp.data;
             });
         }
+
+        changePassword(currentPassword: string, newPassword: string) {
+            return this.$.post("/Account/ChangePassword", {
+                CurrentPassword: currentPassword, 
+                NewPassword: newPassword
+            }).then(() => { });
+        }
     }
 
     export interface ILoginDto {

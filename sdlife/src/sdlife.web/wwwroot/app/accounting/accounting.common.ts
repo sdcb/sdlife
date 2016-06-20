@@ -17,24 +17,6 @@
         };
     });
 
-    export function isSmallDevice(media: ng.material.IMedia) {
-        return media("xs");
-    }
-
-    export function ensure(
-        dialog: ng.material.IDialogService,
-        ev: Event,
-        title: string,
-        textContent: string = null) {
-        return dialog.show(dialog.confirm()
-            .title(title)
-            .textContent(textContent)
-            .ok("确定")
-            .cancel("取消")
-            .clickOutsideToClose(true)
-            .targetEvent(<MouseEvent>ev));
-    }
-
     export function mapEntityToCalendar(entity: IAccountingEntity): IAccountingEventObject {
         return {
             title: entity.title,
@@ -46,7 +28,7 @@
 
     export function addColorToEventObjects(data: IAccountingEventObject[]) {
         const saturation = 1;
-        
+
         let incomes = data.filter(x => x.entity.isIncome);
         let incomesSorted = _.chain(incomes.map(x => x.entity.amount)).uniq().sortBy().value();
         incomes.forEach(v => {
@@ -56,7 +38,7 @@
             let lightness = 0.8 - percent * 0.5;
             v.color = `hsl(${hue * 360}, ${saturation * 100}%, ${lightness * 100}%)`;
         });
-        
+
         let spends = data.filter(x => !x.entity.isIncome);
         let spendsSorted = _.chain(spends.map(x => x.entity.amount)).uniq().sortBy().value();
         spends.forEach(v => {

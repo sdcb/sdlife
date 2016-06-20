@@ -41,6 +41,24 @@
         return interceptor;
     }]);
 
+    export function isSmallDevice(media: ng.material.IMedia) {
+        return media("xs");
+    }
+
+    export function ensure(
+        dialog: ng.material.IDialogService,
+        ev: Event,
+        title: string,
+        textContent: string = null) {
+        return dialog.show(dialog.confirm()
+            .title(title)
+            .textContent(textContent)
+            .ok("确定")
+            .cancel("取消")
+            .clickOutsideToClose(true)
+            .targetEvent(<MouseEvent>ev));
+    }
+
     app.config(["$httpProvider", ($httpProvider: ng.IHttpProvider) => {
         $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
         $httpProvider.defaults.headers.post["RequestVerificationToken"] = () => localStorage.getItem("csrf");
