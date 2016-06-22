@@ -138,6 +138,10 @@ namespace sdlife.accounting {
             return `${range.start.format("l")} - ${range.end.format("l")}`;
         }
 
+        showChangePasswordDialog(ev: MouseEvent) {
+            login.showChangePasswordDialog(this.dialog, this.media, ev);
+        }
+
         static $inject = ["$compile", "$scope", "accounting.api", "$mdDialog", "$mdMedia", "$timeout"];
         constructor(
             public compile: ng.ICompileService,

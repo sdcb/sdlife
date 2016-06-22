@@ -12,20 +12,26 @@
         }
 
         commit() {
-            this.loading = this.api
-                .changePassword(this.oldPassword, this.password)
-                .then(data => this.dialog.hide(data));
+            if (this.password === this.confirmedPassword) {
+                return this.loading = this.api
+                    .changePassword(this.oldPassword, this.password)
+                    .then(data => this.dialog.hide(data)).catch(() => {
+                        this.toast.showSimple("修改密码失败");
+                    });
+            } else {
+                return this.toast.showSimple("两次密码输入不相同");
+            }
         }
 
-        static $inject = ["$dialog", "login.api"];
+        static $inject = ["$mdDialog", "login.api", "$mdToast"];
         constructor(
             public dialog: ng.material.IDialogService,
-            public api: LoginApi) {
+            public api: LoginApi,
+            public toast: ng.material.IToastService) {
         }
     }
 
     export function showChangePasswordDialog(
-        date: string,
         dialog: ng.material.IDialogService,
         media: ng.material.IMedia,
         ev: MouseEvent) {
