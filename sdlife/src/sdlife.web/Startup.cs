@@ -50,6 +50,11 @@ namespace sdlife.web
             services.AddIdentity<User, Role>(x =>
             {
                 x.User.RequireUniqueEmail = true;
+                x.Password.RequireDigit = true;
+                x.Password.RequiredLength = 8;
+                x.Password.RequireLowercase = true;
+                x.Password.RequireUppercase = true;
+                x.Password.RequireNonAlphanumeric = false;
             })
                 .AddUserManager<SdlifeUserManager>()
                 .AddEntityFrameworkStores<ApplicationDbContext, int>()
