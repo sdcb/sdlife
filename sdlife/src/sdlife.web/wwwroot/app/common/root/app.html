@@ -1,7 +1,26 @@
 ﻿<div layout="row" style="height: 100%;">
+    <loading size="250" promise="vm.loading"></loading>
     <sdlife-menu style="display:flex" router="vm.$router"></sdlife-menu>
 
-    <md-content layout layout-fill layout-padding>
-        <ng-outlet></ng-outlet>
+    <md-content layout="column" layout-fill>
+        <md-toolbar class="md-whiteframe-glow-z1 appbar">
+            <div class="md-toolbar-tools" tabindex="-1">
+                <md-button class="md-icon-button" ng-click="root.openMenu()" hide-gt-sm aria-label="Toggle Menu">
+                    <md-icon class="material-icons">menu</md-icon>
+                </md-button>
+                <div layout="row" flex class="fill-height">
+                    
+                </div>
+                <span flex></span>
+
+                <md-button aria-label="Change Password" ng-click="vm.showChangePasswordDialog($event)">
+                    修改密码
+                </md-button>
+                <md-button aria-label="Logout" ng-click="vm.logout($event)">
+                    注销
+                </md-button>
+            </div>
+        </md-toolbar>
+        <ng-outlet class="layout-padding"></ng-outlet>
     </md-content>
 </div>

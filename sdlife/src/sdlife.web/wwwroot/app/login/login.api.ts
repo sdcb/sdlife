@@ -12,6 +12,10 @@ namespace sdlife.login {
             return this.$.post("/Account/Login", dto);
         }
 
+        logout() {
+            return this.$.post("/Account/Logout", {});
+        }
+
         refreshCsrf() {
             return this.$.post("/Account/RefreshCsrf", {}).then(resp => {
                 return resp.data;
