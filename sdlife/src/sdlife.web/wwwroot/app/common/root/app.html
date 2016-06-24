@@ -5,7 +5,7 @@
     <md-content layout="column" layout-fill>
         <md-toolbar class="md-whiteframe-glow-z1 appbar">
             <div class="md-toolbar-tools" tabindex="-1">
-                <md-button class="md-icon-button" ng-click="root.openMenu()" hide-gt-sm aria-label="Toggle Menu">
+                <md-button class="md-icon-button" ng-click="vm.openMenu()" hide-gt-sm aria-label="Toggle Menu">
                     <md-icon class="material-icons">menu</md-icon>
                 </md-button>
                 <div layout="row" flex class="fill-height">
@@ -21,6 +21,6 @@
                 </md-button>
             </div>
         </md-toolbar>
-        <ng-outlet class="app-outlet"></ng-outlet>
+        <ng-outlet class="app-outlet" layout-padding></ng-outlet>
     </md-content>
 </div>

@@ -17,11 +17,16 @@
             });
         }
 
-        static $inject = ["$mdDialog", "$mdMedia", "login.api"];
+        openMenu() {
+            this.sidenav("left").toggle();
+        }
+
+        static $inject = ["$mdDialog", "$mdMedia", "login.api", "$mdSidenav"];
         constructor(
             public dialog: ng.material.IDialogService,
             public media: ng.material.IMedia,
-            public loginApi: login.LoginApi) {
+            public loginApi: login.LoginApi,
+            public sidenav: ng.material.ISidenavService) {
         }
     }
 
