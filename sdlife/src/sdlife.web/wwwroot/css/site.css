@@ -117,3 +117,7 @@ md-tooltip .md-content {
 
 .appbar {
 }
+
+.app-outlet {
+    overflow-x: hidden;
+}
