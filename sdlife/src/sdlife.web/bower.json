@@ -3,9 +3,9 @@
   "private": true,
   "dependencies": {
     "jquery": "^3.0.0",
-    "angular": "1.5.5",
-    "angular-material": "^1.0.9",
-    "fullcalendar": "^2.7.3",
+    "angular": "1.5.7",
+    "angular-material": "1.0.9",
+    "fullcalendar": "2.8.0",
     "moment": "^2.13.0",
     "angular-ui-calendar": "1.0.1",
     "jquery.ui.touch": "*",
@@ -14,7 +14,7 @@
   },
   "resolutions": {
     "angular": "^1.4.8",
-    "fullcalendar": "2.7.2",
+    "fullcalendar": "2.8.0",
     "jquery": "~3.0.0"
   }
 }
