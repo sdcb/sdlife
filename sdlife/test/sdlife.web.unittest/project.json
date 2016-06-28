@@ -4,7 +4,7 @@
   },
   "dependencies": {
     "dotnet-test-xunit": "1.0.0-*",
-    "Microsoft.EntityFrameworkCore.InMemory": "1.0.0-rc2-final",
+    "Microsoft.EntityFrameworkCore.InMemory": "1.0.0",
     "sdlife.web": "1.0.0-*",
     "XUnit": "2.1.0"
   },
@@ -16,7 +16,7 @@
       ],
       "dependencies": {
         "Microsoft.NETCore.App": {
-          "version": "1.0.0-rc2-3002702",
+          "version": "1.0.0-*",
           "type": "platform"
         }
       }
