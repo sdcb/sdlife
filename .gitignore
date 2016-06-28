@@ -245,7 +245,7 @@ ModelManifest.xml
 .fake/
 **/wwwroot/lib
 lib.min.css
-site.min.css
+app.min.css
 /sdlife/src/sdlife.web/wwwroot/typings
 *.js
 *.js.map

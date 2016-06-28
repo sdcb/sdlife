@@ -1,0 +1,18 @@
+﻿// Configure bundling and minification for the project.
+// More info at https://go.microsoft.com/fwlink/?LinkId=808241
+[
+  {
+    "outputFileName": "wwwroot/min/lib.min.css",
+    "inputFiles": [
+      "wwwroot/lib/angular/angular-csp.css",
+      "wwwroot/lib/angular-material/angular-material.min.css",
+      "wwwroot/lib/fullcalendar/dist/fullcalendar.min.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/min/app.min.css",
+    "inputFiles": [
+      "wwwroot/css/site.css"
+    ]
+  }
+]

@@ -2,89 +2,23 @@
 "use strict";
 
 var gulp = require("gulp"),
-    gulpif = require("gulp-if"), 
+    gulpif = require("gulp-if"),
     rimraf = require("rimraf"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
     uglify = require("gulp-uglify"),
-    htmlmin = require("gulp-htmlmin"), 
+    htmlmin = require("gulp-htmlmin"),
     templateCache = require("gulp-angular-templatecache"),
-    fs = require("fs");    
+    fs = require("fs");
 
-var paths = {
-    webroot: "./wwwroot/"
-};
-
-paths.js = paths.webroot + "app/**/*.js";
-paths.minJs = paths.webroot + "app/**/*.min.js";
-paths.concatJsDest = paths.webroot + "min/app.min.js";
-
-paths.css = paths.webroot + "css/**/*.css";
-paths.minCss = paths.webroot + "css/**/*.min.css";
-paths.concatCssDest = paths.webroot + "min/site.min.css";
-
-paths.libJs = [
-    "jquery/dist/jquery.min.js",
-    "angular/angular.min.js",
-    "angular-component-router/angular_1_router.js",
-    "jquery.ui.touch/jquery.ui.touch.js",
-    "angular-aria/angular-aria.min.js",
-    "angular-messages/angular-messages.min.js",
-    "angular-animate/angular-animate.min.js",
-    "angular-material/angular-material.min.js",
-    "moment/min/moment.min.js",
-    "fullcalendar/dist/fullcalendar.min.js",
-    "fullcalendar/dist/lang/zh-cn.js",
-    "angular-ui-calendar/src/calendar.js",
-    "lodash/dist/lodash.min.js"
-].map(function (x) { return paths.webroot + "lib/" + x; });
-paths.concatLibJsDest = paths.webroot + "min/lib.min.js";
-
-paths.libCss = [
-    "angular/angular-csp.css",
-    "angular-material/angular-material.min.css",
-    "fullcalendar/dist/fullcalendar.min.css"
-].map(function (x) { return paths.webroot + "lib/" + x; });
-paths.concatLibCssDest = paths.webroot + "min/lib.min.css";
-
-gulp.task("clean:js", function (cb) {
-    rimraf(paths.concatJsDest, cb);
-});
-
-gulp.task("clean:css", function (cb) {
-    rimraf(paths.concatCssDest, cb);
-});
-
-gulp.task("clean", ["clean:js", "clean:css"]);
-
-gulp.task("min:js", function () {
-    var cshtml = fs.readFileSync("Views/Home/Index.cshtml", "utf8");
-    var regex = /<script src=\"~\/app\/(.+).js"><\/script>/g;
-    var scripts = cshtml.match(regex).map(function (tag) {
-        var jsFile = tag.replace(regex, "$1");
-        return "./wwwroot/app/" + jsFile + ".js";
-    });
-    return gulp.src(scripts, { base: "." })
-        .pipe(concat(paths.concatJsDest))
-        .pipe(uglify())
-        .pipe(gulp.dest("."));
-});
-
-gulp.task("min:libJs", function () {
-    return gulp.src(paths.libJs, { base: "." })
-        .pipe(gulpif(function (file) {
-            return !/\.min\.js/.test(file.path);
-        }, uglify()))
-        .pipe(concat(paths.concatLibJsDest))
-        .pipe(gulp.dest("."));
-});
+var webroot = "./wwwroot/";
 
 gulp.task("min:templateCache", function () {
     return gulp.src("wwwroot/app/**/*.html")
         .pipe(htmlmin({
-            collapseWhitespace: true, 
+            collapseWhitespace: true,
             collapseBooleanAttributes: true,
-            removeComments: true, 
+            removeComments: true,
         }))
         .pipe(templateCache({
             module: "sdlife",
@@ -94,18 +28,41 @@ gulp.task("min:templateCache", function () {
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min:css", function () {
-    return gulp.src([paths.css, "!" + paths.minCss])
-        .pipe(concat(paths.concatCssDest))
-        .pipe(cssmin())
+gulp.task("min:appJs", function () {
+    var cshtml = fs.readFileSync("Views/Home/Index.cshtml", "utf8");
+    var regex = /<script src=\"~\/app\/(.+).js"><\/script>/g;
+    var scripts = cshtml.match(regex).map(function (tag) {
+        var jsFile = tag.replace(regex, "$1");
+        return "./wwwroot/app/" + jsFile + ".js";
+    });
+    return gulp.src(scripts, { base: "." })
+        .pipe(concat("wwwroot/min/app.min.js"))
+        .pipe(uglify())
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min:libCss", function () {
-    return gulp.src(paths.libCss)
-        .pipe(concat(paths.concatLibCssDest))
-        .pipe(cssmin())
+gulp.task("min:libJs", function () {
+    var libJs = [
+        "wwwroot/lib/jquery/dist/jquery.min.js",
+        "wwwroot/lib/angular/angular.min.js",
+        "wwwroot/lib/angular-component-router/angular_1_router.js",
+        "wwwroot/lib/jquery.ui.touch/jquery.ui.touch.js",
+        "wwwroot/lib/angular-aria/angular-aria.min.js",
+        "wwwroot/lib/angular-messages/angular-messages.min.js",
+        "wwwroot/lib/angular-animate/angular-animate.min.js",
+        "wwwroot/lib/angular-material/angular-material.min.js",
+        "wwwroot/lib/moment/min/moment.min.js",
+        "wwwroot/lib/fullcalendar/dist/fullcalendar.min.js",
+        "wwwroot/lib/fullcalendar/dist/lang/zh-cn.js",
+        "wwwroot/lib/angular-ui-calendar/src/calendar.js",
+        "wwwroot/lib/lodash/dist/lodash.min.js"
+    ];
+    return gulp.src(libJs, { base: "." })
+        .pipe(gulpif(function (file) {
+            return !/\.min\.js/.test(file.path);
+        }, uglify()))
+        .pipe(concat("wwwroot/min/lib.min.js"))
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min", ["min:js", "min:libJs", "min:css", "min:libCss", "min:templateCache"]);
+gulp.task("min", ["min:templateCache", "min:appJs", "min:libJs"]);
