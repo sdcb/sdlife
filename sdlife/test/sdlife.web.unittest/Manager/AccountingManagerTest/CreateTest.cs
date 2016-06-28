@@ -33,8 +33,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Time = expectedEventTime,
                 Title = title
             }, User.UserId);
-
-            // Action
+            
             var accounting = await db.Accounting
                 .Include(x => x.Title)
                 .SingleAsync(x => x.Id == created.Id);
