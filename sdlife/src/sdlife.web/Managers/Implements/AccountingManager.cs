@@ -74,11 +74,12 @@ namespace sdlife.web.Managers.Implements
 
         private async Task<List<string>> SearchTitlesInternal(string titleQuery, bool isIncome, int limit)
         {
+            var before = DateTime.Now.AddMonths(-1);
             return await _db.AccountingTitle
                 .Include(x => x.Accountings)
                 .Where(x => x.IsIncome == isIncome)
                 .Where(x => x.Title.StartsWith(titleQuery) || x.ShortCut.StartsWith(titleQuery))
-                .OrderByDescending(x => x.Accountings.Count())
+                .OrderByDescending(x => x.Accountings.Count(a => a.EventTime >= before))
                 .Select(x => x.Title)
                 .Take(limit)
                 .ToListAsync().ConfigureAwait(false);
