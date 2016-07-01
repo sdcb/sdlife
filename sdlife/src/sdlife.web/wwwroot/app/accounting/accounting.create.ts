@@ -24,7 +24,7 @@
                 isIncome: this.result.isIncome, 
                 title: this.result.title || this.$searchTitle
             };
-            return this.api.create(data);
+            return this.api.create(data, this.userId);
         }
 
         commit(valid: boolean) {
@@ -40,12 +40,13 @@
             return this.api.searchAutoTitles(title, this.result.isIncome);
         }
 
-        static $inject = ["$scope", "$mdDialog", "date", "accounting.api"];
+        static $inject = ["$scope", "$mdDialog", "accounting.api", "date", "userId"];
         constructor(
             public scope: ng.IScope, 
             public dialog: ng.material.IDialogService,
-            public date: string,
-            public api: AccountingApi
+            public api: AccountingApi, 
+            public date: string, 
+            public userId: number
         ) {
             scope.$watch(() => this.result.isIncome, () => {
                 this.$searchTitle = "";
@@ -56,6 +57,7 @@
 
     export function showAccountingCreateDialog(
         date: string, 
+        userId: number, 
         dialog: ng.material.IDialogService,
         media: ng.material.IMedia, 
         ev: MouseEvent) {
@@ -67,7 +69,8 @@
             clickOutsideToClose: false,
             targetEvent: ev, 
             locals: {
-                date: date
+                date: date, 
+                userId: userId
             }, 
             fullscreen: isSmallDevice(media)
         });

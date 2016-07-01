@@ -25,7 +25,11 @@ namespace sdlife.accounting {
         }
 
         $routerOnActivate(next) {
-            this.userId = next.params.userId;
+            this.userId = parseInt(next.params.userId);
+            if (this.userId) {
+                this.api.canIModify(this.userId)
+                    .then(v => this.canCreate = v);
+            }
         }
 
         calendarView: FullCalendar.ViewObject;
@@ -56,7 +60,7 @@ namespace sdlife.accounting {
         }
 
         dayClick(date: moment.Moment, ev: MouseEvent) {
-            showAccountingCreateDialog(date.format(), this.dialog, this.media, ev).then((...args) => {
+            showAccountingCreateDialog(date.format(), this.userId, this.dialog, this.media, ev).then((...args) => {
                 return this.loadDataInViewRange();
             });
         }
@@ -175,13 +179,23 @@ namespace sdlife.accounting {
         canCreate = false;
 
         dayClick(date: moment.Moment, ev: MouseEvent) {
+            if (this.canCreate) {
+                super.dayClick(date, ev);
+            }
         }
 
         eventClick(event: IAccountingEventObject, jsEvent: MouseEvent, view: FullCalendar.ViewObject) {
+            if (this.canCreate) {
+                super.eventClick(event, jsEvent, view);
+            }
         }
 
         eventDrop(event: IAccountingEventObject, duration: moment.Duration, rollback: () => void) {
-            rollback();
+            if (this.canCreate) {
+                super.eventDrop(event, duration, rollback);
+            } else {
+                rollback();
+            }
         }
     }
 

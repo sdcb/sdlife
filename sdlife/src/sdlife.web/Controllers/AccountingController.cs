@@ -31,9 +31,10 @@ namespace sdlife.web.Controllers
             return View();
         }
         
-        public async Task<AccountingDto> Create([FromBody]AccountingDto dto)
+        public async Task<AccountingDto> Create([FromBody]AccountingDto dto, int? userId = null)
         {
-            return (await _accounting.Create(dto, _user.UserId)).Value;
+            var toCreateUserId = userId ?? _user.UserId;
+            return (await _accounting.Create(dto, toCreateUserId)).Value;
         }
 
         public async Task UpdateTime(int id, [FromBody]DateTime time)
@@ -78,6 +79,11 @@ namespace sdlife.web.Controllers
                     UserName = x.UserName, 
                     Email = x.Email
                 });
+        }
+
+        public async Task<bool> CanIModify(int userId)
+        {
+            return await _accounting.Privilege.CanIModify(userId);
         }
     }
 }

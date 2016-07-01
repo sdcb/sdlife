@@ -17,8 +17,8 @@ namespace sdlife.accounting {
             });
         }
 
-        create(dto: IAccountingDto) {
-            return this.$.post<IAccountingEntity>("/Accounting/Create", dto).then(cb => {
+        create(dto: IAccountingDto, userId: number) {
+            return this.$.post<IAccountingEntity>(`/Accounting/Create?userId=${userId}`, dto).then(cb => {
                 return cb.data;
             });
         }
@@ -57,6 +57,12 @@ namespace sdlife.accounting {
 
         authorizedUsers() {
             return this.$.post<Array<IUserDto>>("/Accounting/AuthorizedUsers", {}).then(cb => {
+                return cb.data;
+            });
+        }
+
+        canIModify(userId: number) {
+            return this.$.post<boolean>(`/Accounting/CanIModify?userId=${userId}`, {}).then(cb => {
                 return cb.data;
             });
         }

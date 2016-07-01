@@ -1,8 +1,11 @@
 ﻿namespace sdlife.accounting {
     class CreateIcon {
+        userId: number;
+
         open(ev: MouseEvent) {
             showAccountingCreateDialog(
                 moment().format(),
+                this.userId, 
                 this.dialog,
                 this.media,
                 ev).then(() => {
@@ -24,7 +27,8 @@
         controller: CreateIcon, 
         controllerAs: "vm", 
         bindings: {
-            onCreated: "&"
+            onCreated: "&", 
+            userId: "<", 
         }, 
         templateUrl: "/app/accounting/accounting.createicon.html", 
     });
