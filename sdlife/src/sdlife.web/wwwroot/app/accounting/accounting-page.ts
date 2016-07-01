@@ -71,6 +71,10 @@ namespace sdlife.accounting {
 
         eventDrop(event: IAccountingEventObject, duration: moment.Duration, rollback: () => void) {
             this.loading = this.api.updateTime(event.entity.id, event.start)
+                .then(() => {
+                    event.entity.time = moment(event.start).format();
+                    this.caculateTotalAmount();
+                })
                 .catch(() => rollback());
         }
 
