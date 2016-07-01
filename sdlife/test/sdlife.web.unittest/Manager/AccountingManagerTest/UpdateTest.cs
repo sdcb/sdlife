@@ -26,12 +26,12 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var now = DateTime.Now;
 
             // Action
-            var created = await accountingManager.Create(new AccountingDto
+            var created = (await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test"
-            }, User.UserId);
+            }, User.UserId)).Value;
 
             // Action
             var title = "I love lgl";
@@ -63,12 +63,12 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var now = DateTime.Now;
 
             // Action
-            var created = await accountingManager.Create(new AccountingDto
+            var created = (await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "早餐"
-            }, User.UserId);
+            }, User.UserId)).Value;
 
             // Action
             var title = "晚餐";
@@ -97,12 +97,12 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var now = DateTime.Now;
 
             // Action
-            var created = await accountingManager.Create(new AccountingDto
+            var created = (await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "早餐"
-            }, User.UserId);
+            }, User.UserId)).Value;
 
             // Action
             await accountingManager.UpdateTime(created.Id, now);
@@ -122,13 +122,13 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var now = DateTime.Now;
 
             // Action
-            var created = await accountingManager.Create(new AccountingDto
+            var created = (await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test", 
                 Comment = "I love lgl"
-            }, User.UserId);
+            }, User.UserId)).Value;
 
             // Action
             created.Comment = " ";
@@ -148,13 +148,13 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             // Action
-            var created = await accountingManager.Create(new AccountingDto
+            var created = (await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test",
                 Comment = "I love lgl"
-            }, User.UserId);
+            }, User.UserId)).Value;
 
             // Action
             created.Title = "life";
@@ -174,13 +174,13 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             // Action
-            var created = await accountingManager.Create(new AccountingDto
+            var created = (await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test",
                 Comment = "I love lgl"
-            }, User.UserId);
+            }, User.UserId)).Value;
             var create2 = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
@@ -207,13 +207,13 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var now = DateTime.Now;
 
-            var created = await accountingManager.Create(new AccountingDto
+            var created = (await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test",
                 Comment = "I love lgl"
-            }, User.UserId);
+            }, User.UserId)).Value;
 
             // Action
             created.Comment = "Nice";

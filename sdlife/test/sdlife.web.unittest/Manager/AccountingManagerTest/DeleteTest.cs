@@ -23,12 +23,12 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             // Arrange 
             var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            var created = await accountingManager.Create(new AccountingDto
+            var created = (await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test"
-            }, User.UserId);
+            }, User.UserId)).Value;
 
             // Action
             await accountingManager.Delete(created.Id);
@@ -44,12 +44,12 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             // Arrange 
             var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            var created = await accountingManager.Create(new AccountingDto
+            var created = (await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test"
-            }, User.UserId);
+            }, User.UserId)).Value;
 
             // Action
             await accountingManager.Delete(created.Id);
@@ -65,18 +65,18 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             // Arrange 
             var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            var created = await accountingManager.Create(new AccountingDto
+            var created = (await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test"
-            }, User.UserId);
-            var created2 = await accountingManager.Create(new AccountingDto
+            }, User.UserId)).Value;
+            var created2 = (await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test"
-            }, User.UserId);
+            }, User.UserId)).Value;
 
             // Action
             await accountingManager.Delete(created.Id);
@@ -92,12 +92,12 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             // Arrange 
             var accountingManager = ServiceProvider.GetRequiredService<IAccountingManager>();
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            var created = await accountingManager.Create(new AccountingDto
+            var created = (await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = DateTime.Now,
                 Title = "test"
-            }, User.UserId);
+            }, User.UserId)).Value;
 
             // Action
             await accountingManager.Delete(created.Id);

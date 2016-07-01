@@ -11,15 +11,15 @@ namespace sdlife.web.Managers
     {
         IAccountingPrivilegeManager Privilege { get; }
 
-        Task<AccountingDto> Create(AccountingDto dto, int createUserId);
+        Task<Result<AccountingDto>> Create(AccountingDto dto, int createUserId);
         Task<List<string>> SearchIncomeTitles(string titleQuery, int limit = 20);
         Task<List<string>> SearchSpendingTitles(string titleQuery, int limit = 20);
-        Task UpdateTime(int accountId, DateTime time);
-        Task<AccountingDto> Update(AccountingDto dto);
+        Task<Result> UpdateTime(int accountId, DateTime time);
+        Task<Result<AccountingDto>> Update(AccountingDto dto);
 
         Task UpdateTitleShortCuts();
         
         Task<IQueryable<AccountingDto>> UserAccountingInRange(DateTime start, DateTime end, int userId);
-        Task Delete(int id);
+        Task<Result> Delete(int id);
     }
 }

@@ -12,6 +12,6 @@ namespace sdlife.web.Managers
         Task<bool> CheckUserAuthorization(int userId, int targetUserId, AccountingAuthorizeLevel level);
         Task SetUserAuthroize(int userId, int authorizedUserId, AccountingAuthorizeLevel level);
         IQueryable<User> AuthorizedUsers(int userId);
-        Task<bool> CanUserModify(int userId, int authorizedUserId);
+        Task<bool> CanIModify(int authorizedUserId);
     }
 }

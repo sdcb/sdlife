@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet-sdlife.web-22e022c3-0a67-41bd-b099-03574093de8d",
 
   "dependencies": {
@@ -42,7 +42,7 @@
     "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": {
       "version": "1.0.0-preview2-final",
       "type": "build"
-    }, 
+    },
     "System.Text.Encoding.CodePages": "4.0.1"
   },
 

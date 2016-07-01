@@ -85,10 +85,10 @@ namespace sdlife.web.Managers.Implements
                 .Select(x => x.User);
         }
 
-        public async Task<bool> CanUserModify(int userId, int targetUserId)
+        public async Task<bool> CanIModify(int targetUserId)
         {
             return await 
-                CheckUserAuthorization(userId, targetUserId, AccountingAuthorizeLevel.Modify)
+                CheckUserAuthorization(_user.UserId, targetUserId, AccountingAuthorizeLevel.Modify)
                 .ConfigureAwait(false);
         }
 

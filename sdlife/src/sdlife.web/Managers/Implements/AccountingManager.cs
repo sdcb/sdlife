@@ -33,8 +33,13 @@ namespace sdlife.web.Managers.Implements
             Privilege = privilege;
         }
 
-        public async Task<AccountingDto> Create(AccountingDto dto, int createUserId)
+        public async Task<Result<AccountingDto>> Create(AccountingDto dto, int createUserId)
         {
+            if (!await Privilege.CanIModify(createUserId).ConfigureAwait(false))
+            {
+                return NoPrivilegeFail<AccountingDto>();
+            }
+
             var titleEntity = await GetOrCreateTitle(dto.Title, dto.IsIncome).ConfigureAwait(false);
 
             var entity = new Accounting
@@ -63,7 +68,17 @@ namespace sdlife.web.Managers.Implements
                 _db.Entry(entity.Comment).State = EntityState.Detached;
             }
 
-            return entity;
+            return Result.Ok((AccountingDto)entity);
+        }
+
+        private Result<T> NoPrivilegeFail<T>()
+        {
+            return Result.Fail<T>("你没有修改此用户的权限。");
+        }
+
+        private Result NoPrivilegeFail()
+        {
+            return Result.Fail("你没有修改此用户的权限。");
         }
 
         public async Task<List<string>> SearchIncomeTitles(string titleQuery, int limit)
@@ -89,23 +104,34 @@ namespace sdlife.web.Managers.Implements
                 .ToListAsync().ConfigureAwait(false);
         }
 
-        public async Task UpdateTime(int accountId, DateTime time)
+        public async Task<Result> UpdateTime(int accountId, DateTime time)
         {
             var entity = await _db.Accounting
                 .Where(x => x.Id == accountId)
                 .SingleAsync().ConfigureAwait(false);
 
+            if (!await Privilege.CanIModify(entity.CreateUserId).ConfigureAwait(false))
+            {
+                return NoPrivilegeFail();
+            }
+
             entity.EventTime = time;
             await _db.SaveChangesAsync().ConfigureAwait(false);
+            return Result.Ok();
         }
 
-        public async Task<AccountingDto> Update(AccountingDto dto)
+        public async Task<Result<AccountingDto>> Update(AccountingDto dto)
         {
             var entity = await _db.Accounting
                 .Include(x => x.Title)
                 .Include(x => x.Comment)
                 .Where(x => x.Id == dto.Id)
                 .SingleAsync().ConfigureAwait(false);
+
+            if (!await Privilege.CanIModify(entity.CreateUserId).ConfigureAwait(false))
+            {
+                return NoPrivilegeFail<AccountingDto>();
+            }
 
             if (entity.Title.Title != dto.Title)
             {
@@ -150,14 +176,14 @@ namespace sdlife.web.Managers.Implements
             }
 
             await _db.SaveChangesAsync().ConfigureAwait(false);
-            return entity;
+            return Result.Ok((AccountingDto)entity);
         }
 
         public async Task<IQueryable<AccountingDto>> UserAccountingInRange(DateTime start, DateTime end, int userId)
         {
-            var query = 
+            var query =
                 from accounting in _db.Accounting
-                join title in _db.AccountingTitle on accounting.TitleId equals title.Id 
+                join title in _db.AccountingTitle on accounting.TitleId equals title.Id
                 join comment in _db.AccountingComment on accounting.Id equals comment.AccountingId into commentGroup
                 from comment in commentGroup.DefaultIfEmpty()
                 where accounting.EventTime >= start && accounting.EventTime < end && accounting.CreateUserId == userId
@@ -167,7 +193,7 @@ namespace sdlife.web.Managers.Implements
                     Amount = accounting.Amount,
                     Comment = comment == null ? null : comment.Comment,
                     Time = accounting.EventTime,
-                    IsIncome = title.IsIncome, 
+                    IsIncome = title.IsIncome,
                     Title = title.Title
                 };
             if (_user.UserId == userId)
@@ -177,15 +203,15 @@ namespace sdlife.web.Managers.Implements
             else
             {
                 var access = await GetUserAccess(_user.UserId, userId).ConfigureAwait(false);
-                if (access == AccountingAuthorizeLevel.QueryAll)
+                if ((access & AccountingAuthorizeLevel.QueryAll) == AccountingAuthorizeLevel.QueryAll)
                 {
                     return query;
                 }
-                else if (access == AccountingAuthorizeLevel.QueryIncomes)
+                else if ((access & AccountingAuthorizeLevel.QueryIncomes) == AccountingAuthorizeLevel.QueryIncomes)
                 {
                     return query.Where(x => x.IsIncome);
                 }
-                else if (access == AccountingAuthorizeLevel.QuerySpendings)
+                else if ((access & AccountingAuthorizeLevel.QuerySpendings) == AccountingAuthorizeLevel.QuerySpendings)
                 {
                     return query.Where(x => !x.IsIncome);
                 }
@@ -205,12 +231,17 @@ namespace sdlife.web.Managers.Implements
                 .ConfigureAwait(false);
         }
 
-        public async Task Delete(int id)
+        public async Task<Result> Delete(int id)
         {
             var result = await _db.Accounting
                 .Include(x => x.Title)
                 .Include(x => x.Comment)
                 .SingleAsync(x => x.Id == id).ConfigureAwait(false);
+
+            if (!await Privilege.CanIModify(result.CreateUserId).ConfigureAwait(false))
+            {
+                return NoPrivilegeFail();
+            }
 
             _db.Remove(result);
             var titleRefCount = await _db.Accounting
@@ -222,6 +253,7 @@ namespace sdlife.web.Managers.Implements
             }
 
             await _db.SaveChangesAsync().ConfigureAwait(false);
+            return Result.Ok();
         }
 
         public async Task UpdateTitleShortCuts()
@@ -256,8 +288,8 @@ namespace sdlife.web.Managers.Implements
             var newOne = new AccountingTitle
             {
                 Title = title,
-                ShortCut = _pinYin.GetStringCapitalPinYin(title), 
-                IsIncome = isIncome, 
+                ShortCut = _pinYin.GetStringCapitalPinYin(title),
+                IsIncome = isIncome,
             };
             _db.Add(newOne);
 

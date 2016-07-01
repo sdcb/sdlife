@@ -27,12 +27,12 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
 
             // Action
             var expectedEventTime = DateTime.Parse(timeString);
-            var created = await accountingManager.Create(new AccountingDto
+            var created = (await accountingManager.Create(new AccountingDto
             {
                 Amount = (decimal)money, 
                 Time = expectedEventTime,
                 Title = title
-            }, User.UserId);
+            }, User.UserId)).Value;
             
             var accounting = await db.Accounting
                 .Include(x => x.Title)
@@ -55,13 +55,13 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var now = DateTime.Now;
 
-            var created = await accountingManager.Create(new AccountingDto
+            var created = (await accountingManager.Create(new AccountingDto
             {
                 Amount = 1,
                 Time = now,
                 Title = "早餐", 
                 Comment = comment
-            }, User.UserId);
+            }, User.UserId)).Value;
 
             // Action
             var accounting = await db.Accounting
@@ -89,12 +89,12 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var now = DateTime.Now;
 
-            var created = await accountingManager.Create(new AccountingDto
+            var created = (await accountingManager.Create(new AccountingDto
             {
                 Amount = 1,
                 Time = now,
                 Title = title
-            }, User.UserId);
+            }, User.UserId)).Value;
 
             // Action
             var accounting = await db.Accounting

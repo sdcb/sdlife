@@ -98,13 +98,14 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var user = ServiceProvider.GetService<ICurrentUser>();
             var currentUserId = user.UserId;
             var otherUserId = user.UserId + 1;
+            await accountingManager.Privilege.SetUserAuthroize(otherUserId, currentUserId,
+                AccountingAuthorizeLevel.QueryAll | AccountingAuthorizeLevel.Modify);
             var created = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
                 Time = new DateTime(2015, 1, 1),
                 Title = "test"
             }, otherUserId);
-            await accountingManager.Privilege.SetUserAuthroize(otherUserId, currentUserId, AccountingAuthorizeLevel.QueryAll);
 
             // Action
             var real = (await accountingManager.UserAccountingInRange(
@@ -149,6 +150,8 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var user = ServiceProvider.GetService<ICurrentUser>();
             var currentUserId = user.UserId;
             var otherUserId = user.UserId + 1;
+            await accountingManager.Privilege.SetUserAuthroize(otherUserId, currentUserId, 
+                AccountingAuthorizeLevel.QueryIncomes | AccountingAuthorizeLevel.Modify);
             var income = await accountingManager.Create(new AccountingDto
             {
                 Amount = 2,
@@ -163,7 +166,6 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Title = "spending",
                 IsIncome = false,
             }, otherUserId);
-            await accountingManager.Privilege.SetUserAuthroize(otherUserId, currentUserId, AccountingAuthorizeLevel.QueryIncomes);
 
             // Action
             var real = (await accountingManager.UserAccountingInRange(
