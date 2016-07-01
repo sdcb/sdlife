@@ -5,10 +5,10 @@
         router: ng.Router;
 
         accountingMenu = [
-            new MenuItem("我", ["Book"])
+            new MenuItem("我", ["Book"], this.router)
         ];
         menus = <Array<IMenuItem>>[
-            new MenuFolder("记帐", this.accountingMenu)
+            new MenuFolder("记帐", this.accountingMenu, this.router)
         ];
 
         isFolderOpen(folder: IMenuItem) {
@@ -22,7 +22,7 @@
         setupAccountingUsers() {
             this.api.authorizedUsers().then(users => {
                 this.accountingMenu.push(...users.map(user => {
-                    return new MenuItem(user.email, ["BookFriend", { userId: user.id }]);
+                    return new MenuItem(user.email, ["BookFriend", { userId: user.id }], this.router);
                 }));
             });
         }
@@ -41,7 +41,7 @@
         }
 
         isActive() {
-            return false;
+            return this.menu.isActive();
         }
 
         onclick() {
@@ -51,10 +51,9 @@
 
     class MenuItemComponent {
         menu: IMenuItem;
-        router: ng.Router;
 
         isActive() {
-            return this.router.isRouteActive(this.router.generate(this.menu.state));
+            return this.menu.isActive();
         }
     }
 
@@ -75,7 +74,6 @@
             menu: "<",
             isOpen: "<",
             toggle: "&",
-            router: "<",
         }
     });
 
@@ -85,7 +83,6 @@
         controllerAs: "vm",
         bindings: {
             menu: "<",
-            router: "<",
         }
     });
 
@@ -96,6 +93,7 @@
         state?: Array<any>,
         subMenus?: IMenuItem[],
         visible(): boolean,
+        isActive(): boolean, 
     }
 
     class MenuItemBase {
@@ -116,20 +114,28 @@
 
     class MenuItem extends MenuItemBase implements IMenuItem {
         type = "item";
-        constructor(public title: string, public state: Array<any>) {
+        constructor(public title: string, public state: Array<any>, public router: ng.Router) {
             super();
+        }
+
+        isActive() {
+            return this.router.isRouteActive(this.router.generate(this.state));
         }
     }
 
     class MenuFolder extends MenuItemBase implements IMenuItem {
         open = true;
         type = "folder";
-        constructor(public title: string, public subMenus: IMenuItem[]) {
+        constructor(public title: string, public subMenus: IMenuItem[], public router: ng.Router) {
             super();
         }
 
         hide() {
             return this.subMenus.length > 0;
+        }
+
+        isActive() {
+            return this.subMenus.some(v => v.isActive());
         }
     }
 }

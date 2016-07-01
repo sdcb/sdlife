@@ -1,5 +1,5 @@
 ﻿<div flex>
-    <md-button class="md-button-toggle" ng-class="{toggled : vm.isOpen}"
+    <md-button class="md-button-toggle" ng-class="{toggled: vm.isOpen, active: vm.isActive()}"
                ng-click="vm.onclick()"
                layout="row"
                aria-label="sdlife-menu-{{vm.menu.title | nospace}}">
