@@ -26,6 +26,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             service.AddTransient<ITimeService, TestTimeService>();
             service.AddTransient<ICurrentUser, TestCurrentUser>();
             service.AddTransient<IAccountingManager, AccountingManager>();
+            service.AddTransient<IAccountingPrivilegeManager, AccountingPrivilegeManager>();
             service.AddTransient<IPinYinConverter, PinYinConverter>();
 
             ServiceProvider = service.BuildServiceProvider();

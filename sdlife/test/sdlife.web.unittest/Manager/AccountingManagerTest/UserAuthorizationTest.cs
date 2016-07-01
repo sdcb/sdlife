@@ -25,7 +25,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             // Action
-            await accountingManager.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.QuerySpendings);
+            await accountingManager.Privilege.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.QuerySpendings);
 
             // Assert
             var authorize = await db.AccountingUserAuthorization
@@ -42,8 +42,8 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             // Action
-            await accountingManager.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.QuerySpendings);
-            await accountingManager.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.None);
+            await accountingManager.Privilege.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.QuerySpendings);
+            await accountingManager.Privilege.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.None);
 
             // Assert
             var authorize = await db.AccountingUserAuthorization
@@ -59,8 +59,8 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             // Action
-            await accountingManager.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.QuerySpendings);
-            await accountingManager.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.QueryAll);
+            await accountingManager.Privilege.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.QuerySpendings);
+            await accountingManager.Privilege.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.QueryAll);
 
             // Assert
             var authorize = await db.AccountingUserAuthorization
@@ -76,10 +76,10 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             // Action
-            await accountingManager.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.QuerySpendings);
+            await accountingManager.Privilege.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.QuerySpendings);
 
             // Assert
-            Assert.True(await accountingManager.CheckUserAuthorization(2, 1, AccountingAuthorizeLevel.QuerySpendings));
+            Assert.True(await accountingManager.Privilege.CheckUserAuthorization(2, 1, AccountingAuthorizeLevel.QuerySpendings));
         }
 
         [Fact]
@@ -90,10 +90,10 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             // Action
-            await accountingManager.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.QuerySpendings);
+            await accountingManager.Privilege.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.QuerySpendings);
 
             // Assert
-            Assert.False(await accountingManager.CheckUserAuthorization(2, 1, AccountingAuthorizeLevel.QueryIncomes));
+            Assert.False(await accountingManager.Privilege.CheckUserAuthorization(2, 1, AccountingAuthorizeLevel.QueryIncomes));
         }
 
         [Fact]
@@ -104,10 +104,10 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var db = ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             // Action
-            await accountingManager.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.QueryAll);
+            await accountingManager.Privilege.SetUserAuthroize(1, 2, AccountingAuthorizeLevel.QueryAll);
 
             // Assert
-            Assert.True(await accountingManager.CheckUserAuthorization(2, 1, AccountingAuthorizeLevel.QueryIncomes));
+            Assert.True(await accountingManager.Privilege.CheckUserAuthorization(2, 1, AccountingAuthorizeLevel.QueryIncomes));
         }
     }
 }

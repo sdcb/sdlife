@@ -75,6 +75,7 @@ namespace sdlife.web
 
             // Add managers.
             services.AddTransient<IAccountingManager, AccountingManager>();
+            services.AddTransient<IAccountingPrivilegeManager, AccountingPrivilegeManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

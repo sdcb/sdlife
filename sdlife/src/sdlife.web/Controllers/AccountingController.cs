@@ -71,7 +71,7 @@ namespace sdlife.web.Controllers
 
         public IQueryable<object> AuthorizedUsers()
         {
-            return _accounting.AuthorizedUsers(_user.UserId)
+            return _accounting.Privilege.AuthorizedUsers(_user.UserId)
                 .Select(x => new 
                 {
                     Id = x.Id, 

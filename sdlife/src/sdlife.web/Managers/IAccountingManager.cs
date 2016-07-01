@@ -9,6 +9,8 @@ namespace sdlife.web.Managers
 {
     public interface IAccountingManager
     {
+        IAccountingPrivilegeManager Privilege { get; }
+
         Task<AccountingDto> Create(AccountingDto dto, int createUserId);
         Task<List<string>> SearchIncomeTitles(string titleQuery, int limit = 20);
         Task<List<string>> SearchSpendingTitles(string titleQuery, int limit = 20);
@@ -19,9 +21,5 @@ namespace sdlife.web.Managers
         
         Task<IQueryable<AccountingDto>> UserAccountingInRange(DateTime start, DateTime end, int userId);
         Task Delete(int id);
-
-        Task<bool> CheckUserAuthorization(int userId, int targetUserId, AccountingAuthorizeLevel level);
-        Task SetUserAuthroize(int userId, int authorizedUserId, AccountingAuthorizeLevel level);
-        IQueryable<User> AuthorizedUsers(int userId);
     }
 }

@@ -104,7 +104,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Time = new DateTime(2015, 1, 1),
                 Title = "test"
             }, otherUserId);
-            await accountingManager.SetUserAuthroize(otherUserId, currentUserId, AccountingAuthorizeLevel.QueryAll);
+            await accountingManager.Privilege.SetUserAuthroize(otherUserId, currentUserId, AccountingAuthorizeLevel.QueryAll);
 
             // Action
             var real = (await accountingManager.UserAccountingInRange(
@@ -163,7 +163,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
                 Title = "spending",
                 IsIncome = false,
             }, otherUserId);
-            await accountingManager.SetUserAuthroize(otherUserId, currentUserId, AccountingAuthorizeLevel.QueryIncomes);
+            await accountingManager.Privilege.SetUserAuthroize(otherUserId, currentUserId, AccountingAuthorizeLevel.QueryIncomes);
 
             // Action
             var real = (await accountingManager.UserAccountingInRange(
