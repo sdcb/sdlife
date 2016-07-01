@@ -31,11 +31,16 @@ namespace sdlife.web.Managers.Implements
 
         public async Task<bool> CheckUserAuthorization(int userId, int targetUserId, AccountingAuthorizeLevel level)
         {
+            if (userId == targetUserId)
+            {
+                return true;
+            }
+
             return await _db.AccountingUserAuthorization
                 .AnyAsync(x =>
                 x.UserId == targetUserId &&
                 x.AuthorizedUserId == userId &&
-                ((x.Level & level)  == level)).ConfigureAwait(false);
+                ((x.Level & level) == level)).ConfigureAwait(false);
         }
 
         public async Task SetUserAuthroize(int userId, int authorizedUserId, AccountingAuthorizeLevel level)
@@ -78,6 +83,23 @@ namespace sdlife.web.Managers.Implements
                 .Include(x => x.User)
                 .Where(x => x.AuthorizedUserId == userId)
                 .Select(x => x.User);
+        }
+
+        public async Task<bool> CanUserModify(int userId, int targetUserId)
+        {
+            return await 
+                CheckUserAuthorization(userId, targetUserId, AccountingAuthorizeLevel.Modify)
+                .ConfigureAwait(false);
+        }
+
+        public List<IdName<AccountingAuthorizeLevel>> AllPrivileges()
+        {
+            return new List<IdName<AccountingAuthorizeLevel>>
+            {
+                IdName.Create(AccountingAuthorizeLevel.QueryIncomes, "查询收入"),
+                IdName.Create(AccountingAuthorizeLevel.QuerySpendings, "查询支出"),
+                IdName.Create(AccountingAuthorizeLevel.Modify, "改动"),
+            };
         }
     }
 }

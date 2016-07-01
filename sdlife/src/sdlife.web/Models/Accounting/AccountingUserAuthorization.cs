@@ -28,6 +28,7 @@ namespace sdlife.web.Models
         None = 0, 
         QuerySpendings = 1, 
         QueryIncomes = 2, 
-        QueryAll = 3, 
+        QueryAll = QuerySpendings | QueryIncomes, 
+        Modify = 4, 
     }
 }
