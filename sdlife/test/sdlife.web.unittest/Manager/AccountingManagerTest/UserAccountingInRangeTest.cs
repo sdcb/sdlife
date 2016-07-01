@@ -98,7 +98,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var user = ServiceProvider.GetService<ICurrentUser>();
             var currentUserId = user.UserId;
             var otherUserId = user.UserId + 1;
-            await accountingManager.Privilege.SetUserAuthroize(otherUserId, currentUserId,
+            await accountingManager.Privilege.Set(otherUserId, currentUserId,
                 AccountingAuthorizeLevel.QueryAll | AccountingAuthorizeLevel.Modify);
             var created = await accountingManager.Create(new AccountingDto
             {
@@ -150,7 +150,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             var user = ServiceProvider.GetService<ICurrentUser>();
             var currentUserId = user.UserId;
             var otherUserId = user.UserId + 1;
-            await accountingManager.Privilege.SetUserAuthroize(otherUserId, currentUserId, 
+            await accountingManager.Privilege.Set(otherUserId, currentUserId, 
                 AccountingAuthorizeLevel.QueryIncomes | AccountingAuthorizeLevel.Modify);
             var income = await accountingManager.Create(new AccountingDto
             {

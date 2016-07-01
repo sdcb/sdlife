@@ -43,7 +43,7 @@ namespace sdlife.web.Managers.Implements
                 ((x.Level & level) == level)).ConfigureAwait(false);
         }
 
-        public async Task SetUserAuthroize(int userId, int authorizedUserId, AccountingAuthorizeLevel level)
+        public async Task Set(int userId, int authorizedUserId, AccountingAuthorizeLevel level)
         {
             var existAuthorization = await _db.AccountingUserAuthorization
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.AuthorizedUserId == authorizedUserId)

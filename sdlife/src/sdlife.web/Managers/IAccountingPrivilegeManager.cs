@@ -10,7 +10,7 @@ namespace sdlife.web.Managers
     public interface IAccountingPrivilegeManager
     {
         Task<bool> CheckUserAuthorization(int userId, int targetUserId, AccountingAuthorizeLevel level);
-        Task SetUserAuthroize(int userId, int authorizedUserId, AccountingAuthorizeLevel level);
+        Task Set(int userId, int authorizedUserId, AccountingAuthorizeLevel level);
         IQueryable<User> AuthorizedUsers(int userId);
         Task<bool> CanIModify(int authorizedUserId);
     }
