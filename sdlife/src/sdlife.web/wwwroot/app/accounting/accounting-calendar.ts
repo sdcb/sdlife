@@ -203,15 +203,15 @@ namespace sdlife.accounting {
         }
     }
 
-    module.component("accountingPage", {
+    module.component("accountingCalendar", {
         controller: AccountingPage,
         controllerAs: "vm",
-        templateUrl: "/app/accounting/accounting-page.html",
+        templateUrl: "/app/accounting/accounting-calendar.html",
     });
 
-    module.component("accountingPageForFriend", {
+    module.component("accountingCalendarForFriend", {
         controller: AccountingPageForFriend,
         controllerAs: "vm",
-        templateUrl: "/app/accounting/accounting-page.html",
+        templateUrl: "/app/accounting/accounting-calendar.html",
     });
 }
