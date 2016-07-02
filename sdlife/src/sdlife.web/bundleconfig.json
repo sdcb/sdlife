@@ -6,7 +6,8 @@
     "inputFiles": [
       "wwwroot/lib/angular/angular-csp.css",
       "wwwroot/lib/angular-material/angular-material.min.css",
-      "wwwroot/lib/fullcalendar/dist/fullcalendar.min.css"
+      "wwwroot/lib/fullcalendar/dist/fullcalendar.min.css",
+      "wwwroot/lib/angular-material-data-table/dist/md-data-table.min.css"
     ]
   },
   {

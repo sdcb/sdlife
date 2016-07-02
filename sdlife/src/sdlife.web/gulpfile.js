@@ -51,6 +51,7 @@ gulp.task("min:libJs", function () {
         "wwwroot/lib/angular-messages/angular-messages.min.js",
         "wwwroot/lib/angular-animate/angular-animate.min.js",
         "wwwroot/lib/angular-material/angular-material.min.js",
+        "wwwroot/lib/angular-material-data-table/dist/md-data-table.min.js", 
         "wwwroot/lib/moment/min/moment.min.js",
         "wwwroot/lib/fullcalendar/dist/fullcalendar.min.js",
         "wwwroot/lib/fullcalendar/dist/lang/zh-cn.js",
