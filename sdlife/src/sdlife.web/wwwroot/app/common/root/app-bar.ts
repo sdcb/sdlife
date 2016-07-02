@@ -1,6 +1,6 @@
 ﻿namespace sdlife {
     class AppBarComponent {
-        $router: ng.Router;
+        router: ng.Router;
         loading: ng.IPromise<any>;
 
         showChangePasswordDialog(ev: MouseEvent) {
@@ -11,7 +11,7 @@
             ensure(this.dialog, ev, "确定要注销登陆吗？").then(() => {
                 return this.loading = this.loginApi.logout();
             }).then(() => {
-                this.$router.navigate(["Login"]);
+                this.router.navigateByUrl("/login");
             });
         }
 
@@ -35,7 +35,7 @@
         templateUrl: "/app/common/root/app-bar.html", 
         transclude: true, 
         bindings: {
-            "$router": "<"
+            "router": "<"
         }
     });
 }

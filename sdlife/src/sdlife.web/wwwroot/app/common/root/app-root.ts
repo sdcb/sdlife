@@ -12,7 +12,7 @@
         controllerAs: "vm", 
         templateUrl: "/app/common/root/app-root.html", 
         $routeConfig: [
-            { path: "/login", component: "login-page", name: "Login" }, 
+            { path: "/login", component: "loginPage", name: "Login" }, 
             { path: "/...", component: "sdlifeApp", name: "App" }, 
         ]
     });

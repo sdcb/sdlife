@@ -207,11 +207,17 @@ namespace sdlife.accounting {
         controller: AccountingPage,
         controllerAs: "vm",
         templateUrl: "/app/accounting/accounting-calendar.html",
+        bindings: {
+            "$router": "<"
+        }
     });
 
     module.component("accountingCalendarForFriend", {
         controller: AccountingPageForFriend,
         controllerAs: "vm",
         templateUrl: "/app/accounting/accounting-calendar.html",
+        bindings: {
+            "$router": "<"
+        }
     });
 }
