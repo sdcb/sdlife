@@ -181,9 +181,54 @@ namespace sdlife.web.Managers.Implements
             return Result.Ok((AccountingDto)entity);
         }
 
-        public Task<PagedList<AccountingDto>> GetAccountingPagedList(PagedListQuery query)
+        public async Task<PagedList<AccountingDto>> GetAccountingPagedList(AccountingPagedListQuery query)
         {
-            throw new NotImplementedException();
+            var data =
+                from accounting in _db.Accounting
+                join title in _db.AccountingTitle on accounting.TitleId equals title.Id
+                join comment in _db.AccountingComment on accounting.Id equals comment.AccountingId into commentGroup
+                from comment in commentGroup.DefaultIfEmpty()
+                where accounting.CreateUserId == query.UserId
+                select new AccountingDto
+                {
+                    Id = accounting.Id,
+                    Amount = accounting.Amount,
+                    Comment = comment == null ? null : comment.Comment,
+                    Time = accounting.EventTime,
+                    IsIncome = title.IsIncome,
+                    Title = title.Title
+                };
+
+            if (query.Title.HasValue)
+            {
+                data = data.Where(x => x.Title.StartsWith(query.Title.Value));
+            }
+            if (query.Titles.HasValue)
+            {
+                data = data.Where(x => query.Titles.Value.Contains(x.Title));
+            }
+            if (query.From.HasValue)
+            {
+                data = data.Where(x => x.Time >= query.From.Value);
+            }
+            if (query.To.HasValue)
+            {
+                data = data.Where(x => x.Time < query.To.Value);
+            }
+            if (query.IsIncome.HasValue)
+            {
+                data = data.Where(x => x.IsIncome == query.IsIncome.Value);
+            }
+            if (query.MinAmount.HasValue)
+            {
+                data = data.Where(x => x.Amount >= query.MinAmount.Value);
+            }
+            if (query.MaxAmount.HasValue)
+            {
+                data = data.Where(x => x.Amount < query.MaxAmount.Value);
+            }
+
+            return await data.CreatePagedList(query).ConfigureAwait(false);
         }
 
         public async Task<IQueryable<AccountingDto>> UserAccountingInRange(DateTime start, DateTime end, int userId)
