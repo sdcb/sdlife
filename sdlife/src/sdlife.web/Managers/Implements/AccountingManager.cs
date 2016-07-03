@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.DynamicLinq;
+
 
 namespace sdlife.web.Managers.Implements
 {
@@ -177,6 +179,11 @@ namespace sdlife.web.Managers.Implements
 
             await _db.SaveChangesAsync().ConfigureAwait(false);
             return Result.Ok((AccountingDto)entity);
+        }
+
+        public Task<PagedList<AccountingDto>> GetAccountingPagedList(PagedListQuery query)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IQueryable<AccountingDto>> UserAccountingInRange(DateTime start, DateTime end, int userId)

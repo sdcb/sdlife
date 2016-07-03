@@ -26,11 +26,11 @@ namespace sdlife.web.Controllers
             _user = user;
         }
 
-        public IActionResult Index()
+        public async Task<PagedList<AccountingDto>> List(PagedListQuery query)
         {
-            return View();
+            return await _accounting.GetAccountingPagedList(query);
         }
-        
+
         public async Task<AccountingDto> Create([FromBody]AccountingDto dto, int? userId = null)
         {
             var toCreateUserId = userId ?? _user.UserId;
