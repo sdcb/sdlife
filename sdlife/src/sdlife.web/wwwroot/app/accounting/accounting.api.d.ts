@@ -38,6 +38,29 @@
         eventDragStop?: (event: IAccountingEventObject, jsEvent: MouseEvent, ui: any, view: FullCalendar.ViewObject) => void;
         eventClick?: (event: IAccountingEventObject, jsEvent: MouseEvent, view: FullCalendar.ViewObject) => any; // return type boolean or void
     }
+
+    export interface IPagedListQuery {
+        page?: number;
+        pageSize?: number;
+        orderBy?: string;
+        asc?: boolean;
+    }
+
+    export interface IAccountingPagedListQuery {
+        userId: number;
+        title?: string;
+        titles?: string[];
+        from?: string;
+        to?: string;
+        isIncome?: boolean;
+        minAmount?: number;
+        maxAmount?: number;
+    }
+
+    export interface IPagedList<T> {
+        totalCount: number;
+        items: T[];
+    }
 }
 
 declare namespace FullCalendar {
