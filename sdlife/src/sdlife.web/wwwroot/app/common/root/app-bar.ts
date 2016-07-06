@@ -1,5 +1,5 @@
 ﻿namespace sdlife {
-    class AppBarComponent {
+    export class AppBar {
         router: ng.Router;
         loading: ng.IPromise<any>;
 
@@ -30,7 +30,7 @@
 
     let app = angular.module(consts.moduleName);
     app.component("appBar", {
-        controller: AppBarComponent, 
+        controller: AppBar, 
         controllerAs: "vm", 
         templateUrl: "/app/common/root/app-bar.html", 
         transclude: true, 

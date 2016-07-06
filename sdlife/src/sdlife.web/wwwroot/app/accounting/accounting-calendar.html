@@ -1,5 +1,5 @@
 ﻿<div layout="column">
-    <app-bar router="vm.$router">日历</app-bar>
+    <accounting-app-bar router="vm.$router"></accounting-app-bar>
     <div layout-padding>
         <loading size="160" promise="vm.loading"></loading>
         <div ui-calendar="vm.calendarConfig" ng-model="vm.eventSources"></div>

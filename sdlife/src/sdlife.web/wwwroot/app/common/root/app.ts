@@ -14,6 +14,7 @@
         },
         $routeConfig: [
             { path: "/book/me/calendar", component: "accountingCalendar", name: "BookCalendar" },
+            { path: "/book/me/list", component: "accountingList", name: "BookList" },
             { path: "/book/:userId/calendar", component: "accountingCalendarForFriend", name: "BookCalendarFriend" },
             { path: "/**", redirectTo: ["BookCalendar"] }
         ]

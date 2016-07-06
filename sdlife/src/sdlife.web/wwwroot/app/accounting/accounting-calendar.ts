@@ -3,9 +3,7 @@
 namespace sdlife.accounting {
     let module = angular.module(consts.moduleName);
 
-    export class AccountingPage {
-        userId: number;
-        canCreate = true;
+    class AccountingCalendar extends AccountingBasePage {
         eventSources = [<IAccountingEventObject[]>[]];
         calendarConfig = <IAccountingCalendarConfig>{
             height: "auto",
@@ -22,14 +20,6 @@ namespace sdlife.accounting {
             viewRender: (view, el) => this.viewRender(view, el),
             eventRender: (event, element) => this.eventRender(event, element),
             eventClick: (event, jsEvent, view) => this.eventClick(event, jsEvent, view)
-        }
-
-        $routerOnActivate(next) {
-            this.userId = parseInt(next.params.userId);
-            if (this.userId) {
-                this.api.canIModify(this.userId)
-                    .then(v => this.canCreate = v);
-            }
         }
 
         calendarView: FullCalendar.ViewObject;
@@ -150,11 +140,12 @@ namespace sdlife.accounting {
         constructor(
             public compile: ng.ICompileService,
             public scope: ng.IScope,
-            public api: AccountingApi,
+            api: AccountingApi,
             public dialog: ng.material.IDialogService,
             public media: ng.material.IMedia,
             public timeout: ng.ITimeoutService
         ) {
+            super(api);
             scope.$watch(() => this.isSmallDevice(), () => {
                 let v = this.eventSources[0];
                 this.eventSources[0] = [];
@@ -179,7 +170,7 @@ namespace sdlife.accounting {
         throw new Error("UNKNOWN viewName: " + viewName);
     }
 
-    class AccountingPageForFriend extends AccountingPage {
+    class AccountingCalendarForFriend extends AccountingCalendar {
         canCreate = false;
 
         dayClick(date: moment.Moment, ev: MouseEvent) {
@@ -204,7 +195,7 @@ namespace sdlife.accounting {
     }
 
     module.component("accountingCalendar", {
-        controller: AccountingPage,
+        controller: AccountingCalendar,
         controllerAs: "vm",
         templateUrl: "/app/accounting/accounting-calendar.html",
         bindings: {
@@ -213,7 +204,7 @@ namespace sdlife.accounting {
     });
 
     module.component("accountingCalendarForFriend", {
-        controller: AccountingPageForFriend,
+        controller: AccountingCalendarForFriend,
         controllerAs: "vm",
         templateUrl: "/app/accounting/accounting-calendar.html",
         bindings: {
