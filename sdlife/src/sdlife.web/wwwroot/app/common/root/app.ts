@@ -13,10 +13,9 @@
             $router: "<",
         },
         $routeConfig: [
-            { path: "/book/me/calendar", component: "accountingCalendar", name: "BookCalendar" },
-            { path: "/book/me/list", component: "accountingList", name: "BookList" },
-            { path: "/book/:userId/calendar", component: "accountingCalendarForFriend", name: "BookCalendarFriend" },
-            { path: "/**", redirectTo: ["BookCalendar"] }
+            { path: "/book/:userId/calendar", component: "accountingCalendar", name: "BookCalendar" },
+            { path: "/book/:userId/list", component: "accountingList", name: "BookList" },
+            { path: "/**", redirectTo: ["BookCalendar", { userId: "me" }] }
         ]
     });
 }

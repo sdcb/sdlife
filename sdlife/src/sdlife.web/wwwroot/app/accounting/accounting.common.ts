@@ -55,12 +55,17 @@
     export class AccountingBasePage {
         $router: ng.Router;
         userId: number;
-        canCreate = true;
+        canCreate = false;
         $routerOnActivate(next) {
-            this.userId = parseInt(next.params.userId);
-            if (this.userId) {
-                this.api.canIModify(this.userId)
-                    .then(v => this.canCreate = v);
+            if (next.params.userId === "me") {
+                this.userId = null;
+                this.canCreate = true;
+            } else {
+                this.userId = parseInt(next.params.userId);
+                if (this.userId) {
+                    this.api.canIModify(this.userId)
+                        .then(v => this.canCreate = v);
+                }
             }
         }
 

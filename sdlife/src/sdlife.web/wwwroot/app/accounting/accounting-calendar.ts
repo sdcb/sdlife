@@ -170,9 +170,7 @@ namespace sdlife.accounting {
         throw new Error("UNKNOWN viewName: " + viewName);
     }
 
-    class AccountingCalendarForFriend extends AccountingCalendar {
-        canCreate = false;
-
+    class AccountingCalendarInUser extends AccountingCalendar {
         dayClick(date: moment.Moment, ev: MouseEvent) {
             if (this.canCreate) {
                 super.dayClick(date, ev);
@@ -196,15 +194,6 @@ namespace sdlife.accounting {
 
     module.component("accountingCalendar", {
         controller: AccountingCalendar,
-        controllerAs: "vm",
-        templateUrl: "/app/accounting/accounting-calendar.html",
-        bindings: {
-            "$router": "<"
-        }
-    });
-
-    module.component("accountingCalendarForFriend", {
-        controller: AccountingCalendarForFriend,
         controllerAs: "vm",
         templateUrl: "/app/accounting/accounting-calendar.html",
         bindings: {

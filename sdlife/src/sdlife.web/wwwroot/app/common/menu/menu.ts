@@ -5,7 +5,7 @@
         router: ng.Router;
 
         accountingMenu = [
-            new MenuItem("我", ["BookCalendar"], this.router)
+            new MenuItem("我", ["BookCalendar", { userId: "me" }], this.router)
         ];
         menus = <Array<IMenuItem>>[
             new MenuFolder("记帐", this.accountingMenu, this.router)
@@ -22,7 +22,7 @@
         setupAccountingUsers() {
             this.api.authorizedUsers().then(users => {
                 this.accountingMenu.push(...users.map(user => {
-                    return new MenuItem(user.email, ["BookCalendarFriend", { userId: user.id }], this.router);
+                    return new MenuItem(user.email, ["BookCalendar", { userId: user.id }], this.router);
                 }));
             });
         }
