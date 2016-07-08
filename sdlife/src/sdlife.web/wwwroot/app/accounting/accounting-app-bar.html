@@ -1,9 +1,9 @@
 ﻿<app-bar router="vm.router">
     <md-nav-bar md-selected-nav-item="vm.currentNavItem" nav-bar-aria-label="navigation links">
-        <md-nav-item md-nav-href="#/book/me/calendar" name="calendar">
+        <md-nav-item md-nav-href="{{'#/book/' + vm.user() + '/calendar'}}" name="calendar">
             日历
         </md-nav-item>
-        <md-nav-item md-nav-href="#/book/me/list" name="list">
+        <md-nav-item md-nav-href="{{'#/book/' + vm.user() + '/list'}}" name="list">
             列表
         </md-nav-item>
     </md-nav-bar>

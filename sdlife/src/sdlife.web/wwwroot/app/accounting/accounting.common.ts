@@ -56,12 +56,13 @@
         $router: ng.Router;
         userId: number;
         canCreate = false;
-        $routerOnActivate(next) {
-            if (next.params.userId === "me") {
+        $routerOnActivate(next: ng.ComponentInstruction) {
+            let userId = location.href.replace(/.+\/book\/(.+)\/.+/g, "$1");
+            if (userId === "me" || !userId) {
                 this.userId = null;
                 this.canCreate = true;
             } else {
-                this.userId = parseInt(next.params.userId);
+                this.userId = parseInt(userId);
                 if (this.userId) {
                     this.api.canIModify(this.userId)
                         .then(v => this.canCreate = v);

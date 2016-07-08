@@ -1,6 +1,10 @@
 ﻿namespace sdlife {
     class AccountingAppBar extends AppBar {
         currentNavItem: string;
+        userId: number;
+        user() {
+            return this.userId ? this.userId : "me";
+        }
 
         getCurrentNavItemByUrl(url: string) {
             if (url.indexOf("calendar") !== -1) {
@@ -28,7 +32,8 @@
         controllerAs: "vm", 
         templateUrl: "/app/accounting/accounting-app-bar.html", 
         bindings: {
-            "router": "<"
+            "router": "<", 
+            "userId": "<"
         }
     });
 }

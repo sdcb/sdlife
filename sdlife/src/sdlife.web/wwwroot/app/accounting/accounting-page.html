@@ -1,0 +1,7 @@
+﻿<div layout="column">
+    <accounting-app-bar user-id="vm.userId" router="vm.$router"></accounting-app-bar>
+    <create-icon ng-if="vm.canCreate"
+                 user-id="vm.userId"
+                 on-created="vm.onCreated()"></create-icon>
+    <ng-outlet></ng-outlet>
+</div>

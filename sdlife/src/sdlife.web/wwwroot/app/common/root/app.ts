@@ -13,9 +13,8 @@
             $router: "<",
         },
         $routeConfig: [
-            { path: "/book/:userId/calendar", component: "accountingCalendar", name: "BookCalendar" },
-            { path: "/book/:userId/list", component: "accountingList", name: "BookList" },
-            { path: "/**", redirectTo: ["BookCalendar", { userId: "me" }] }
+            { path: "/book/:userId/...", component: "accountingPage", name: "Book", useAsDefault: true },
+            { path: "/", redirectTo: ["Book", { userId: "me" }] }
         ]
     });
 }
