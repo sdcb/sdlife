@@ -121,3 +121,11 @@ md-tooltip .md-content {
 .app-outlet {
     overflow-x: hidden;
 }
+
+.appbar .md-nav-item span {
+    color: white;
+}
+
+.appbar md-nav-ink-bar {
+    background-color: white;
+}
