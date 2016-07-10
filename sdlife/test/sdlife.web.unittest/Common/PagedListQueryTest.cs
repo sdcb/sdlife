@@ -16,13 +16,12 @@ namespace sdlife.web.unittest.Common
             {
                 Page = 3,
                 PageSize = 12,
-                Asc = true,
                 OrderBy = "Title"
             };
 
             Assert.Equal(24, query.Skip);
             Assert.Equal(12, query.Take);
-            Assert.Equal("Title ASC", query.SortString);
+            Assert.Equal("Title ASC", query.SortString());
         }
 
         [Fact]
@@ -32,7 +31,6 @@ namespace sdlife.web.unittest.Common
             {
                 Page = 3,
                 PageSize = null,
-                Asc = true,
                 OrderBy = "Title"
             };
 
@@ -46,7 +44,6 @@ namespace sdlife.web.unittest.Common
             {
                 Page = -3,
                 PageSize = 12,
-                Asc = true,
                 OrderBy = "Title"
             };
 
@@ -60,7 +57,6 @@ namespace sdlife.web.unittest.Common
             {
                 Page = -3,
                 PageSize = -12,
-                Asc = true,
                 OrderBy = "Title"
             };
 
@@ -74,7 +70,6 @@ namespace sdlife.web.unittest.Common
             {
                 Page = 1,
                 PageSize = PagedListQuery.MaxPageSize + 1,
-                Asc = true,
                 OrderBy = "Title"
             };
 
@@ -88,25 +83,10 @@ namespace sdlife.web.unittest.Common
             {
                 Page = 1,
                 PageSize = 12,
-                Asc = false,
-                OrderBy = "Title"
+                OrderBy = "-Title"
             };
 
-            Assert.Equal("Title DESC", query.SortString);
-        }
-
-        [Fact]
-        public void NullAscWillEmitNullSortString()
-        {
-            var query = new PagedListQuery
-            {
-                Page = 3,
-                PageSize = 12,
-                Asc = null,
-                OrderBy = "Title"
-            };
-
-            Assert.Equal(null, query.SortString);
+            Assert.Equal("Title DESC", query.SortString());
         }
 
         [Fact]
@@ -116,11 +96,10 @@ namespace sdlife.web.unittest.Common
             {
                 Page = 3,
                 PageSize = 12,
-                Asc = true,
                 OrderBy = null
             };
 
-            Assert.Equal(null, query.SortString);
+            Assert.Equal(null, query.SortString());
         }
     }
 }
