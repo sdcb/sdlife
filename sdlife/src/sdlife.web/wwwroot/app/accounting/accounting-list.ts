@@ -27,6 +27,10 @@ namespace sdlife.accounting {
         loadData = () => {
             return this.promise = this.api.loadList(this.query).then(data => this.data = data);
         }
+
+        onCreated() {
+            this.loadData();
+        }
     }
 
     module.component("accountingList", {

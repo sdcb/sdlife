@@ -1,4 +1,8 @@
-﻿<div layout-padding>
+﻿<create-icon ng-if="vm.canCreate"
+             user-id="vm.userId"
+             on-created="vm.onCreated()"></create-icon>
+
+<div layout-padding>
     <loading size="160" promise="vm.loading"></loading>
     <div ui-calendar="vm.calendarConfig" ng-model="vm.eventSources"></div>
     <div>

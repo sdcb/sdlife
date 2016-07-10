@@ -1,4 +1,8 @@
-﻿<md-toolbar class="md-table-toolbar md-default">
+﻿<create-icon ng-if="vm.canCreate"
+             user-id="vm.userId"
+             on-created="vm.onCreated()"></create-icon>
+
+<md-toolbar class="md-table-toolbar md-default">
     <div class="md-toolbar-tools">
         列表
     </div>
