@@ -119,7 +119,9 @@
         }
 
         isActive() {
-            return this.router.isRouteActive(this.router.generate(this.state));
+            let instrument = this.router.generate(this.state);
+            let active = this.router.isRouteActive(instrument);
+            return active;
         }
     }
 

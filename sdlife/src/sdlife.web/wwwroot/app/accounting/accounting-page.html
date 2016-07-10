@@ -1,5 +1,14 @@
 ﻿<div layout="column">
-    <accounting-app-bar user-id="vm.userId" router="vm.$router"></accounting-app-bar>
+    <app-bar router="vm.$router">
+        <md-nav-bar md-selected-nav-item="vm.currentNavItem" nav-bar-aria-label="navigation links">
+            <md-nav-item md-nav-href="{{'#/book/' + vm.user() + '/calendar'}}" name="calendar">
+                日历
+            </md-nav-item>
+            <md-nav-item md-nav-href="{{'#/book/' + vm.user() + '/list'}}" name="list">
+                列表
+            </md-nav-item>
+        </md-nav-bar>
+    </app-bar>
     <create-icon ng-if="vm.canCreate"
                  user-id="vm.userId"
                  on-created="vm.onCreated()"></create-icon>
