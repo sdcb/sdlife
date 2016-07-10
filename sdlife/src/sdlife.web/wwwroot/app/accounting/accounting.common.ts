@@ -1,8 +1,8 @@
 ﻿namespace sdlife.accounting {
-    let module = angular.module(consts.moduleName);
+    let app = angular.module(consts.moduleName);
     moment.locale("zh-cn");
 
-    module.filter("accountingDate", () => {
+    app.filter("accountingDate", () => {
         return (dateOrMoment: moment.Moment | Date | string) => {
             let time = moment(dateOrMoment);
             if (time.isSame(moment(), "day")) {
@@ -14,6 +14,13 @@
             } else {
                 return time.clone().format("LL");
             }
+        };
+    });
+
+    app.filter("accountingTime", () => {
+        return (dateOrMoment: moment.Moment | Date | string) => {
+            let time = moment(dateOrMoment);
+            return time.format("LL");
         };
     });
 

@@ -11,9 +11,7 @@ namespace sdlife.web.Models
 
         public int? PageSize { get; set; }
 
-        public Maybe<string> OrderBy { get; set; }
-
-        public bool? Asc { get; set; }
+        public string OrderBy { get; set; }
 
         public int Skip
         {
@@ -37,18 +35,22 @@ namespace sdlife.web.Models
             }
         }
 
-        public Maybe<string> SortString
+        public Maybe<string> SortString()
         {
-            get
+            if (OrderBy != null)
             {
-                if (OrderBy.HasValue && Asc.HasValue)
+                if (!OrderBy.StartsWith("-"))
                 {
-                    return OrderBy + " " + (Asc.Value ? "ASC" : "DESC");
+                    return OrderBy + " " + "ASC";
                 }
                 else
                 {
-                    return null;
+                    return OrderBy.Substring(1) + " " + "DESC";
                 }
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -70,6 +72,6 @@ namespace sdlife.web.Models
 
         public const int DefaultPage = 1;
         public const int MaxPageSize = 100;
-        public const int DefaultPageSize = 20;
+        public const int DefaultPageSize = 12;
     }
 }

@@ -199,13 +199,13 @@ namespace sdlife.web.Managers.Implements
                     Title = title.Title
                 };
 
-            if (query.Title.HasValue)
+            if (query.Title != null)
             {
-                data = data.Where(x => x.Title.StartsWith(query.Title.Value));
+                data = data.Where(x => x.Title.StartsWith(query.Title));
             }
-            if (query.Titles.HasValue)
+            if (query.Titles != null)
             {
-                data = data.Where(x => query.Titles.Value.Contains(x.Title));
+                data = data.Where(x => query.Titles.Contains(x.Title));
             }
             if (query.From.HasValue)
             {

@@ -43,10 +43,9 @@
         page?: number;
         pageSize?: number;
         orderBy?: string;
-        asc?: boolean;
     }
 
-    export interface IAccountingPagedListQuery {
+    export interface IAccountingPagedListQuery extends IPagedListQuery {
         userId: number;
         title?: string;
         titles?: string[];

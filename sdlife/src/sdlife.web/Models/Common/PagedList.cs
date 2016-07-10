@@ -18,11 +18,13 @@ namespace sdlife.web.Models
     {
         public static async Task<PagedList<T>> CreatePagedList<T>(this IQueryable<T> input, PagedListQuery query)
         {
-            var itemsInput = input.Skip(query.Skip).Take(query.Take);
-            if (query.SortString.HasValue)
+            var itemsInput = input;
+            if (query.SortString().HasValue)
             {
-                itemsInput = itemsInput.OrderBy(query.SortString.Value);
+                itemsInput = itemsInput
+                    .OrderBy(query.SortString().Value);
             }
+            itemsInput = itemsInput.Skip(query.Skip).Take(query.Take);
 
             return new PagedList<T>
             {

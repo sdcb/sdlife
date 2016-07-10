@@ -3,7 +3,7 @@
         moduleName: "sdlife"
     };
 
-    let app = angular.module(consts.moduleName, ["ngMaterial", "ui.calendar", "ngMessages", "ngComponentRouter"]);
+    let app = angular.module(consts.moduleName, ["ngMaterial", "ui.calendar", "ngMessages", "ngComponentRouter", "md.data.table"]);
 
     app.value("$routerRootComponent", "sdlifeAppRoot");    
 

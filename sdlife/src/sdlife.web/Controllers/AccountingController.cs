@@ -26,8 +26,9 @@ namespace sdlife.web.Controllers
             _user = user;
         }
 
-        public async Task<PagedList<AccountingDto>> List(AccountingPagedListQuery query)
+        public async Task<PagedList<AccountingDto>> List([FromBody]AccountingPagedListQuery query)
         {
+            query.UserId = query.UserId ?? _user.UserId;
             return await _accounting.GetAccountingPagedList(query);
         }
 
