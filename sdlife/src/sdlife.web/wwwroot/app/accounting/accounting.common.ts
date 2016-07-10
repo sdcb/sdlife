@@ -56,8 +56,10 @@
         $router: ng.Router;
         userId: number;
         canCreate = false;
+
         $routerOnActivate(next: ng.ComponentInstruction) {
-            let userId = location.href.replace(/.+\/book\/(.+)\/.+/g, "$1");
+            let userId = next.params["userId"] ||
+                this.$router.parent.parent._currentInstruction.component.params["userId"];
             if (userId === "me" || !userId) {
                 this.userId = null;
                 this.canCreate = true;
