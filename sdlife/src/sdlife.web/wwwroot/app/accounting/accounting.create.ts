@@ -4,7 +4,7 @@
         loading: ng.IPromise<any>;
         result = {
             amount: 0,
-            comment: null,
+            comment: "",
             time: moment().startOf("minute").toDate(),
             isIncome: false, 
             title: ""

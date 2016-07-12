@@ -49,7 +49,7 @@
         dialog: ng.material.IDialogService,
         ev: Event,
         title: string,
-        textContent: string = null) {
+        textContent: string = "") {
         return dialog.show(dialog.confirm()
             .title(title)
             .textContent(textContent)

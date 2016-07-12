@@ -18,6 +18,7 @@ namespace sdlife.accounting {
                     return r.name;
                 }
             }
+            throw new Error("non existing router");
         }
 
         routes = [

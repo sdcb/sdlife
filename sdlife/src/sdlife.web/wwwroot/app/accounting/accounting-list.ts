@@ -8,7 +8,7 @@ namespace sdlife.accounting {
         query: IAccountingPagedListQuery = {
             page: 1, 
             pageSize: 12, 
-            userId: null, 
+            userId: 0, 
             orderBy: "-Time", 
         };
         promise: ng.IPromise<any>;

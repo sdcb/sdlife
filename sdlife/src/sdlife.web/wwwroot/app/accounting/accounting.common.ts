@@ -68,7 +68,7 @@
             let userId = next.params["userId"] ||
                 this.$router.parent.parent._currentInstruction.component.params["userId"];
             if (userId === "me" || !userId) {
-                this.userId = null;
+                this.userId = 0;
                 this.canCreate = true;
             } else {
                 this.userId = parseInt(userId);
