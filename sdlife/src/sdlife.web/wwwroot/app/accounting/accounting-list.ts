@@ -13,11 +13,6 @@ namespace sdlife.accounting {
         };
         promise: ng.IPromise<any>;
 
-        static $inject = ["accounting.api"];
-        constructor(api: AccountingApi) {
-            super(api);
-        }
-
         $routerOnActivate(next) {
             super.$routerOnActivate(next);
             this.loadData();
@@ -30,6 +25,21 @@ namespace sdlife.accounting {
 
         onCreated() {
             this.loadData();
+        }
+
+        searchTitle(title: string) {
+            return this.api.searchSpendingTitles(title);
+        }
+
+        static $inject = ["accounting.api", "$scope"];
+        constructor(
+            api: AccountingApi,
+            scope: ng.IScope) {
+            super(api);
+
+            scope.$watch(() => this.query.title, (newValue: string, oldValue: string) => {
+                if (newValue !== oldValue) this.loadData();
+            });
         }
     }
 
