@@ -79,7 +79,13 @@
             },
             fullscreen: isSmallDevice(media)
         };
-        thisDialog.locals["thisDialog"] = thisDialog;
+        
+        if (thisDialog.locals) {
+            thisDialog.locals["thisDialog"] = thisDialog;
+        } else {
+            NN(thisDialog.locals);
+        }
+        
         return dialog.show(thisDialog);
     }
 

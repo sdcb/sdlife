@@ -6,7 +6,7 @@
             amount: 0,
             comment: "",
             time: moment().startOf("minute").toDate(),
-            isIncome: false, 
+            isIncome: false,
             title: ""
         };
 
@@ -21,7 +21,7 @@
                     .second(moment().second())
                     .millisecond(moment().millisecond())
                     .format(),
-                isIncome: this.result.isIncome, 
+                isIncome: this.result.isIncome,
                 title: this.result.title || this.$searchTitle
             };
             return this.api.create(data, this.userId);
@@ -42,10 +42,10 @@
 
         static $inject = ["$scope", "$mdDialog", "accounting.api", "date", "userId"];
         constructor(
-            public scope: ng.IScope, 
+            public scope: ng.IScope,
             public dialog: ng.material.IDialogService,
-            public api: AccountingApi, 
-            public date: string, 
+            public api: AccountingApi,
+            public date: string,
             public userId: number
         ) {
             scope.$watch(() => this.result.isIncome, () => {
@@ -56,25 +56,25 @@
     }
 
     export function showAccountingCreateDialog(
-        date: string, 
-        userId: number, 
+        date: string,
+        userId: number | null,
         dialog: ng.material.IDialogService,
-        media: ng.material.IMedia, 
+        media: ng.material.IMedia,
         ev: MouseEvent) {
         return dialog.show(<ng.material.IDialogOptions>{
             controller: AcountingCreateDialog,
-            templateUrl: "/app/accounting/accounting.create.html", 
+            templateUrl: "/app/accounting/accounting.create.html",
             controllerAs: "vm",
 
             clickOutsideToClose: false,
-            targetEvent: ev, 
+            targetEvent: ev,
             locals: {
-                date: date, 
+                date: date,
                 userId: userId
-            }, 
+            },
             fullscreen: isSmallDevice(media)
         });
     }
-    
+
     let module = angular.module(consts.moduleName);
 }

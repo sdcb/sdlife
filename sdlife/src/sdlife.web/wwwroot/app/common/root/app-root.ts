@@ -60,8 +60,12 @@
     }
 
     app.config(["$httpProvider", ($httpProvider: ng.IHttpProvider) => {
-        $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-        $httpProvider.defaults.headers.post["RequestVerificationToken"] = () => localStorage.getItem("csrf");
-        $httpProvider.interceptors.push("authHttpInterceptor");
+        if ($httpProvider.defaults.headers) {
+            $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+            $httpProvider.defaults.headers.post["RequestVerificationToken"] = () => localStorage.getItem("csrf");
+            $httpProvider.interceptors.push("authHttpInterceptor");
+        } else {
+            throw new Error("$httpProvider.defaults.headers should never be null");
+        }
     }]);
 }

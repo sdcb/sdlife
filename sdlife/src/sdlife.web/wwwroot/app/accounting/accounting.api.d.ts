@@ -12,27 +12,27 @@
     }
 
     export interface IAccountingEventObject {
-        title: string, 
-        start: string|moment.Moment, 
-        end?: string|moment.Moment, 
-        allDay?: boolean, 
-        color?: string, 
+        title: string,
+        start: string | moment.Moment,
+        end?: string | moment.Moment,
+        allDay?: boolean,
+        color?: string,
 
         entity: IAccountingEntity
     }
 
     export interface IAccountingCalendarConfig {
-        height?: string, 
-        editable: boolean, 
+        height?: string,
+        editable: boolean,
         header: {
-            left: string, 
-            center: string, 
+            left: string,
+            center: string,
             right: string
-        }, 
-        lang?: "zh-cn", 
-        dayClick: (date: moment.Moment, ev: MouseEvent) => void, 
-        eventDrop: (event: IAccountingEventObject, duration: moment.Duration, rollback: () => void) => void, 
-        eventResize: (event: IAccountingEventObject, delta: moment.Duration, revertFunc: () => void, jsEvent: Event, ui: any, view: FullCalendar.ViewObject) => void, 
+        },
+        lang?: "zh-cn",
+        dayClick: (date: moment.Moment, ev: MouseEvent) => void,
+        eventDrop: (event: IAccountingEventObject, duration: moment.Duration, rollback: () => void) => void,
+        eventResize: (event: IAccountingEventObject, delta: moment.Duration, revertFunc: () => void, jsEvent: Event, ui: any, view: FullCalendar.ViewObject) => void,
         viewRender: (view: FullCalendar.ViewObject, element: JQuery) => void;
         eventRender: (event: IAccountingEventObject, element: JQuery, view: FullCalendar.ViewObject) => void;
         eventDragStop?: (event: IAccountingEventObject, jsEvent: MouseEvent, ui: any, view: FullCalendar.ViewObject) => void;
@@ -46,7 +46,7 @@
     }
 
     export interface IAccountingPagedListQuery extends IPagedListQuery {
-        userId: number;
+        userId: number | null;
         title?: string;
         titles?: string[];
         from?: string;

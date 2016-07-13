@@ -33,6 +33,14 @@
         };
     }
 
+    export function NN<T>(t: T | undefined) {
+        if (t === null || t === undefined) {
+            throw new Error("value should never be null");
+        } else {
+            return t;
+        }
+    }
+
     export function addColorToEventObjects(data: IAccountingEventObject[]) {
         const saturation = 1;
 
@@ -60,15 +68,15 @@
     }
 
     export class AccountingBasePage {
-        $router: ng.Router;
-        userId: number;
+        readonly $router: ng.Router;
+        userId: number | null;
         canCreate = false;
 
         $routerOnActivate(next: ng.ComponentInstruction) {
             let userId = next.params["userId"] ||
                 this.$router.parent.parent._currentInstruction.component.params["userId"];
             if (userId === "me" || !userId) {
-                this.userId = 0;
+                this.userId = null;
                 this.canCreate = true;
             } else {
                 this.userId = parseInt(userId);

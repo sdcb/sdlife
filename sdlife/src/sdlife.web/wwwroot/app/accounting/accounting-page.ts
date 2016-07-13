@@ -5,7 +5,6 @@ namespace sdlife.accounting {
 
     class AccountingPage extends AccountingBasePage {
         currentNavItem: string;
-        userId: number;
         user() {
             return this.userId ? this.userId : "me";
         }
