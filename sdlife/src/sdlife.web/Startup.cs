@@ -60,11 +60,7 @@ namespace sdlife.web
                 .AddEntityFrameworkStores<ApplicationDbContext, int>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc().AddJsonOptions(options =>
-            {
-                options.SerializerSettings.ContractResolver =
-                    new CamelCasePropertyNamesContractResolver();
-            });
+            services.AddMvc();
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
