@@ -61,7 +61,7 @@ namespace sdlife.accounting {
         }
 
         authorizedUsers() {
-            return this.$.post<Array<IUserDto>>("/Accounting/AuthorizedUsers", {}).then(cb => {
+            return this.$.post<Array<IAccountingAuthorizedUser>>("/Accounting/AuthorizedUsers", {}).then(cb => {
                 return NN(cb.data);
             });
         }

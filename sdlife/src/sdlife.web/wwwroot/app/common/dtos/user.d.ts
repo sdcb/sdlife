@@ -4,4 +4,9 @@
         userName: string;
         email: string;
     }
+
+    interface IAccountingAuthorizedUser {
+        userId: number;
+        userName: string;
+    }
 }

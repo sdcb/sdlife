@@ -22,7 +22,7 @@
         setupAccountingUsers() {
             this.api.authorizedUsers().then(users => {
                 this.accountingMenu.push(...users.map(user => {
-                    return new MenuItem(user.email, ["Book", { userId: user.id }], this.router);
+                    return new MenuItem(user.userName, ["Book", { userId: user.userId }], this.router);
                 }));
             });
         }

@@ -17,6 +17,10 @@ namespace sdlife.web.Models
 
         public AccountingAuthorizeLevel Level { get; set; }
 
+        [Required]
+        [MaxLength(15)]
+        public string Alias { get; set; }
+
         public User User { get; set; }
 
         public User AuthorizedUser { get; set; }
