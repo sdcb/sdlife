@@ -37,8 +37,7 @@
         isOpen: boolean;
         menu: IMenuItem;
         router: ng.Router;
-        toggle() {
-        }
+        toggle: () => void;
 
         isActive() {
             return this.menu.isActive();
