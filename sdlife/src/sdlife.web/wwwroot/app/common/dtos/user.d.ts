@@ -5,7 +5,7 @@
         email: string;
     }
 
-    interface IAccountingAuthorizedUser {
+    interface IAccountingUserRelationship {
         userId: number;
         userName: string;
     }
