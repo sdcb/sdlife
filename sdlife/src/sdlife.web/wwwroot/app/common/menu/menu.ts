@@ -7,6 +7,7 @@
         accountingMenu = [
             new MenuItem("我", ["Book", { userId: "me" }], this.router)
         ];
+
         menus = <Array<IMenuItem>>[
             new MenuFolder("记帐", this.accountingMenu, this.router)
         ];
@@ -113,23 +114,21 @@
 
     class MenuItem extends MenuItemBase implements IMenuItem {
         type = "item";
-        constructor(public title: string, public state: Array<any>, public router: ng.Router) {
-            super();
-        }
 
         isActive() {
             let instrument = this.router.generate(this.state);
             let active = this.router.isRouteActive(instrument);
             return active;
         }
+
+        constructor(public title: string, public state: Array<any>, public router: ng.Router) {
+            super();
+        }
     }
 
     class MenuFolder extends MenuItemBase implements IMenuItem {
         open = true;
         type = "folder";
-        constructor(public title: string, public subMenus: IMenuItem[], public router: ng.Router) {
-            super();
-        }
 
         hide() {
             return this.subMenus.length > 0;
@@ -137,6 +136,10 @@
 
         isActive() {
             return this.subMenus.some(v => v.isActive());
+        }
+
+        constructor(public title: string, public subMenus: IMenuItem[], public router: ng.Router) {
+            super();
         }
     }
 }
