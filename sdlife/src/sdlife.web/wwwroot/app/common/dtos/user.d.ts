@@ -4,4 +4,9 @@
         userName: string;
         email: string;
     }
+
+    interface IAccountingUserRelationship {
+        userId: number;
+        userName: string;
+    }
 }

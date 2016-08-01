@@ -15,11 +15,10 @@
             if (this.password === this.confirmedPassword) {
                 return this.loading = this.api
                     .changePassword(this.oldPassword, this.password)
-                    .then(data => this.dialog.hide(data)).catch(() => {
-                        this.toast.showSimple("修改密码失败");
-                    });
+                    .then(data => this.dialog.hide(data))
+                    .catch(() => this.toast.showSimple("修改密码失败。"));
             } else {
-                return this.toast.showSimple("两次密码输入不相同");
+                return this.toast.showSimple("两次密码输入不相同。");
             }
         }
 

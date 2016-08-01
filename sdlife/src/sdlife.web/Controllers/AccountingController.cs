@@ -81,9 +81,8 @@ namespace sdlife.web.Controllers
             return _accounting.Privilege.AuthorizedUsers(_user.UserId)
                 .Select(x => new 
                 {
-                    Id = x.Id, 
-                    UserName = x.UserName, 
-                    Email = x.Email
+                    UserId = x.UserId, 
+                    UserName = x.Alias
                 });
         }
 
