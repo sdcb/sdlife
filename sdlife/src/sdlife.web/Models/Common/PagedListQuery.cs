@@ -74,4 +74,9 @@ namespace sdlife.web.Models
         public const int MaxPageSize = 100;
         public const int DefaultPageSize = 12;
     }
+
+    public class SqlPagedListQuery : PagedListQuery
+    {
+        public string Sql { get; set; }
+    }
 }

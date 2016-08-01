@@ -32,6 +32,11 @@ namespace sdlife.web.Controllers
             return await _accounting.GetAccountingPagedList(query);
         }
 
+        public async Task<PagedList<AccountingDto>> SqlList([FromBody]SqlPagedListQuery query)
+        {
+            return await _accounting.GetAccountingPagedList(query);
+        }
+
         public async Task<AccountingDto> Create([FromBody]AccountingDto dto, int? userId = null)
         {
             var toCreateUserId = userId ?? _user.UserId;

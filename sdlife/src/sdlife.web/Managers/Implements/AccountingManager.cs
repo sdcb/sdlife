@@ -231,6 +231,26 @@ namespace sdlife.web.Managers.Implements
             return await data.CreatePagedList(query).ConfigureAwait(false);
         }
 
+        public async Task<PagedList<AccountingDto>> GetAccountingPagedList(SqlPagedListQuery query)
+        {
+            var data =
+                from accounting in _db.Accounting
+                join title in _db.AccountingTitle on accounting.TitleId equals title.Id
+                join comment in _db.AccountingComment on accounting.Id equals comment.AccountingId into commentGroup
+                from comment in commentGroup.DefaultIfEmpty()
+                select new AccountingDto
+                {
+                    Id = accounting.Id,
+                    Amount = accounting.Amount,
+                    Comment = comment == null ? null : comment.Comment,
+                    Time = accounting.EventTime,
+                    IsIncome = title.IsIncome,
+                    Title = title.Title
+                };
+
+            return await data.CreateSqlPagedList(query).ConfigureAwait(false);
+        }
+
         public async Task<IQueryable<AccountingDto>> UserAccountingInRange(DateTime start, DateTime end, int userId)
         {
             var query =

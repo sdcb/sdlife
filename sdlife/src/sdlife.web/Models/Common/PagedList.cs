@@ -32,5 +32,10 @@ namespace sdlife.web.Models
                 Items = await itemsInput.ToListAsync().ConfigureAwait(false)
             };
         }
+
+        public static Task<PagedList<T>> CreateSqlPagedList<T>(this IQueryable<T> input, SqlPagedListQuery query)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
