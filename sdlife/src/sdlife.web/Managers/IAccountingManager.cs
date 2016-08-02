@@ -22,6 +22,6 @@ namespace sdlife.web.Managers
         Task<IQueryable<AccountingDto>> UserAccountingInRange(DateTime start, DateTime end, int userId);
         Task<Result> Delete(int id);
         Task<PagedList<AccountingDto>> GetAccountingPagedList(AccountingPagedListQuery query);
-        Task<Result<PagedList<AccountingDto>>> GetAccountingPagedList(SqlPagedListQuery query);
+        Result<Task<PagedList<AccountingDto>>> GetAccountingPagedList(SqlPagedListQuery query);
     }
 }

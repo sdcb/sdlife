@@ -231,27 +231,40 @@ namespace sdlife.web.Managers.Implements
             return await data.CreatePagedList(query).ConfigureAwait(false);
         }
 
-        public async Task<Result<PagedList<AccountingDto>>> GetAccountingPagedList(SqlPagedListQuery query)
+        public Result<Task<PagedList<AccountingDto>>> GetAccountingPagedList(SqlPagedListQuery query)
         {
             var data =
                 from accounting in _db.Accounting
                 join title in _db.AccountingTitle on accounting.TitleId equals title.Id
                 join comment in _db.AccountingComment on accounting.Id equals comment.AccountingId into commentGroup
                 from comment in commentGroup.DefaultIfEmpty()
-                select new AccountingDto
+                select new 
                 {
                     Id = accounting.Id,
                     Amount = accounting.Amount,
                     Comment = comment == null ? null : comment.Comment,
                     Time = accounting.EventTime,
                     IsIncome = title.IsIncome,
-                    Title = title.Title
+                    Title = title.Title, 
+                    UserId = accounting.CreateUserId
                 };
 
-            return await data
+            var result = data
                 .Filter(query.Sql)
-                .OnSuccess(async(v) => await v.CreateSqlPagedList(query));
-            
+                .OnSuccess(q => q.Select(v => new AccountingDto
+                {
+                    Id = v.Id,
+                    Amount = v.Amount,
+                    Comment = v.Comment,
+                    Time = v.Time,
+                    IsIncome = v.IsIncome,
+                    Title = v.Title
+                }))
+                .OnSuccess(async v =>
+                {
+                    return await v.CreatePagedList(query);
+                });
+            throw new Exception();
         }
 
         public async Task<IQueryable<AccountingDto>> UserAccountingInRange(DateTime start, DateTime end, int userId)
