@@ -44,7 +44,8 @@
       "type": "build"
     },
     "System.Text.Encoding.CodePages": "4.0.1",
-    "Microsoft.EntityFrameworkCore.DynamicLinq": "1.0.1"
+    "Microsoft.EntityFrameworkCore.DynamicLinq": "1.0.1",
+    "Antlr4.Runtime": "4.5.3.1-beta001"
   },
 
   "tools": {

@@ -17,6 +17,8 @@ using sdlife.web.Services.Implements;
 using sdlife.web.Managers;
 using sdlife.web.Managers.Implements;
 
+[assembly: CLSCompliant(false)]
+
 namespace sdlife.web
 {
     public class Startup
