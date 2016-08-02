@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.DynamicLinq;
-
+using sdlife.web.Models.SqlAntlr;
 
 namespace sdlife.web.Managers.Implements
 {
@@ -231,7 +231,7 @@ namespace sdlife.web.Managers.Implements
             return await data.CreatePagedList(query).ConfigureAwait(false);
         }
 
-        public async Task<PagedList<AccountingDto>> GetAccountingPagedList(SqlPagedListQuery query)
+        public async Task<Result<PagedList<AccountingDto>>> GetAccountingPagedList(SqlPagedListQuery query)
         {
             var data =
                 from accounting in _db.Accounting
@@ -248,7 +248,10 @@ namespace sdlife.web.Managers.Implements
                     Title = title.Title
                 };
 
-            return await data.CreateSqlPagedList(query).ConfigureAwait(false);
+            return await data
+                .Filter(query.Sql)
+                .OnSuccess(async(v) => await v.CreateSqlPagedList(query));
+            
         }
 
         public async Task<IQueryable<AccountingDto>> UserAccountingInRange(DateTime start, DateTime end, int userId)

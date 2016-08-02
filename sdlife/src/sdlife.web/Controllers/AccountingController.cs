@@ -32,9 +32,11 @@ namespace sdlife.web.Controllers
             return await _accounting.GetAccountingPagedList(query);
         }
 
-        public async Task<PagedList<AccountingDto>> SqlList([FromBody]SqlPagedListQuery query)
+        public async Task<IActionResult> SqlList([FromBody]SqlPagedListQuery query)
         {
-            return await _accounting.GetAccountingPagedList(query);
+            var result = await _accounting.GetAccountingPagedList(query);
+            if (result.IsFailure) return BadRequest(result.Error);
+            return Json(result.Value);
         }
 
         public async Task<AccountingDto> Create([FromBody]AccountingDto dto, int? userId = null)
