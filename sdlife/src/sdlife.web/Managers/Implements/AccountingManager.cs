@@ -249,7 +249,7 @@ namespace sdlife.web.Managers.Implements
                     UserId = accounting.CreateUserId
                 };
 
-            var result = data
+            return data
                 .Filter(query.Sql)
                 .OnSuccess(q => q.Select(v => new AccountingDto
                 {
@@ -264,7 +264,6 @@ namespace sdlife.web.Managers.Implements
                 {
                     return await v.CreatePagedList(query);
                 });
-            throw new Exception();
         }
 
         public async Task<IQueryable<AccountingDto>> UserAccountingInRange(DateTime start, DateTime end, int userId)

@@ -11,8 +11,7 @@
   "frameworks": {
     "netcoreapp1.0": {
       "imports": [
-        "dotnet5.6",
-        "portable-net45+win8"
+        "dotnet5.6"
       ],
       "dependencies": {
         "Microsoft.NETCore.App": {
