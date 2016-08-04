@@ -40,6 +40,38 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             Assert.Equal(SampleData.Title, data.Title);
         }
 
+        [Fact]
+        public async Task WrongUserIdQuery()
+        {
+            // Arrange 
+            await ArrangeSampleData();
+
+            // Action
+            var real = await AccountingManager.GetAccountingPagedList(new SqlPagedListQuery
+            {
+                Sql = $"UserId = {User.UserId + 1}"
+            }).Value;
+
+            // Assert
+            Assert.Equal(0, real.TotalCount);
+        }
+
+        [Fact]
+        public async Task UnknownFieldWillFail()
+        {
+            // Arrange 
+            await ArrangeSampleData();
+
+            // Action
+            var real = AccountingManager.GetAccountingPagedList(new SqlPagedListQuery
+            {
+                Sql = $"UserIdx = {User.UserId}"
+            });
+
+            // Assert
+            Assert.Equal(true, real.IsFailure);
+        }
+
         private AccountingPagedListQuery GetDefaultQueryObject()
         {
             return new AccountingPagedListQuery
