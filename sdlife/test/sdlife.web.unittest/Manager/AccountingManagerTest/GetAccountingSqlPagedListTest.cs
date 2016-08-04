@@ -57,6 +57,22 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
         }
 
         [Fact]
+        public async Task Parenthesis()
+        {
+            // Arrange 
+            await ArrangeSampleData();
+
+            // Action
+            var real = await AccountingManager.GetAccountingPagedList(new SqlPagedListQuery
+            {
+                Sql = $"(UserId = {User.UserId})"
+            }).Value;
+
+            // Assert
+            Assert.Equal(SampleDataCount, real.TotalCount);
+        }
+
+        [Fact]
         public async Task UnknownFieldWillFail()
         {
             // Arrange 

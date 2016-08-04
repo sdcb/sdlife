@@ -103,7 +103,7 @@ namespace sdlife.web.Models.SqlAntlr
 
         public override Expression VisitParenthesis([NotNull] ParenthesisContext context)
         {
-            return Visit(context.GetChild<ExpressionContext>(0));
+            return Visit(context.GetChild<PredicateContext>(0));
         }
 
         private SqlValue EvalExpression(IParseTree expression)
