@@ -11,6 +11,7 @@ namespace sdlife.accounting {
             sql: "", 
             orderBy: "-Time", 
         };
+        queryOk = true;
         promise: ng.IPromise<any>;
 
         $routerOnActivate(next) {
@@ -20,7 +21,9 @@ namespace sdlife.accounting {
 
         loadData = () => {
             return this.promise = this.api.loadSqlList(this.query)
-                .then(data => this.data = data);
+                .then(data => this.data = data)
+                .then(() => this.queryOk = true)
+                .catch(() => this.queryOk = false);
         }
 
         onCreated() {
