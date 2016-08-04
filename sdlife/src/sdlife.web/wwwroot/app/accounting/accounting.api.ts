@@ -22,6 +22,11 @@ namespace sdlife.accounting {
                 .then(cb => NN(cb.data));
         }
 
+        loadSqlList(query: ISqlPagedListQuery): ng.IPromise<IPagedList<IAccountingDto>> {
+            return this.$.post("/Accounting/SqlList", query)
+                .then(cb => NN(cb.data));
+        }
+
         create(dto: IAccountingDto, userId: number) {
             return this.$.post<IAccountingEntity>(`/Accounting/Create?userId=${userId}`, dto).then(cb => {
                 return NN(cb.data);

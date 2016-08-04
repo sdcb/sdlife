@@ -5,20 +5,11 @@
 <br />
 <md-toolbar class="md-table-toolbar md-default">
     <div class="md-toolbar-tools">
-        <md-autocomplete flex
-                         md-no-cache="true"
-                         md-input-name="autocompleteField"
-                         md-min-length="1"
-                         md-input-minlength="1"
-                         md-input-maxlength="20"
-                         md-search-text="vm.$searchTitle"
-                         md-selected-item="vm.query.title"
-                         md-items="item in vm.searchTitle(vm.$searchTitle)"
-                         md-floating-label="标题...">
-            <md-item-template>
-                <span md-highlight-text="vm.$searchTitle" md-highlight-flags="^i">{{item}}</span>
-            </md-item-template>
-        </md-autocomplete>
+        <md-input-container flex>
+            <label>查询...</label>
+            <input type="text" 
+                   ng-model="vm.query.sql" />
+        </md-input-container>
     </div>
 </md-toolbar>
 

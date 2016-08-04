@@ -13,6 +13,11 @@ namespace sdlife.web.Models.SqlAntlr
     {
         public static Result<IQueryable<T>> Filter<T>(this IQueryable<T> dataIn, string sqlWherePredicate)
         {
+            if (string.IsNullOrWhiteSpace(sqlWherePredicate))
+            {
+                return Result.Ok(dataIn);
+            }
+
             try
             {
                 var inputStream = new AntlrInputStream(sqlWherePredicate);

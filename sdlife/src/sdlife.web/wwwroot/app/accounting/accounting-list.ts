@@ -5,10 +5,10 @@ namespace sdlife.accounting {
 
     class AccountingList extends AccountingBasePage {
         data: IPagedList<IAccountingDto>;
-        query: IAccountingPagedListQuery = {
+        query: ISqlPagedListQuery = {
             page: 1, 
             pageSize: 12, 
-            userId: 0, 
+            sql: "", 
             orderBy: "-Time", 
         };
         promise: ng.IPromise<any>;
@@ -16,11 +16,11 @@ namespace sdlife.accounting {
         $routerOnActivate(next) {
             super.$routerOnActivate(next);
             this.loadData();
-            this.query.userId = this.userId;
         }
 
         loadData = () => {
-            return this.promise = this.api.loadList(this.query).then(data => this.data = data);
+            return this.promise = this.api.loadSqlList(this.query)
+                .then(data => this.data = data);
         }
 
         onCreated() {
@@ -37,7 +37,7 @@ namespace sdlife.accounting {
             scope: ng.IScope) {
             super(api);
 
-            scope.$watch(() => this.query.title, (newValue: string, oldValue: string) => {
+            scope.$watch(() => this.query.sql, (newValue: string, oldValue: string) => {
                 if (newValue !== oldValue) this.loadData();
             });
         }

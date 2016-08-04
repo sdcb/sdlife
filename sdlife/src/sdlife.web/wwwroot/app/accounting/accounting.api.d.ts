@@ -45,6 +45,10 @@
         orderBy?: string;
     }
 
+    export interface ISqlPagedListQuery extends IPagedListQuery {
+        sql: string;
+    }
+
     export interface IAccountingPagedListQuery extends IPagedListQuery {
         userId: number | null;
         title?: string;
