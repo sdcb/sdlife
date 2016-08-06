@@ -8,7 +8,8 @@
         <md-input-container flex ng-class="{'md-input-invalid': !vm.queryOk}">
             <label>SQL查询...</label>
             <input type="text"
-                   ng-model="vm.query.sql" />
+                   ng-model="vm.query.sql"
+                   ng-model-options="{debounce: 500}" />
         </md-input-container>
     </div>
 </md-toolbar>
