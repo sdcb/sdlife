@@ -29,6 +29,7 @@ namespace sdlife.web.Data
             builder.Entity<IdentityRoleClaim<int>>().ToTable("RoleClaim");
             builder.Entity<IdentityUserToken<int>>().ToTable("UserToken");
 
+            // Business Table Custom Transforms
             builder.Entity<Accounting>()
                 .HasIndex(x => x.EventTime)
                 .ForSqlServerIsClustered(true)
@@ -39,7 +40,7 @@ namespace sdlife.web.Data
             builder.Entity<Accounting>()
                 .Property(x => x.EventTime)
                 .HasDefaultValueSql("SYSDATETIME()");
-
+            
             builder.Entity<AccountingTitle>()
                 .HasIndex(x => x.Title)
                 .IsUnique(true);
