@@ -16,6 +16,6 @@
   "resolutions": {
     "angular": "^1.4.8",
     "fullcalendar": "2.8.0",
-    "jquery": "~3.0.0"
+    "jquery": "3.1.0"
   }
 }

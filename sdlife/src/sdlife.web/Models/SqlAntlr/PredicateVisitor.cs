@@ -13,7 +13,7 @@ namespace sdlife.web.Models.SqlAntlr
 {
     public class PredicateVisitor<T> : SqlBaseVisitor<Expression>
     {
-        ParameterExpression Pe = Expression.Parameter(typeof(T), "x");
+        ParameterExpression Pe = Expression.Parameter(typeof(T), "accounting");
 
         public override Expression VisitSingleOperator([NotNull] SingleOperatorContext context)
         {
