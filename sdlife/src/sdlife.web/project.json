@@ -93,7 +93,14 @@
   },
 
   "scripts": {
-    "prepublish": [ "npm install", "dotnet bundle", "bower install", "gulp clean", "gulp min" ],
+    "prepublish": [
+      "npm install",
+      "dotnet bundle",
+      "bower install",
+      "gulp clean",
+      "gulp min",
+      "./Models/SqlAntlr/Details/sql.bat"
+    ],
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   }
 }
