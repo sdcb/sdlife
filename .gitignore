@@ -250,3 +250,11 @@ app.min.css
 *.js
 *.js.map
 appsettings.*.json
+/sdlife/src/sdlife.web/Models/SqlAntlr/Details/SqlVisitor.cs
+/sdlife/src/sdlife.web/Models/SqlAntlr/Details/SqlParser.cs
+/sdlife/src/sdlife.web/Models/SqlAntlr/Details/SqlListener.cs
+/sdlife/src/sdlife.web/Models/SqlAntlr/Details/SqlLexer.tokens
+/sdlife/src/sdlife.web/Models/SqlAntlr/Details/SqlLexer.cs
+/sdlife/src/sdlife.web/Models/SqlAntlr/Details/SqlBaseVisitor.cs
+/sdlife/src/sdlife.web/Models/SqlAntlr/Details/SqlBaseListener.cs
+/sdlife/src/sdlife.web/Models/SqlAntlr/Details/Sql.tokens
