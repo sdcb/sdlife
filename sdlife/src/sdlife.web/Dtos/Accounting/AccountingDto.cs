@@ -1,4 +1,5 @@
 ﻿using sdlife.web.Models;
+using sdlife.web.Models.SqlAntlr;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,29 @@ namespace sdlife.web.Dtos
                 Title = x.Title.Title
             };
         }
+    }
+
+    public class AccountingDtoWithUser
+    {
+        public int Id { get; set; }
+
+        [QueryField(Name = "title")]
+        public string Title { get; set; }
+
+        [QueryField(Name = "amount")]
+        public decimal Amount { get; set; }
+
+        [QueryField(Name = "time")]
+        public DateTime Time { get; set; }
+
+        [QueryField(Name = "isIncome")]
+        public bool IsIncome { get; set; }
+
+        [QueryField(Name = "comment")]
+        public string Comment { get; set; }
+
+        [QueryField(Name = "userId")]
+        public int UserId { get; set; }
     }
 
     public static class AccountingDtoExtensions

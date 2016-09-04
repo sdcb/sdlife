@@ -238,7 +238,7 @@ namespace sdlife.web.Managers.Implements
                 join title in _db.AccountingTitle on accounting.TitleId equals title.Id
                 join comment in _db.AccountingComment on accounting.Id equals comment.AccountingId into commentGroup
                 from comment in commentGroup.DefaultIfEmpty()
-                select new 
+                select new AccountingDtoWithUser
                 {
                     Id = accounting.Id,
                     Amount = accounting.Amount,

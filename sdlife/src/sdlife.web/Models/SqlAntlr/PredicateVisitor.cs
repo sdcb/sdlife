@@ -15,13 +15,38 @@ namespace sdlife.web.Models.SqlAntlr
     {
         ParameterExpression Pe = Expression.Parameter(typeof(T), "x");
 
+        public Dictionary<string, string> SyntaxPropertyMap = new Dictionary<string, string>();
+
+        public PredicateVisitor() : base()
+        {
+            GeneratePropertySyntaxMap();
+        }
+
+        private void GeneratePropertySyntaxMap()
+        {
+            var type = typeof(T);
+            var properties = type.GetProperties();
+            foreach (var property in properties)
+            {
+                var attribute = property.GetCustomAttribute<QueryFieldAttribute>();
+                if (attribute != null)
+                {
+                    SyntaxPropertyMap[attribute.Name] = property.Name;
+                }
+                else
+                {
+                    SyntaxPropertyMap[property.Name] = property.Name;
+                }
+            }
+        }
+
         public override Expression VisitSingleOperator([NotNull] SingleOperatorContext context)
         {
             var syntax = context.GetChild(0).GetText();
             var opText = context.GetChild(1).GetText();
             var val = EvalExpression(context.GetChild(2));
 
-            var left = Expression.PropertyOrField(Pe, syntax);
+            var left = Expression.PropertyOrField(Pe, SyntaxPropertyMap[syntax]);
             var right = Expression.Constant(Convert.ChangeType(val.Value(), left.Type));
 
             Expression op;
@@ -74,7 +99,7 @@ namespace sdlife.web.Models.SqlAntlr
             var exp1 = EvalExpression(context.GetChild<ExpressionContext>(0)).Value();
             var exp2 = EvalExpression(context.GetChild<ExpressionContext>(1)).Value();
 
-            var prop = Expression.PropertyOrField(Pe, syntax);
+            var prop = Expression.PropertyOrField(Pe, SyntaxPropertyMap[syntax]);
             var left = Expression.Constant(Convert.ChangeType(exp1, prop.Type));
             var right = Expression.Constant(Convert.ChangeType(exp2, prop.Type));
 
@@ -93,7 +118,7 @@ namespace sdlife.web.Models.SqlAntlr
                 .ToList();
 
             var left = Expression.Constant(values);
-            var right = Expression.PropertyOrField(Pe, syntax);
+            var right = Expression.PropertyOrField(Pe, SyntaxPropertyMap[syntax]);
             var op = Expression.Call(
                 left,
                 typeof(List<object>).GetMethod("Contains", new[] { typeof(object) }),
