@@ -27,7 +27,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             // Action
             var real = await AccountingManager.GetAccountingPagedList(new SqlPagedListQuery
             {
-                Sql = $"UserId = {User.UserId}"
+                Sql = $"userId = {User.UserId}"
             }).Value;
 
             // Assert
@@ -49,7 +49,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             // Action
             var real = await AccountingManager.GetAccountingPagedList(new SqlPagedListQuery
             {
-                Sql = $"UserId = {User.UserId + 1}"
+                Sql = $"userId = {User.UserId + 1}"
             }).Value;
 
             // Assert
@@ -65,7 +65,7 @@ namespace sdlife.web.unittest.Manager.AccountingManagerTest
             // Action
             var real = await AccountingManager.GetAccountingPagedList(new SqlPagedListQuery
             {
-                Sql = $"(UserId = {User.UserId})"
+                Sql = $"(userId = {User.UserId})"
             }).Value;
 
             // Assert
