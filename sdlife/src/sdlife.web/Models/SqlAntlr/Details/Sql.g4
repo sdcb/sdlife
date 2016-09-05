@@ -21,6 +21,7 @@ predicate
 
 expression
 	: '(' expression ')'                           #ExpressionParenthesis
+	| SYNTAX '(' ')'                               #VoidFunction
 	| SYNTAX '(' expression ')'                    #Function
 	| SYNTAX '(' expression ',' expression ')'     #BinaryFunction
 	| expression operator = ('*' | '/') expression #Binary

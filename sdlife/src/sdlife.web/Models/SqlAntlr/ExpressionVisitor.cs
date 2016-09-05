@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime.Misc;
+using Microsoft.AspNetCore.Http;
 using sdlife.web.Models.SqlAntlr.Details;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,16 @@ namespace sdlife.web.Models.SqlAntlr
             {
                 case "abs":
                     return Math.Abs(v);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(func));
+            }
+        }
+
+        public override SqlValue VisitVoidFunction([NotNull] VoidFunctionContext context)
+        {
+            var func = context.GetChild(0).GetText();
+            switch (func)
+            {
                 default:
                     throw new ArgumentOutOfRangeException(nameof(func));
             }
