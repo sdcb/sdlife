@@ -37,12 +37,12 @@ namespace sdlife.web.Managers.Implements
 
         public async Task<Result<AccountingDto>> Create(AccountingDto dto, int createUserId)
         {
-            if (!await Privilege.CanIModify(createUserId).ConfigureAwait(false))
+            if (!await Privilege.CanIModify(createUserId))
             {
                 return NoPrivilegeFail<AccountingDto>();
             }
 
-            var titleEntity = await GetOrCreateTitle(dto.Title, dto.IsIncome).ConfigureAwait(false);
+            var titleEntity = await GetOrCreateTitle(dto.Title, dto.IsIncome);
 
             var entity = new Accounting
             {
@@ -61,7 +61,7 @@ namespace sdlife.web.Managers.Implements
             }
 
             _db.Add(entity);
-            await _db.SaveChangesAsync().ConfigureAwait(false);
+            await _db.SaveChangesAsync();
 
             _db.Entry(entity).State = EntityState.Detached;
             _db.Entry(entity.Title).State = EntityState.Detached;
@@ -85,12 +85,12 @@ namespace sdlife.web.Managers.Implements
 
         public async Task<List<string>> SearchIncomeTitles(string titleQuery, int limit)
         {
-            return await SearchTitlesInternal(titleQuery, true, limit).ConfigureAwait(false);
+            return await SearchTitlesInternal(titleQuery, true, limit);
         }
 
         public async Task<List<string>> SearchSpendingTitles(string titleQuery, int limit = 20)
         {
-            return await SearchTitlesInternal(titleQuery, false, limit).ConfigureAwait(false);
+            return await SearchTitlesInternal(titleQuery, false, limit);
         }
 
         private async Task<List<string>> SearchTitlesInternal(string titleQuery, bool isIncome, int limit)
@@ -103,22 +103,22 @@ namespace sdlife.web.Managers.Implements
                 .OrderByDescending(x => x.Accountings.Count(a => a.EventTime >= before))
                 .Select(x => x.Title)
                 .Take(limit)
-                .ToListAsync().ConfigureAwait(false);
+                .ToListAsync();
         }
 
         public async Task<Result> UpdateTime(int accountId, DateTime time)
         {
             var entity = await _db.Accounting
                 .Where(x => x.Id == accountId)
-                .SingleAsync().ConfigureAwait(false);
+                .SingleAsync();
 
-            if (!await Privilege.CanIModify(entity.CreateUserId).ConfigureAwait(false))
+            if (!await Privilege.CanIModify(entity.CreateUserId))
             {
                 return NoPrivilegeFail();
             }
 
             entity.EventTime = time;
-            await _db.SaveChangesAsync().ConfigureAwait(false);
+            await _db.SaveChangesAsync();
             return Result.Ok();
         }
 
@@ -128,9 +128,9 @@ namespace sdlife.web.Managers.Implements
                 .Include(x => x.Title)
                 .Include(x => x.Comment)
                 .Where(x => x.Id == dto.Id)
-                .SingleAsync().ConfigureAwait(false);
+                .SingleAsync();
 
-            if (!await Privilege.CanIModify(entity.CreateUserId).ConfigureAwait(false))
+            if (!await Privilege.CanIModify(entity.CreateUserId))
             {
                 return NoPrivilegeFail<AccountingDto>();
             }
@@ -138,10 +138,10 @@ namespace sdlife.web.Managers.Implements
             if (entity.Title.Title != dto.Title)
             {
                 var oldTitle = entity.Title;
-                entity.Title = await GetOrCreateTitle(dto.Title, dto.IsIncome).ConfigureAwait(false);
+                entity.Title = await GetOrCreateTitle(dto.Title, dto.IsIncome);
 
                 var titleRefCount = await _db.Accounting
-                    .CountAsync(x => x.Id != entity.Id && x.TitleId == entity.TitleId).ConfigureAwait(false);
+                    .CountAsync(x => x.Id != entity.Id && x.TitleId == entity.TitleId);
                 if (titleRefCount == 0)
                 {
                     _db.Remove(oldTitle);
@@ -177,7 +177,7 @@ namespace sdlife.web.Managers.Implements
                 }
             }
 
-            await _db.SaveChangesAsync().ConfigureAwait(false);
+            await _db.SaveChangesAsync();
             return Result.Ok((AccountingDto)entity);
         }
 
@@ -228,7 +228,7 @@ namespace sdlife.web.Managers.Implements
                 data = data.Where(x => x.Amount < query.MaxAmount.Value);
             }
 
-            return await data.CreatePagedList(query).ConfigureAwait(false);
+            return await data.CreatePagedList(query);
         }
 
         public Result<Task<PagedList<AccountingDto>>> GetAccountingPagedList(SqlPagedListQuery query)
@@ -289,7 +289,7 @@ namespace sdlife.web.Managers.Implements
             }
             else
             {
-                var access = await GetUserAccess(_user.UserId, userId).ConfigureAwait(false);
+                var access = await GetUserAccess(_user.UserId, userId);
                 if ((access & AccountingAuthorizeLevel.QueryAll) == AccountingAuthorizeLevel.QueryAll)
                 {
                     return query;
@@ -314,8 +314,7 @@ namespace sdlife.web.Managers.Implements
             return await _db.AccountingUserAuthorization
                 .Where(x => x.AuthorizedUserId == userId && x.UserId == targetUserId)
                 .Select(x => x.Level)
-                .FirstOrDefaultAsync()
-                .ConfigureAwait(false);
+                .FirstOrDefaultAsync();
         }
 
         public async Task<Result> Delete(int id)
@@ -323,34 +322,33 @@ namespace sdlife.web.Managers.Implements
             var result = await _db.Accounting
                 .Include(x => x.Title)
                 .Include(x => x.Comment)
-                .SingleAsync(x => x.Id == id).ConfigureAwait(false);
+                .SingleAsync(x => x.Id == id);
 
-            if (!await Privilege.CanIModify(result.CreateUserId).ConfigureAwait(false))
+            if (!await Privilege.CanIModify(result.CreateUserId))
             {
                 return NoPrivilegeFail();
             }
 
             _db.Remove(result);
             var titleRefCount = await _db.Accounting
-                .CountAsync(x => x.Id != id && x.TitleId == result.TitleId)
-                .ConfigureAwait(false);
+                .CountAsync(x => x.Id != id && x.TitleId == result.TitleId);
             if (titleRefCount == 0)
             {
                 _db.Remove(result.Title);
             }
 
-            await _db.SaveChangesAsync().ConfigureAwait(false);
+            await _db.SaveChangesAsync();
             return Result.Ok();
         }
 
         public async Task UpdateTitleShortCuts()
         {
-            var data = await _db.AccountingTitle.ToListAsync().ConfigureAwait(false);
+            var data = await _db.AccountingTitle.ToListAsync();
             foreach (var item in data)
             {
                 item.ShortCut = _pinYin.GetStringCapitalPinYin(item.Title);
             }
-            await _db.SaveChangesAsync().ConfigureAwait(false);
+            await _db.SaveChangesAsync();
         }
 
         #region private functions 
@@ -358,7 +356,7 @@ namespace sdlife.web.Managers.Implements
         {
             var result = await _db.AccountingTitle
                 .Where(x => x.Title == title && x.IsIncome == isIncome)
-                .FirstOrDefaultAsync().ConfigureAwait(false);
+                .FirstOrDefaultAsync();
 
             if (result != null)
             {
@@ -366,7 +364,7 @@ namespace sdlife.web.Managers.Implements
             }
             else
             {
-                return await CreateTitle(title, isIncome).ConfigureAwait(false);
+                return await CreateTitle(title, isIncome);
             }
         }
 
@@ -380,7 +378,7 @@ namespace sdlife.web.Managers.Implements
             };
             _db.Add(newOne);
 
-            await _db.SaveChangesAsync().ConfigureAwait(false);
+            await _db.SaveChangesAsync();
             return newOne;
         }
 
