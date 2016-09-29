@@ -1,10 +1,11 @@
-﻿using System;
+﻿using sdlife.web.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace sdlife.web.Services.Implements
+namespace sdlife.web.unittest.Mocked
 {
     public class TestCurrentUser : ICurrentUser
     {
