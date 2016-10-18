@@ -11,7 +11,11 @@ namespace sdlife.web.Models
 
         public int UserId { get; set; }
 
-        public DateTime RecordTime { get; set; }
+        public int WeatherId { get; set; }
+
+        public DateTime RecordTime { get; set; } = DateTime.Now;
+
+        public DiaryWeather Weather { get; set; }
 
         public User User { get; set; }
 
