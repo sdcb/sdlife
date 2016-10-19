@@ -10,7 +10,7 @@ namespace sdlife.web.Models
     public class AccountingComment
     {
         [Key]
-        [ForeignKey("Accounting")]
+        [ForeignKey(nameof(Accounting))]
         public int AccountingId { get; set; }
 
         [Required]

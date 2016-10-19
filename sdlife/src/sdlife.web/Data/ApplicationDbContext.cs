@@ -61,6 +61,25 @@ namespace sdlife.web.Data
                 .HasOne(x => x.AuthorizedUser)
                 .WithMany(x => x.AccountingUserAuthorizationTarget)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<DiaryHeader>()
+                .HasIndex(x => x.RecordTime)
+                .ForSqlServerIsClustered(true)
+                .IsUnique(true);
+            builder.Entity<DiaryHeader>()
+                .HasIndex(x => x.Id)
+                .ForSqlServerIsClustered(false);
+            builder.Entity<DiaryHeader>()
+                .Property(x => x.RecordTime)
+                .HasDefaultValueSql("SYSDATETIME()");
+            builder.Entity<DiaryFeeling>()
+                .HasKey(x => new { x.FeelingId, x.DiaryId });
+            builder.Entity<Feeling>()
+                .HasIndex(x => x.Name)
+                .IsUnique(true);
+            builder.Entity<DiaryWeather>()
+                .HasIndex(x => x.Name)
+                .IsUnique(true);
         }
 
         public DbSet<Accounting> Accounting { get; set; }
@@ -70,5 +89,13 @@ namespace sdlife.web.Data
         public DbSet<AccountingComment> AccountingComment { get; set; }
 
         public DbSet<AccountingUserAuthorization> AccountingUserAuthorization { get; set; }
+
+        public DbSet<DiaryHeader> DiaryHeader { get; set; }
+
+        public DbSet<Feeling> Feeling { get; set; }
+
+        public DbSet<DiaryWeather> DiaryWeather { get; set; }
+
+        public DbSet<DiaryContent> DiaryContent { get; set; }
     }
 }

@@ -19,6 +19,8 @@ namespace sdlife.web.Models
 
         public User User { get; set; }
 
+        public DiaryContent Content { get; set; }
+
         public ICollection<DiaryFeeling> Feelings { get; set; } = new HashSet<DiaryFeeling>();
     }
 }
