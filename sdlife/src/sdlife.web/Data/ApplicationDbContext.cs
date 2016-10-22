@@ -61,14 +61,14 @@ namespace sdlife.web.Data
                 .HasOne(x => x.AuthorizedUser)
                 .WithMany(x => x.AccountingUserAuthorizationTarget)
                 .OnDelete(DeleteBehavior.Restrict);
-
+            
+            builder.Entity<DiaryHeader>()
+                .HasKey(x => x.Id)
+                .ForSqlServerIsClustered(false);
             builder.Entity<DiaryHeader>()
                 .HasIndex(x => x.RecordTime)
                 .ForSqlServerIsClustered(true)
                 .IsUnique(true);
-            builder.Entity<DiaryHeader>()
-                .HasIndex(x => x.Id)
-                .ForSqlServerIsClustered(false);
             builder.Entity<DiaryHeader>()
                 .Property(x => x.RecordTime)
                 .HasDefaultValueSql("SYSDATETIME()");
@@ -77,7 +77,7 @@ namespace sdlife.web.Data
             builder.Entity<Feeling>()
                 .HasIndex(x => x.Name)
                 .IsUnique(true);
-            builder.Entity<DiaryWeather>()
+            builder.Entity<Weather>()
                 .HasIndex(x => x.Name)
                 .IsUnique(true);
         }
@@ -94,7 +94,7 @@ namespace sdlife.web.Data
 
         public DbSet<Feeling> Feeling { get; set; }
 
-        public DbSet<DiaryWeather> DiaryWeather { get; set; }
+        public DbSet<Weather> Weather { get; set; }
 
         public DbSet<DiaryContent> DiaryContent { get; set; }
     }

@@ -8,7 +8,7 @@ using sdlife.web.Data;
 namespace sdlife.web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161019112550_DiaryInitial")]
+    [Migration("20161022075705_DiaryInitial")]
     partial class DiaryInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,9 +235,7 @@ namespace sdlife.web.Data.Migrations
 
                     b.Property<int>("WeatherId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id")
+                    b.HasKey("Id")
                         .HasAnnotation("SqlServer:Clustered", false);
 
                     b.HasIndex("RecordTime")
@@ -251,29 +249,13 @@ namespace sdlife.web.Data.Migrations
                     b.ToTable("DiaryHeader");
                 });
 
-            modelBuilder.Entity("sdlife.web.Models.DiaryWeather", b =>
+            modelBuilder.Entity("sdlife.web.Models.Feeling", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("DiaryWeather");
-                });
-
-            modelBuilder.Entity("sdlife.web.Models.Feeling", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Name")
                         .HasAnnotation("MaxLength", 20);
 
                     b.HasKey("Id");
@@ -354,6 +336,23 @@ namespace sdlife.web.Data.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("sdlife.web.Models.Weather", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 20);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Weather");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<int>", b =>
@@ -453,7 +452,7 @@ namespace sdlife.web.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("sdlife.web.Models.DiaryWeather", "Weather")
+                    b.HasOne("sdlife.web.Models.Weather", "Weather")
                         .WithMany()
                         .HasForeignKey("WeatherId")
                         .OnDelete(DeleteBehavior.Cascade);

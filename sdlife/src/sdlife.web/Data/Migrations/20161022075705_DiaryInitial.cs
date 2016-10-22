@@ -10,7 +10,7 @@ namespace sdlife.web.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "DiaryWeather",
+                name: "Feeling",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -19,20 +19,20 @@ namespace sdlife.web.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DiaryWeather", x => x.Id);
+                    table.PrimaryKey("PK_Feeling", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Feeling",
+                name: "Weather",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<int>(maxLength: 20, nullable: false)
+                    Name = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Feeling", x => x.Id);
+                    table.PrimaryKey("PK_Weather", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,7 +47,8 @@ namespace sdlife.web.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DiaryHeader", x => x.Id);
+                    table.PrimaryKey("PK_DiaryHeader", x => x.Id)
+                        .Annotation("SqlServer:Clustered", false);
                     table.ForeignKey(
                         name: "FK_DiaryHeader_User_UserId",
                         column: x => x.UserId,
@@ -55,9 +56,9 @@ namespace sdlife.web.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DiaryHeader_DiaryWeather_WeatherId",
+                        name: "FK_DiaryHeader_Weather_WeatherId",
                         column: x => x.WeatherId,
-                        principalTable: "DiaryWeather",
+                        principalTable: "Weather",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -121,12 +122,6 @@ namespace sdlife.web.Data.Migrations
                 column: "FeelingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DiaryHeader_Id",
-                table: "DiaryHeader",
-                column: "Id")
-                .Annotation("SqlServer:Clustered", false);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_DiaryHeader_RecordTime",
                 table: "DiaryHeader",
                 column: "RecordTime",
@@ -144,14 +139,14 @@ namespace sdlife.web.Data.Migrations
                 column: "WeatherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DiaryWeather_Name",
-                table: "DiaryWeather",
+                name: "IX_Feeling_Name",
+                table: "Feeling",
                 column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Feeling_Name",
-                table: "Feeling",
+                name: "IX_Weather_Name",
+                table: "Weather",
                 column: "Name",
                 unique: true);
         }
@@ -171,7 +166,7 @@ namespace sdlife.web.Data.Migrations
                 name: "Feeling");
 
             migrationBuilder.DropTable(
-                name: "DiaryWeather");
+                name: "Weather");
         }
     }
 }

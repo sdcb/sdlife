@@ -15,7 +15,7 @@ namespace sdlife.web.Models
 
         public DateTime RecordTime { get; set; } = DateTime.Now;
 
-        public DiaryWeather Weather { get; set; }
+        public Weather Weather { get; set; }
 
         public User User { get; set; }
 

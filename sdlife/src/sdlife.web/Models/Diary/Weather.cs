@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace sdlife.web.Models
 {
-    public class DiaryWeather
+    public class Weather
     {
         public int Id { get; set; }
 
