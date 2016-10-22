@@ -19,6 +19,18 @@ namespace sdlife.web.Dtos
 
         public DateTime RecordTime { get; set; }
 
+        public static explicit operator DiaryDto(DiaryHeader x)
+        {
+            return new DiaryDto
+            {
+                Id = x.Id,
+                Feelings = x.Feelings.Select(v => v.Feeling.Name),
+                Content = x.Content.Content,
+                RecordTime = x.RecordTime,
+                Weather = x.Weather.Name
+            };
+        }
+
         public static IQueryable<DiaryDto> FromQuery(IQueryable<DiaryHeader> data)
         {
             return data
