@@ -23,8 +23,8 @@ namespace sdlife.web.unittest.Manager.DiaryManagerTest
             var input = new DiaryDto
             {
                 Content = "Hello World",
-                Feelings = new[] { "爽", "开心" },
-                Weather = "晴",
+                Feelings = new[] { "Nice", "Fun" },
+                Weather = "Sunney",
             };
             db.LogToDebug();
             var result = await diary.Create(input);
