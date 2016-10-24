@@ -26,12 +26,11 @@ namespace sdlife.web.unittest.Manager.DiaryManagerTest
                 Feelings = new[] { "Nice", "Fun" },
                 Weather = "Sunney",
             };
-            db.LogToDebug();
             var result = await diary.Create(input);
 
             var header = await db.DiaryHeader.SingleAsync();
             var content = await db.DiaryContent.SingleAsync();
-            var feelings = await db.DiaryHeader.Include(x => x.Feelings).ToListAsync();
+            var feelings = await db.Feeling.ToListAsync();
             var weather = await db.Weather.SingleAsync();
 
             Assert.True(result.Id > 0);
