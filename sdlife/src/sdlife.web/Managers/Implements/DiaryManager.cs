@@ -1,5 +1,6 @@
 ﻿using sdlife.web.Data;
 using sdlife.web.Dtos;
+using sdlife.web.Dtos.Diary;
 using sdlife.web.Models;
 using sdlife.web.Services;
 using System;
@@ -42,6 +43,11 @@ namespace sdlife.web.Managers.Implements
             await _db.SaveChangesAsync();
 
             return (DiaryDto)result;
+        }
+
+        public Task<DiaryDto> PagedList(DiaryQuery query)
+        {
+            throw new NotImplementedException();
         }
     }
 }
