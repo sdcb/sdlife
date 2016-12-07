@@ -45,9 +45,18 @@ namespace sdlife.web.Managers.Implements
             return (DiaryDto)result;
         }
 
-        public Task<DiaryDto> PagedList(DiaryQuery query)
+        public async Task<PagedList<DiaryDto>> PagedList(DiaryQuery query)
         {
-            throw new NotImplementedException();
+            return await _db.DiaryHeader
+                .Where(x => x.UserId == query.UserId)
+                .Select(x => new DiaryDto
+                {
+                    Content = x.Content.Content, 
+                    Feelings = x.Feelings.Select(v => v.Feeling.Name), 
+                    RecordTime = x.RecordTime, 
+                    Weather = x.Weather.Name
+                })
+                .CreatePagedList(query);
         }
     }
 }
