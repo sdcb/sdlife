@@ -8,7 +8,6 @@
     "dotnet-test-xunit": "2.2.0-*",
     "Microsoft.DotNet.InternalAbstractions": "1.0.0",
     "Microsoft.EntityFrameworkCore.InMemory": "1.1.0"
-
   },
   "frameworks": {
     "netcoreapp1.1": {
