@@ -8,7 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4AF3C907-9336-4982-BE35-53AB0DD015B7}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
-		Nuget.Config = Nuget.Config
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "sdlife.web", "src\sdlife.web\sdlife.web.xproj", "{85F8F0C1-E537-4223-8C2C-F26D086715B4}"
