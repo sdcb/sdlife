@@ -72,7 +72,7 @@ namespace sdlife.accounting {
             $(element).addTouch();
 
             if (event.entity.comment) {
-                element.append($(`<md-tooltip>${event.entity.comment.replace("\n", "<br/>")}</md-tooltip>`));
+                element.append($(`<md-tooltip></md-tooltip>`).html(event.entity.comment));
             }
 
             if (!isSmallDevice(this.media)) {
