@@ -1,5 +1,6 @@
 ﻿using sdlife.web.Data;
 using sdlife.web.Dtos;
+using sdlife.web.Dtos.Diary;
 using sdlife.web.Models;
 using sdlife.web.Services;
 using System;
@@ -42,6 +43,20 @@ namespace sdlife.web.Managers.Implements
             await _db.SaveChangesAsync();
 
             return (DiaryDto)result;
+        }
+
+        public async Task<PagedList<DiaryDto>> PagedList(DiaryQuery query)
+        {
+            return await _db.DiaryHeader
+                .Where(x => x.UserId == query.UserId)
+                .Select(x => new DiaryDto
+                {
+                    Content = x.Content.Content, 
+                    Feelings = x.Feelings.Select(v => v.Feeling.Name), 
+                    RecordTime = x.RecordTime, 
+                    Weather = x.Weather.Name
+                })
+                .CreatePagedList(query);
         }
     }
 }
