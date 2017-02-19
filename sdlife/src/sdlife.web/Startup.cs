@@ -86,7 +86,7 @@ namespace sdlife.web
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                //app.UseBrowserLink();
+                app.UseBrowserLink();
             }
             else
             {
