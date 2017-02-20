@@ -12,6 +12,7 @@ module.exports = {
         ]
     }, 
     externals: {
-        vue: "Vue"
+        vue: "Vue", 
+        "vue-router": "VueRouter"
     }
 };
