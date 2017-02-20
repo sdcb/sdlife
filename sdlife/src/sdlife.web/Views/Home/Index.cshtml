@@ -8,17 +8,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>life</title>
-    <link href="//fonts.googleapis.com/css?family=Roboto|Material+Icons" rel="stylesheet">
-    <environment names="Development">
-    </environment>
-    <environment names="Production, Development2">
-    </environment>
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Material+Icons" rel="stylesheet">
 </head>
 <body>
-    Let's start angular 2.
+    <div id="app">
+        Hello {{test}}
+    </div>
     <environment names="Development">
+        <script src="//cdn.bootcss.com/vue/2.1.10/vue.js"></script>
+        <script src="~/webpack/bundle.js"></script>
     </environment>
-    <environment names="Production,Development2">
+
+    <environment names="Staging, Production">
+        <script src="//cdn.bootcss.com/vue/2.1.10/vue.min.js"></script>
     </environment>
+
 </body>
 </html>

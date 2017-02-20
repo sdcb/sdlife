@@ -12,7 +12,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot/build.js" />
+    <Content Remove="wwwroot/build.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\app\main.js" />
+    <Content Include="wwwroot\app\main.js.map" />
     <Content Include="wwwroot\app\main.ts" />
+    <Content Include="wwwroot\package.json" />
+    <Content Include="wwwroot\tsconfig.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,8 +75,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\node_modules\" />
+    <Folder Include="wwwroot\webpack\" />
   </ItemGroup>
 
 </Project>
