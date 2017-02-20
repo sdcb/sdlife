@@ -22,6 +22,11 @@
     <Content Include="wwwroot\app\main.ts" />
     <Content Include="wwwroot\package.json" />
     <Content Include="wwwroot\tsconfig.json" />
+    <Content Include="wwwroot\webpack - 复制.config.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\webpack.config.production.js" />
+    <Content Include="wwwroot\webpack.production.config.js" />
   </ItemGroup>
 
   <ItemGroup>
