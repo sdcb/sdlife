@@ -4,13 +4,12 @@ import VueRouter = require("vue-router");
 const Foo = { template: '<div>foo</div>' }
 const Bar = { template: '<div>bar</div>' }
 
-const routes = [
-    { path: '/foo', component: Foo },
-    { path: '/bar', component: Bar }
-]
-
 const router = new VueRouter({
-    routes: routes
+    routes: [
+        { path: '/foo', component: Foo },
+        { path: '/bar', component: Bar }
+    ], 
+    linkActiveClass: "active"
 })
 
 const app = new Vue({
