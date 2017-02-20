@@ -68,6 +68,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\node_modules\" />
   </ItemGroup>
 
 </Project>
