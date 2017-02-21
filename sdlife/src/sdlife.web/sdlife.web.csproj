@@ -12,7 +12,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\app\main.ts" />
+    <Compile Remove="wwwroot\app\**" />
+    <Compile Remove="wwwroot\css\**" />
+    <Compile Remove="wwwroot\lib\**" />
+    <Compile Remove="wwwroot\node_modules\**" />
+    <Content Remove="wwwroot\app\**" />
+    <Content Remove="wwwroot\css\**" />
+    <Content Remove="wwwroot\lib\**" />
+    <Content Remove="wwwroot\node_modules\**" />
+    <EmbeddedResource Remove="wwwroot\app\**" />
+    <EmbeddedResource Remove="wwwroot\css\**" />
+    <EmbeddedResource Remove="wwwroot\lib\**" />
+    <EmbeddedResource Remove="wwwroot\node_modules\**" />
+    <None Remove="wwwroot\app\**" />
+    <None Remove="wwwroot\css\**" />
+    <None Remove="wwwroot\lib\**" />
+    <None Remove="wwwroot\node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,12 +78,6 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0-msbuild3-final" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0-msbuild3-final" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0-msbuild3-final" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\lib\" />
-    <Folder Include="wwwroot\node_modules\" />
   </ItemGroup>
 
 </Project>
