@@ -8,14 +8,14 @@
     </md-card-header>
     <md-card-content fxLayout="column">
       <md-input-container>
-        <input mdInput placeholder="Username" class="full-width" />
+        <input mdInput placeholder="Username" class="full-width" [(ngModel)]="loginDto.username"/>
       </md-input-container>
       <md-input-container>
-        <input mdInput placeholder="Password" class="full-width" />
+        <input mdInput placeholder="Password" class="full-width" [(ngModel)]="loginDto.password"/>
       </md-input-container>
     </md-card-content>
     <md-card-actions>
-      <button md-button>Login</button>
+      <button md-button (click)="login()">Login</button>
       <button md-button>Forgot password</button>
     </md-card-actions>
   </md-card>

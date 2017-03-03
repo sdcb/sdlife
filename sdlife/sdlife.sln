@@ -5,11 +5,6 @@ VisualStudioVersion = 15.0.26206.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{134C3D04-2F24-4D79-887F-029A55381EA6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4AF3C907-9336-4982-BE35-53AB0DD015B7}"
-	ProjectSection(SolutionItems) = preProject
-		Nuget.Config = Nuget.Config
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{05187A7B-2D3F-4896-B252-43FADFE18D23}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sdlife.web", "src\sdlife.web\sdlife.web.csproj", "{85F8F0C1-E537-4223-8C2C-F26D086715B4}"
