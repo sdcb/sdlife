@@ -57,6 +57,7 @@ namespace sdlife.web
                 x.Password.RequireLowercase = true;
                 x.Password.RequireUppercase = true;
                 x.Password.RequireNonAlphanumeric = false;
+                x.Cookies.ApplicationCookie.AutomaticAuthenticate = false;
             })
                 .AddUserManager<SdlifeUserManager>()
                 .AddEntityFrameworkStores<ApplicationDbContext, int>()
@@ -99,7 +100,7 @@ namespace sdlife.web
             app.UseIdentity();
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
-            app.UseMvc(route => 
+            app.UseMvc(route =>
             {
                 route.MapRoute("Default", "{controller=Home}/{Action=Index}/{id?}");
             });

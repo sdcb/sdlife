@@ -1,32 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { Http, HttpModule } from '@angular/http';
-import { NgModule } from '@angular/core';
+import { Http } from '@angular/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accounting',
   templateUrl: './accounting.component.html',
   styleUrls: ['./accounting.component.css']
 })
-@NgModule({
-  imports: [
-    HttpModule
-  ]
-})
 export class AccountingComponent implements OnInit {
 
-  constructor(private http: Http) {
-
+  constructor(
+    private http: Http, 
+    private router: Router) {
   }
 
   ngOnInit() {
+    this.router.navigate(["/login"]);
   }
 
   test() {
-    this.http.post("/Accounting/List", {
-      title: "早餐"
-    }).subscribe(resp => {
-      console.log(resp.json());
-    });
+    
   }
 
 }

@@ -6,7 +6,7 @@ import { AccountingComponent } from './accounting/accounting.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent }, 
   { path: 'accounting', component: AccountingComponent }, 
-  { path: '', component: AccountingComponent }
+  { path: '', redirectTo: '/accounting', pathMatch: 'full' }
 ];
 
 @NgModule({
