@@ -8,11 +8,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { AccountingComponent } from './accounting/accounting.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    AccountingComponent
   ],
   imports: [
     BrowserModule,

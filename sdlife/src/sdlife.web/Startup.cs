@@ -99,7 +99,10 @@ namespace sdlife.web
             app.UseIdentity();
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
-            app.UseMvc();
+            app.UseMvc(route => 
+            {
+                route.MapRoute("Default", "{controller=Home}/{Action=Index}/{id?}");
+            });
         }
     }
 }
