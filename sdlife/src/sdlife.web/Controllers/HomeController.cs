@@ -17,11 +17,6 @@ namespace sdlife.web.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         public IActionResult Error()
         {
             return View();
