@@ -1,8 +1,8 @@
 <md-card class="md-whiteframe-2dp" style="height: 50%; width: 100%; position: absolute; padding: 0; background: hsl(200, 100%, 60%);"></md-card>
 <div fxLayout="row" fxLayoutAlign="center center" style="position: absolute; height: 100%; width: 100%">
-  <md-card fxFlex="35%" fxFlex.xs="100%" fxFlex.sm="70%">
+  <md-card fxFlex="35%" fxFlex.xs="100%">
     <md-card-header>
-      <md-card-title>
+      <md-card-title >
         Login to life
       </md-card-title>
     </md-card-header>
@@ -14,9 +14,10 @@
         <input mdInput placeholder="Password" class="full-width" [(ngModel)]="loginDto.password"/>
       </md-input-container>
     </md-card-content>
-    <md-card-actions>
-      <button md-button (click)="login()">Login</button>
-      <button md-button>Forgot password</button>
+    <md-card-actions fxLayout="row">
+      <div fxFlex></div>
+      <button fxFlex md-raised-button (click)="login()">Login</button>
+      <button fxFlex md-button>Forgot password</button>
     </md-card-actions>
   </md-card>
 </div>
