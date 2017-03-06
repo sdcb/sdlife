@@ -69,11 +69,13 @@ namespace sdlife.web.Controllers
                 return NotFound();
             }
 
+            var userClaims = await _userManager.GetClaimsAsync(user);
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()), 
-                new Claim(JwtRegisteredClaimNames.Jti, Convert.ToBase64String(Guid.NewGuid().ToByteArray()))
-            };
+                new Claim(JwtRegisteredClaimNames.Jti, Convert.ToBase64String(Guid.NewGuid().ToByteArray())), 
+                new Claim(JwtRegisteredClaimNames.Email, user.Email), 
+            }.Concat(userClaims);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

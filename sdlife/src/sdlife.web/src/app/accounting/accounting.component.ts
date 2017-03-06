@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,18 +7,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./accounting.component.css']
 })
 export class AccountingComponent implements OnInit {
-
   constructor(
-    private http: Http, 
     private router: Router) {
   }
 
   ngOnInit() {
-    this.router.navigate(["/login"]);
+    if (localStorage.getItem("token") === null) {
+      this.router.navigate(["/login", {
+        redirectUrl: "/"
+      }]);
+    }
   }
-
-  test() {
-    
-  }
-
 }
