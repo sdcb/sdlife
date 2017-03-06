@@ -8,6 +8,11 @@ using Microsoft.AspNetCore.Identity;
 using sdlife.web.Models;
 using sdlife.web.Managers;
 using Microsoft.AspNetCore.Antiforgery;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.Extensions.Configuration;
+using System.Security.Claims;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,15 +23,18 @@ namespace sdlife.web.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly SdlifeUserManager _userManager;
         private readonly IAntiforgery _antiforgery;
+        private readonly IConfigurationRoot _config;
 
         public AccountController(
             SdlifeUserManager userManager,
             SignInManager<User> signInManager,
-            IAntiforgery antiforgery)
+            IAntiforgery antiforgery, 
+            IConfigurationRoot config)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _antiforgery = antiforgery;
+            _config = config;
         }
 
         public async Task<IActionResult> Login([FromBody]LoginDto loginDto)
@@ -45,6 +53,44 @@ namespace sdlife.web.Controllers
 
             await _signInManager.SignInAsync(user, loginDto.RememberMe);
             return Ok();
+        }
+
+        public async Task<IActionResult> CreateToken([FromBody]LoginDto loginDto)
+        {
+            var user = await _userManager.FindByNameOrEmailAsync(loginDto.UserName);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var passwordOk = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+            if (!passwordOk)
+            {
+                return NotFound();
+            }
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()), 
+                new Claim(JwtRegisteredClaimNames.Jti, Convert.ToBase64String(Guid.NewGuid().ToByteArray()))
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
+            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _config["Tokens:Issuer"],
+                audience: _config["Tokens:Audience"],
+                claims: claims,
+                notBefore: DateTime.UtcNow, 
+                expires: DateTime.UtcNow.AddMinutes(15),
+                signingCredentials: cred);
+
+            return Json(new
+            {
+                Token = new JwtSecurityTokenHandler().WriteToken(token), 
+                Expiration = token.ValidTo
+            });
         }
 
         public async Task Logout()

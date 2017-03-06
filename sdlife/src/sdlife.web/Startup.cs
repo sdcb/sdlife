@@ -16,6 +16,8 @@ using Newtonsoft.Json.Serialization;
 using sdlife.web.Services.Implements;
 using sdlife.web.Managers;
 using sdlife.web.Managers.Implements;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 [assembly: CLSCompliant(false)]
 
@@ -75,6 +77,7 @@ namespace sdlife.web
             // Add managers.
             services.AddTransient<IAccountingManager, AccountingManager>();
             services.AddTransient<IAccountingPrivilegeManager, AccountingPrivilegeManager>();
+            services.AddSingleton(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,7 +90,7 @@ namespace sdlife.web
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                app.UseBrowserLink();
+                //app.UseBrowserLink();
             }
             else
             {
@@ -97,9 +100,20 @@ namespace sdlife.web
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.UseIdentity();
+            //app.UseIdentity();
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
-            app.UseJwtBearerAuthentication();
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AutomaticAuthenticate = true, 
+                AutomaticChallenge = true, 
+                TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = Configuration["Tokens:Issuer"], 
+                    ValidAudience = Configuration["Tokens:Audience"], 
+                    ValidateIssuerSigningKey = true, 
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])), 
+                }
+            });
             
 
             app.UseMvc(route =>
