@@ -12,31 +12,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\app\**" />
-    <Compile Remove="wwwroot\css\**" />
-    <Compile Remove="wwwroot\lib\**" />
-    <Compile Remove="wwwroot\node_modules\**" />
-    <Content Remove="wwwroot\app\**" />
-    <Content Remove="wwwroot\css\**" />
-    <Content Remove="wwwroot\lib\**" />
-    <Content Remove="wwwroot\node_modules\**" />
-    <EmbeddedResource Remove="wwwroot\app\**" />
-    <EmbeddedResource Remove="wwwroot\css\**" />
-    <EmbeddedResource Remove="wwwroot\lib\**" />
-    <EmbeddedResource Remove="wwwroot\node_modules\**" />
-    <None Remove="wwwroot\app\**" />
-    <None Remove="wwwroot\css\**" />
-    <None Remove="wwwroot\lib\**" />
-    <None Remove="wwwroot\node_modules\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="wwwroot\min\**\*;Views\**\*;Areas\**\Views;appsettings*.json;web.config">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="1.1.0" />
