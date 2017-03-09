@@ -1,0 +1,7 @@
+<h1>Accounting</h1>
+
+<ul>
+  <li *ngFor="let item of accountings | async">
+    {{item.id}} {{item.title}} {{item.amount}} {{item.time}}
+  </li>
+</ul>

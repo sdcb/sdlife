@@ -7,8 +7,8 @@ import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { AccountingComponent } from './accounting/accounting.component';
+import { LoginComponent } from './components/login.component';
+import { AccountingComponent } from './components/accounting.component';
 
 @NgModule({
   declarations: [
