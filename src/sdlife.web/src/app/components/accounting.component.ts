@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Rx';
   providers: [DataService]
 })
 export class AccountingComponent implements OnInit {
-  private accountings: any;
+  private accountings: Observable<AccountingDto[]>;
 
   constructor(
     private router: Router, 
