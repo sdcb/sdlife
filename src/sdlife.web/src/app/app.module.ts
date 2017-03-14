@@ -10,6 +10,9 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login.component';
 import { AccountingComponent } from './components/accounting.component';
 
+import { AppHttpService } from './services/app-http.service';
+import { TokenStorageService } from './services/token-storage.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +27,7 @@ import { AccountingComponent } from './components/accounting.component';
     MaterialModule.forRoot(), 
     FlexLayoutModule, 
   ],
-  providers: [],
+  providers: [AppHttpService, TokenStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

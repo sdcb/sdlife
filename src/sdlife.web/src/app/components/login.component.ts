@@ -2,6 +2,7 @@ import { Http } from '@angular/http';
 import { Component, OnInit } from '@angular/core';
 import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
+import { TokenStorageService } from '../services/token-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private http: Http,
     private snackBar: MdSnackBar,
     private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, 
+    private tokenStorage: TokenStorageService) {
   }
 
   ngOnInit(): void {
@@ -37,8 +39,7 @@ export class LoginComponent implements OnInit {
       .post("/Account/CreateToken", this.loginDto)
       .subscribe(x => {
         let json = x.json();
-        localStorage.setItem("token", json.token);
-        localStorage.setItem("token-expiration", json.expiration);
+        this.tokenStorage.store(json.token, json.expiration);
         this.router.navigateByUrl(this.redirectUrl);
       }, err => {
         this.snackBar.open("用户名或密码不正确", "错误", {

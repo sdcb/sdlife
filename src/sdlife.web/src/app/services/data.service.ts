@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { AppHttpService } from './app-http.service';
 
 @Injectable()
 export class DataService {
-  constructor(private http: Http) { }
+  constructor(private http: AppHttpService) { }
 
   loadAccountingInRange(from: string, to: string, userId: number | null) {
     let query = {
@@ -11,13 +11,8 @@ export class DataService {
       to: to,
       userId: userId
     };
-    let options = {
-      headers: new Headers({
-        Authorization: "bearer " + this.token()
-      })
-    };
     return this.http
-      .post("/Accounting/Get", query, options)
+      .post("/Accounting/Get", query)
       .map(res => <AccountingDto[]>res.json());
   }
 

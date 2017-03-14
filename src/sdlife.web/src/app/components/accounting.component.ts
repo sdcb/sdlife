@@ -17,13 +17,8 @@ export class AccountingComponent implements OnInit {
     private data: DataService) {
   }
 
-  ngOnInit() {
-    if (localStorage.getItem("token") === null) {
-      this.router.navigate(["/login", {
-        redirectUrl: "/"
-      }]);
-    }
-      
+  ngOnInit() {      
     this.accountings = this.data.loadAccountingInRange("2017/1/1", "2017/2/1", null);
+    console.log(this.accountings);
   }
 }
