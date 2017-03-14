@@ -22,11 +22,7 @@ export class AppHttpService extends Http {
     }]);
   }
 
-  request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-    if (!this.tokenStorage.isTokenValid()) {
-      Observable.fromPromise(this.onTokenInvalid());
-    }
-
+  private requestByToken(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
     let token = this.tokenStorage.getToken();
     if (typeof url === "string") {
       options = options || {};
@@ -37,11 +33,38 @@ export class AppHttpService extends Http {
     }
 
     return super.request(url, options)
-      .catch((err: Response, caught) => {
-        if (err.status === 401 || err.status === 403) {
-          this.onTokenInvalid();
-        }
-        return Observable.throw(err);
-      });
+      .catch(this.onRequestFailed);
+  }
+
+  private onRequestFailed(err: Response) {
+    if (err.status === 401 || err.status === 403) {
+      this.onTokenInvalid();
+    }
+    return Observable.throw(err);
+  }
+
+  request(url: string | Request, options?: RequestOptionsArgs): Observable<any> {
+    if (!this.tokenStorage.tokenExists()) {
+      debugger;
+      return Observable.fromPromise(this.onTokenInvalid());
+    }
+
+    if (this.tokenStorage.tokenExpired()) {
+      return super.request(new Request({
+        method: "post",
+        url: "/Account/RefreshToken",
+        headers: new Headers({
+          Authorization: "bearer " + this.tokenStorage.getToken()
+        })
+      }))
+      .do(resp => {
+        let json = resp.json();
+        this.tokenStorage.store(json.token, json.expiration);
+      })
+      .map(x => this.requestByToken(url, options))
+      .catch(this.onRequestFailed);
+    } else {
+      return this.requestByToken(url, options);
+    }
   }
 }

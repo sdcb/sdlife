@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
     this.route.params.subscribe(x => {
       if (x["redirectUrl"]) {
         this.redirectUrl = x["redirectUrl"];
-        console.log(this.redirectUrl);
       }
     });
   }

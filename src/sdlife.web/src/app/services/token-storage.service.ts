@@ -11,17 +11,19 @@ export class TokenStorageService {
   }
 
   getToken() {
-    return this.isTokenValid() ?
+    return (this.tokenExists() && !this.tokenExpired()) ?
       localStorage.getItem("token") :
       null;
   }
 
-  isTokenValid() {
+  tokenExists() {
     let token = localStorage.getItem("token");
-    if (token === null) return false;
+    return token !== null;
+  }
 
+  tokenExpired() {
     let expires = localStorage.getItem("token-expires");
-    return new Date(expires) > new Date();
+    return expires === null || (new Date(expires) < new Date());
   }
 
 }
