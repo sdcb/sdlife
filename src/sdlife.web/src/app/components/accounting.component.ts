@@ -23,7 +23,7 @@ export class AccountingComponent implements OnInit {
         redirectUrl: "/"
       }]);
     }
-
+      
     this.accountings = this.data.loadAccountingInRange("2017/1/1", "2017/2/1", null);
   }
 }
