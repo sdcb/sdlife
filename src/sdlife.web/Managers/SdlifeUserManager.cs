@@ -53,11 +53,16 @@ namespace sdlife.web.Managers
             return null;
         }
 
-        public static TimeSpan ExpiresPeriod = TimeSpan.FromMinutes(30);
+        public static TimeSpan RefreshPeriod = TimeSpan.FromMinutes(15);
 
-        public static TimeSpan RefreshPeriod = TimeSpan.FromMinutes(ExpiresPeriod.TotalMinutes / 2);
+        public TimeSpan GetExpirationPeriod(bool rememberMe)
+        {
+            return rememberMe ?
+                TimeSpan.FromDays(7) :
+                TimeSpan.FromMinutes(30);
+        }
 
-        public async Task<UserAccessToken> CreateUserAccessToken(User user)
+        public async Task<UserAccessToken> CreateUserAccessToken(User user, bool rememberMe)
         {
             var userClaims = await GetClaimsAsync(user);
             var claims = new[]
@@ -73,12 +78,14 @@ namespace sdlife.web.Managers
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+            var expirationPeriod = GetExpirationPeriod(rememberMe);
+
             var token = new JwtSecurityToken(
                 issuer: _config["Tokens:Issuer"],
                 audience: _config["Tokens:Audience"],
                 claims: claims,
                 notBefore: DateTime.UtcNow,
-                expires: DateTime.UtcNow.Add(ExpiresPeriod),
+                expires: DateTime.UtcNow.Add(expirationPeriod),
                 signingCredentials: cred);
 
             return new UserAccessToken
@@ -88,5 +95,7 @@ namespace sdlife.web.Managers
                 RefreshTime = DateTime.UtcNow.Add(RefreshPeriod)
             };
         }
+
+        
     }
 }
