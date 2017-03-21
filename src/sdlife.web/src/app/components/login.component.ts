@@ -38,7 +38,10 @@ export class LoginComponent implements OnInit {
       .post("/Account/CreateToken", this.loginDto)
       .subscribe(x => {
         let json = x.json();
-        this.tokenStorage.store(json.token, json.expiration);
+        this.tokenStorage.store(
+          json.token, 
+          json.expiration, 
+          json.refreshTime);
         this.router.navigateByUrl(this.redirectUrl);
       }, err => {
         this.snackBar.open("用户名或密码不正确", "错误", {

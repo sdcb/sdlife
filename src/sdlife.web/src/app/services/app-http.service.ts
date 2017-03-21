@@ -44,12 +44,11 @@ export class AppHttpService extends Http {
   }
 
   request(url: string | Request, options?: RequestOptionsArgs): Observable<any> {
-    if (!this.tokenStorage.tokenExists()) {
-      debugger;
+    if (!this.tokenStorage.tokenExists() || this.tokenStorage.tokenExpired()) {
       return Observable.fromPromise(this.onTokenInvalid());
     }
 
-    if (this.tokenStorage.tokenExpired()) {
+    if (this.tokenStorage.tokenShouldRefresh()) {
       return super.request(new Request({
         method: "post",
         url: "/Account/RefreshToken",
@@ -59,7 +58,10 @@ export class AppHttpService extends Http {
       }))
       .do(resp => {
         let json = resp.json();
-        this.tokenStorage.store(json.token, json.expiration);
+        this.tokenStorage.store(
+          json.token, 
+          json.expiration, 
+          json.refreshTime);
       })
       .map(x => this.requestByToken(url, options))
       .catch(this.onRequestFailed);
