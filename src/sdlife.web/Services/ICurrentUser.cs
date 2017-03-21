@@ -15,6 +15,8 @@ namespace sdlife.web.Services
 
         bool IsInRole(string role);
 
+        bool RememberMe { get; }
+
         string GetClaim(string claimType);
     }
 }

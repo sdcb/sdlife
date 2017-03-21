@@ -73,15 +73,14 @@ namespace sdlife.web.Controllers
             {
                 return NotFound();
             }
-
-            var expirationPeriod = _userManager.GetExpirationPeriod(loginDto.RememberMe);
-            return await _userManager.CreateUserAccessToken(user, expirationPeriod);
+            
+            return await _userManager.CreateUserAccessToken(user, loginDto.RememberMe);
         }
 
         public async Task<UserAccessToken> RefreshToken()
         {
             var user = await _userManager.GetUserAsync(User);
-            return await _userManager.CreateUserAccessToken(user, expirationPeriod);
+            return await _userManager.CreateUserAccessToken(user, _user.RememberMe);
         }
 
         public async Task Logout()

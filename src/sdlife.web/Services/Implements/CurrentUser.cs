@@ -22,28 +22,16 @@ namespace sdlife.web.Services.Implements
         }
 
         public bool IsSignedIn
-        {
-            get
-            {
-                return _httpContext.User.Identity.IsAuthenticated;
-            }
-        }
+            => _httpContext.User.Identity.IsAuthenticated;
 
         public int UserId
-        {
-            get
-            {
-                return int.Parse(_userManager.GetUserId(_httpContext.User));
-            }
-        }
+            => int.Parse(_userManager.GetUserId(_httpContext.User));
 
         public string UserName
-        {
-            get
-            {
-                return _userManager.GetUserName(_httpContext.User);
-            }
-        }
+            => _userManager.GetUserName(_httpContext.User);
+
+        public bool RememberMe
+            => bool.Parse(GetClaim("RememberMe"));
 
         public string GetClaim(string claimType)
         {

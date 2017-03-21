@@ -73,6 +73,8 @@ namespace sdlife.web.Managers
                     Convert.ToBase64String(Guid.NewGuid().ToByteArray())),
                 new Claim(JwtRegisteredClaimNames.Email,
                     user.Email),
+                new Claim("RememberMe", 
+                    rememberMe.ToString()), 
             }.Concat(userClaims);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
