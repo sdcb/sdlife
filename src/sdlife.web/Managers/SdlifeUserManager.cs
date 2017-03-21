@@ -7,13 +7,33 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using sdlife.web.Dtos.Account;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace sdlife.web.Managers
 {
     public class SdlifeUserManager : UserManager<User>
     {
-        public SdlifeUserManager(IUserStore<User> store, IOptions<IdentityOptions> optionsAccessor, IPasswordHasher<User> passwordHasher, IEnumerable<IUserValidator<User>> userValidators, IEnumerable<IPasswordValidator<User>> passwordValidators, ILookupNormalizer keyNormalizer, IdentityErrorDescriber errors, IServiceProvider services, ILogger<UserManager<User>> logger) : base(store, optionsAccessor, passwordHasher, userValidators, passwordValidators, keyNormalizer, errors, services, logger)
+        private readonly IConfigurationRoot _config;
+
+        public SdlifeUserManager(
+            IUserStore<User> store, 
+            IOptions<IdentityOptions> optionsAccessor, 
+            IPasswordHasher<User> passwordHasher, 
+            IEnumerable<IUserValidator<User>> userValidators, 
+            IEnumerable<IPasswordValidator<User>> passwordValidators, 
+            ILookupNormalizer keyNormalizer, 
+            IdentityErrorDescriber errors, 
+            IServiceProvider services, 
+            ILogger<UserManager<User>> logger,
+            IConfigurationRoot config) 
+            : base(store, optionsAccessor, passwordHasher, userValidators, passwordValidators, keyNormalizer, errors, services, logger)
         {
+            _config = config;
         }
 
         public async Task<User> FindByNameOrEmailAsync(string userNameOrEmail)
@@ -31,6 +51,42 @@ namespace sdlife.web.Managers
             }
 
             return null;
+        }
+
+        public static TimeSpan ExpiresPeriod = TimeSpan.FromMinutes(30);
+
+        public static TimeSpan RefreshPeriod = TimeSpan.FromMinutes(ExpiresPeriod.TotalMinutes / 2);
+
+        public async Task<UserAccessToken> CreateUserAccessToken(User user)
+        {
+            var userClaims = await GetClaimsAsync(user);
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub,
+                    user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti,
+                    Convert.ToBase64String(Guid.NewGuid().ToByteArray())),
+                new Claim(JwtRegisteredClaimNames.Email,
+                    user.Email),
+            }.Concat(userClaims);
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
+            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _config["Tokens:Issuer"],
+                audience: _config["Tokens:Audience"],
+                claims: claims,
+                notBefore: DateTime.UtcNow,
+                expires: DateTime.UtcNow.Add(ExpiresPeriod),
+                signingCredentials: cred);
+
+            return new UserAccessToken
+            {
+                Token = new JwtSecurityTokenHandler().WriteToken(token), 
+                Expiration = token.ValidTo, 
+                RefreshTime = DateTime.UtcNow.Add(RefreshPeriod)
+            };
         }
     }
 }

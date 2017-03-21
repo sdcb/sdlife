@@ -13,6 +13,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
+using sdlife.web.Services;
+using sdlife.web.Dtos.Account;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,17 +26,20 @@ namespace sdlife.web.Controllers
         private readonly SdlifeUserManager _userManager;
         private readonly IAntiforgery _antiforgery;
         private readonly IConfigurationRoot _config;
+        private readonly ICurrentUser _user;
 
         public AccountController(
             SdlifeUserManager userManager,
             SignInManager<User> signInManager,
-            IAntiforgery antiforgery, 
-            IConfigurationRoot config)
+            IAntiforgery antiforgery,
+            IConfigurationRoot config,
+            ICurrentUser user)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _antiforgery = antiforgery;
             _config = config;
+            _user = user;
         }
 
         public async Task<IActionResult> Login([FromBody]LoginDto loginDto)
@@ -55,7 +60,7 @@ namespace sdlife.web.Controllers
             return Ok();
         }
 
-        public async Task<IActionResult> CreateToken([FromBody]LoginDto loginDto)
+        public async Task<object> CreateToken([FromBody]LoginDto loginDto)
         {
             var user = await _userManager.FindByNameOrEmailAsync(loginDto.UserName);
             if (user == null)
@@ -69,30 +74,13 @@ namespace sdlife.web.Controllers
                 return NotFound();
             }
 
-            var userClaims = await _userManager.GetClaimsAsync(user);
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()), 
-                new Claim(JwtRegisteredClaimNames.Jti, Convert.ToBase64String(Guid.NewGuid().ToByteArray())), 
-                new Claim(JwtRegisteredClaimNames.Email, user.Email), 
-            }.Concat(userClaims);
+            return await _userManager.CreateUserAccessToken(user);
+        }
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
-            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                issuer: _config["Tokens:Issuer"],
-                audience: _config["Tokens:Audience"],
-                claims: claims,
-                notBefore: DateTime.UtcNow, 
-                expires: DateTime.UtcNow.AddMinutes(15),
-                signingCredentials: cred);
-
-            return Json(new
-            {
-                Token = new JwtSecurityTokenHandler().WriteToken(token), 
-                Expiration = token.ValidTo
-            });
+        public async Task<UserAccessToken> RefreshToken()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            return await _userManager.CreateUserAccessToken(user);
         }
 
         public async Task Logout()
