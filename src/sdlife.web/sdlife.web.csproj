@@ -39,8 +39,8 @@
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.3.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="1.0.3.3" />
-    <PackageReference Include="Antlr4.Runtime" Version="4.5.3.1-beta001" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="1.0.3.4" />
+    <PackageReference Include="Antlr4.Runtime" Version="4.6.1-beta002" />
   </ItemGroup>
 
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
