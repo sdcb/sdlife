@@ -10,28 +10,16 @@ namespace sdlife.web.unittest.Mocked
     public class TestCurrentUser : ICurrentUser
     {
         public bool IsSignedIn
-        {
-            get
-            {
-                return true;
-            }
-        }
+            => true;
 
         public int UserId
-        {
-            get
-            {
-                return 7;
-            }
-        }
+            => 7;
 
         public string UserName
-        {
-            get
-            {
-                return "sdflysha@qq.com";
-            }
-        }
+            => "example@example.com";
+
+        public bool RememberMe
+            => false;
 
         public string GetClaim(string claimType)
         {
