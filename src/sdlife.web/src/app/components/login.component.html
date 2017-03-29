@@ -1,4 +1,4 @@
-<md-card class="md-whiteframe-2dp" style="height: 50%; width: 100%; position: absolute; padding: 0; background: hsl(200, 100%, 60%);"></md-card>
+﻿<md-card class="md-whiteframe-2dp" style="height: 50%; width: 100%; position: absolute; padding: 0; background: hsl(200, 100%, 60%);"></md-card>
 <div fxLayout="row" fxLayoutAlign="center center" style="position: absolute; height: 100%; width: 100%">
   <md-card fxFlex="35%" fxFlex.xs="100%">
     <md-card-header>
@@ -13,7 +13,7 @@
       <md-input-container>
         <input mdInput placeholder="Password" class="full-width" [(ngModel)]="loginDto.password" type="password"/>
       </md-input-container>
-        <input class="full-width" [(ngModel)]="loginDto.rememberMe" type="checkbox"/>
+      <md-slide-toggle [checked]="loginDto.rememberMe">记住我</md-slide-toggle>
     </md-card-content>
     <md-card-actions fxLayout="row">
       <div fxFlex></div>
