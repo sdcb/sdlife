@@ -1,14 +1,16 @@
 ﻿<md-card style="height: 50%; width: 100%; position: absolute; padding: 0; background: hsl(200, 100%, 60%);"></md-card>
 <div fxLayout="row" fxLayoutAlign="center center" style="position: absolute; height: 100%; width: 100%">
   <div fxFlex="35%" fxFlex.xs="100%">
-    <md-toolbar color="primary">life - 登录</md-toolbar>
+    <md-toolbar color="primary">Life - 登录</md-toolbar>
     <md-card>
       <md-card-content fxLayout="column">
         <md-input-container>
-          <input mdInput placeholder="* 用户名" class="full-width" [(ngModel)]="loginDto.username" type="text" />
+          <input mdInput placeholder="用户名" class="full-width" [(ngModel)]="loginDto.username" type="text" />
+          <span mdPrefix><md-icon>email</md-icon></span>
         </md-input-container>
         <md-input-container>
-          <input mdInput placeholder="* 密码" class="full-width" [(ngModel)]="loginDto.password" type="password" />
+          <input mdInput placeholder="密码" class="full-width" [(ngModel)]="loginDto.password" type="password" />
+          <span mdPrefix><md-icon>security</md-icon></span>
         </md-input-container>
         <md-slide-toggle [(ngModel)]="loginDto.rememberMe" color="primary">记住我</md-slide-toggle>
       </md-card-content>
