@@ -16,8 +16,6 @@ using System.Security.Claims;
 using sdlife.web.Services;
 using sdlife.web.Dtos.Account;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace sdlife.web.Controllers
 {
     public class AccountController : SdlifeBaseController
