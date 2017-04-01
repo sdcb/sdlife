@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   };
   redirectUrl = "/";
 
+  inRequest = false;
+
   constructor(
     private http: Http,
     private snackBar: MdSnackBar,
@@ -34,6 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.inRequest = true;
     this.http
       .post("/Account/CreateToken", this.loginDto)
       .subscribe(x => {
@@ -47,6 +50,8 @@ export class LoginComponent implements OnInit {
         this.snackBar.open("用户名或密码不正确", "错误", {
           duration: 1500
         });
+      }, () => {
+          this.inRequest = false;
       });
   }
 }

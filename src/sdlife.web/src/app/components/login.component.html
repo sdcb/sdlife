@@ -1,4 +1,4 @@
-﻿<md-card class="md-whiteframe-2dp" style="height: 50%; width: 100%; position: absolute; padding: 0; background: hsl(200, 100%, 60%);"></md-card>
+﻿<md-card style="height: 50%; width: 100%; position: absolute; padding: 0; background: hsl(200, 100%, 60%);"></md-card>
 <div fxLayout="row" fxLayoutAlign="center center" style="position: absolute; height: 100%; width: 100%">
   <div fxFlex="35%" fxFlex.xs="100%">
     <md-toolbar color="primary">life - 登录</md-toolbar>
@@ -10,14 +10,18 @@
         <md-input-container>
           <input mdInput placeholder="* 密码" class="full-width" [(ngModel)]="loginDto.password" type="password" />
         </md-input-container>
-        <md-slide-toggle [(ngModel)]="loginDto.rememberMe">记住我</md-slide-toggle>
+        <md-slide-toggle [(ngModel)]="loginDto.rememberMe" color="primary">记住我</md-slide-toggle>
       </md-card-content>
       <md-card-actions fxLayout="row">
         <div fxFlex></div>
-        <button fxFlex md-button color="primary" (click)="login()">登录</button>
+        <button type="submit" md-raised-button
+                [disabled]="inRequest"
+                color="primary"
+                (click)="login()">
+          登录{{inRequest ? "中..." : ""}}
+        </button>
         <div fxFlex></div>
-        <!--<button fxFlex md-button>Forgot password</button>-->
       </md-card-actions>
     </md-card>
-  </div>  
+  </div>
 </div>

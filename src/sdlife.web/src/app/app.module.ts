@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+﻿import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -12,6 +12,8 @@ import { AccountingComponent } from './components/accounting.component';
 
 import { AppHttpService } from './services/app-http.service';
 import { TokenStorageService } from './services/token-storage.service';
+//import "hammerjs";
+//import "moment";
 
 @NgModule({
   declarations: [
