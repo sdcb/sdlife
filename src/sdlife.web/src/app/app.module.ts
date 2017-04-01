@@ -12,6 +12,7 @@ import { AccountingComponent } from './components/accounting.component';
 
 import { AppHttpService } from './services/app-http.service';
 import { TokenStorageService } from './services/token-storage.service';
+import { PageHeaderComponent } from './components/common/page-header.component';
 //import "hammerjs";
 //import "moment";
 
@@ -19,7 +20,8 @@ import { TokenStorageService } from './services/token-storage.service';
   declarations: [
     AppComponent,
     LoginComponent,
-    AccountingComponent
+    AccountingComponent,
+    PageHeaderComponent
   ],
   imports: [
     BrowserModule,
