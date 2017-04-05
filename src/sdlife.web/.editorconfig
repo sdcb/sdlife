@@ -1,4 +1,4 @@
-# Editor configuration, see http://editorconfig.org
+﻿# Editor configuration, see http://editorconfig.org
 root = true
 
 [*]
@@ -9,6 +9,9 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 [*.cs]
+indent_size = 4
+
+[*.ts]
 indent_size = 4
 
 [*.md]
