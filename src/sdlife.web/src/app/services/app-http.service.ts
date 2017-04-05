@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { Http, XHRBackend, RequestOptionsArgs, Request, Response, RequestOptions, Headers } from '@angular/http';
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/throw';
-import 'rxjs/add/observable/fromPromise'
+import 'rxjs/add/observable/fromPromise';
+import "rxjs/add/operator/toPromise";
 import { TokenStorageService } from './token-storage.service';
 import { Router } from '@angular/router';
 
@@ -49,22 +50,25 @@ export class AppHttpService extends Http {
     }
 
     if (this.tokenStorage.tokenShouldRefresh()) {
-      return super.request(new Request({
-        method: "post",
-        url: "/Account/RefreshToken",
-        headers: new Headers({
-          Authorization: "bearer " + this.tokenStorage.getToken()
-        })
-      }))
-      .do(resp => {
-        let json = resp.json();
-        this.tokenStorage.store(
-          json.token, 
-          json.expiration, 
-          json.refreshTime);
-      })
-      .map(x => this.requestByToken(url, options))
-      .catch(this.onRequestFailed);
+      return Observable.fromPromise((async () => {
+          let resp = await super.request(new Request({
+              method: "post",
+              url: "/Account/RefreshToken",
+              headers: new Headers({
+                  Authorization: "bearer " + this.tokenStorage.getToken()
+              })
+          })).toPromise();
+          let json = resp.json();
+          this.tokenStorage.store(
+              json.token,
+              json.expiration,
+              json.refreshTime);
+          try {
+              return await this.requestByToken(url, options).toPromise();
+          } catch(e) {
+              return await this.onRequestFailed(resp).toPromise();
+          }
+      })());
     } else {
       return this.requestByToken(url, options);
     }
