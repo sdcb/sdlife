@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { Http, XHRBackend, RequestOptionsArgs, Request, Response, RequestOptions, Headers } from '@angular/http';
+import { Http, XHRBackend, ConnectionBackend, RequestOptionsArgs, Request, Response, RequestOptions, Headers } from '@angular/http';
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/fromPromise';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AppHttpService extends Http {
     constructor(
-        backend: XHRBackend,
+        backend: ConnectionBackend,
         options: RequestOptions,
         private tokenStorage: TokenStorageService,
         private router: Router) {

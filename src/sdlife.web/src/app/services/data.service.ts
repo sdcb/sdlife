@@ -1,9 +1,9 @@
 ﻿import { Injectable } from '@angular/core';
-import { AppHttpService } from './app-http.service';
+import { Http } from "@angular/http";
 
 @Injectable()
 export class DataService {
-    constructor(private http: AppHttpService) { }
+    constructor(private http: Http) { }
 
     loadAccountingInRange(from: string, to: string, userId: number | null) {
         let query = {

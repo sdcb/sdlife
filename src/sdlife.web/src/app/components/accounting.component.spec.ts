@@ -1,5 +1,5 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { AccountingComponent } from './accounting.component';
 
 describe('AccountingComponent', () => {
@@ -7,9 +7,11 @@ describe('AccountingComponent', () => {
     let fixture: ComponentFixture<AccountingComponent>;
 
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [AccountingComponent]
-        })
+        TestBed
+            .configureTestingModule({
+                declarations: [AccountingComponent],
+                schemas: [ NO_ERRORS_SCHEMA ]
+            })
             .compileComponents();
     }));
 

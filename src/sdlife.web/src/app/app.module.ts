@@ -2,10 +2,11 @@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http, ConnectionBackend, XHRBackend, RequestOptions } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { Router } from "@angular/router";
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login.component';
@@ -33,7 +34,20 @@ import { PageHeaderComponent } from './components/common/page-header.component';
         FlexLayoutModule,
         BrowserAnimationsModule
     ],
-    providers: [AppHttpService, TokenStorageService],
+    providers: [
+        TokenStorageService,
+        {
+            provide: Http, 
+            useFactory: (
+                backend: XHRBackend,
+                defaultOptions: RequestOptions,
+                tokenStorage: TokenStorageService,
+                router: Router) => {
+                return new AppHttpService(backend, defaultOptions, tokenStorage, router)
+            }, 
+            deps: [XHRBackend, RequestOptions, TokenStorageService, Router]
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
