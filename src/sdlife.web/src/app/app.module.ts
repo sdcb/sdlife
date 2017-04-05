@@ -18,22 +18,22 @@ import { PageHeaderComponent } from './components/common/page-header.component';
 //import "moment";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    AccountingComponent,
-    PageHeaderComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    AppRoutingModule, 
-    MaterialModule.forRoot(), 
-    FlexLayoutModule, 
-    BrowserAnimationsModule
-  ],
-  providers: [AppHttpService, TokenStorageService],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        AccountingComponent,
+        PageHeaderComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpModule,
+        AppRoutingModule,
+        MaterialModule.forRoot(),
+        FlexLayoutModule,
+        BrowserAnimationsModule
+    ],
+    providers: [AppHttpService, TokenStorageService],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

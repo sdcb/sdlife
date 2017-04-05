@@ -8,7 +8,6 @@ import { Router } from "@angular/router";
     styleUrls: ['./page-header.component.css']
 })
 export class PageHeaderComponent implements OnInit {
-
     constructor(
         private tokenStorage: TokenStorageService,
         private router: Router) { }

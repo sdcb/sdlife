@@ -4,20 +4,20 @@ import { DataService, AccountingDto } from '../services/data.service';
 import { Observable } from 'rxjs/Rx';
 
 @Component({
-  selector: 'app-accounting',
-  templateUrl: './accounting.component.html',
-  styleUrls: ['./accounting.component.css'], 
-  providers: [DataService]
+    selector: 'app-accounting',
+    templateUrl: './accounting.component.html',
+    styleUrls: ['./accounting.component.css'],
+    providers: [DataService]
 })
 export class AccountingComponent implements OnInit {
-  accountings: Observable<AccountingDto[]>;
+    accountings: Observable<AccountingDto[]>;
 
-  constructor(
-    private router: Router, 
-    private data: DataService) {
-  }
+    constructor(
+        private router: Router,
+        private data: DataService) {
+    }
 
-  ngOnInit() {      
-    this.accountings = this.data.loadAccountingInRange("2017/1/1", "2017/2/1", null);
-  }
+    ngOnInit() {
+        this.accountings = this.data.loadAccountingInRange("2017/1/1", "2017/2/1", null);
+    }
 }
