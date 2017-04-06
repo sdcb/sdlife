@@ -15,10 +15,6 @@ export class DataService {
             .post("/Accounting/Get", query)
             .map(res => <AccountingDto[]>res.json());
     }
-
-    private token() {
-        return localStorage.getItem("token");
-    }
 }
 
 export interface AccountingEntity extends AccountingDto {
