@@ -1,6 +1,9 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MaterialModule } from "@angular/material";
+import { Router } from "@angular/router";
 
 import { PageHeaderComponent } from './page-header.component';
+import { TokenStorageService } from "../../services/token-storage.service";
 
 describe('PageHeaderComponent', () => {
     let component: PageHeaderComponent;
@@ -9,7 +12,15 @@ describe('PageHeaderComponent', () => {
     beforeEach(async(() => {
         TestBed
             .configureTestingModule({
-                declarations: [PageHeaderComponent]
+                declarations: [PageHeaderComponent], 
+                imports: [MaterialModule], 
+                providers: [
+                    TokenStorageService, 
+                    {
+                        provide: Router, 
+                        useValue: null, 
+                    }
+                ]
             })
             .compileComponents();
     }));
