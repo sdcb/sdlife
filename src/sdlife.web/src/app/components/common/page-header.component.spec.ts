@@ -3,7 +3,7 @@ import { MaterialModule } from "@angular/material";
 import { Router } from "@angular/router";
 
 import { PageHeaderComponent } from './page-header.component';
-import { TokenStorageService } from "../../services/token-storage.service";
+import { TokenStorage } from "../../services/token-storage.service";
 
 describe('PageHeaderComponent', () => {
     let component: PageHeaderComponent;
@@ -15,7 +15,7 @@ describe('PageHeaderComponent', () => {
                 declarations: [PageHeaderComponent], 
                 imports: [MaterialModule], 
                 providers: [
-                    TokenStorageService, 
+                    TokenStorage, 
                     {
                         provide: Router, 
                         useValue: null, 

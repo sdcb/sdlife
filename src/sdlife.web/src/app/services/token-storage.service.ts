@@ -6,7 +6,7 @@ const TokenExpires = "token-expires";
 const TokenRefresh = "token-refresh";
 
 @Injectable()
-export class TokenStorageService {
+export class TokenStorage {
 
     constructor() { }
 

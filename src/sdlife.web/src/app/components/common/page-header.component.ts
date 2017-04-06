@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { TokenStorageService } from "../../services/token-storage.service";
+import { TokenStorage } from "../../services/token-storage.service";
 import { Router } from "@angular/router";
 
 @Component({
@@ -9,7 +9,7 @@ import { Router } from "@angular/router";
 })
 export class PageHeaderComponent implements OnInit {
     constructor(
-        private tokenStorage: TokenStorageService,
+        private tokenStorage: TokenStorage,
         private router: Router) { }
 
     ngOnInit() {

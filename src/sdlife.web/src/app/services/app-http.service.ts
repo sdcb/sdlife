@@ -4,15 +4,15 @@ import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/fromPromise';
 import "rxjs/add/operator/toPromise";
-import { TokenStorageService } from './token-storage.service';
+import { TokenStorage } from './token-storage.service';
 import { Router } from '@angular/router';
 
 @Injectable()
-export class AppHttpService extends Http {
+export class AppHttp extends Http {
     constructor(
         backend: ConnectionBackend,
         options: RequestOptions,
-        private tokenStorage: TokenStorageService,
+        private tokenStorage: TokenStorage,
         private router: Router) {
         super(backend, options);
     }

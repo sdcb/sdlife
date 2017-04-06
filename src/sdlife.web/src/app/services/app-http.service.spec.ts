@@ -1,6 +1,6 @@
 ﻿import { TestBed, inject } from '@angular/core/testing';
-import { AppHttpService } from './app-http.service';
-import { TokenStorageService } from "./token-storage.service";
+import { AppHttp } from './app-http.service';
+import { TokenStorage } from "./token-storage.service";
 import { Injectable } from '@angular/core';
 import { RequestOptions, HttpModule, ReadyState, Connection, ConnectionBackend } from "@angular/http";
 import { Router } from "@angular/router"
@@ -15,7 +15,7 @@ class CustomBackend extends ConnectionBackend {
     };
 }
 
-class MyTokenStorageService extends TokenStorageService {
+class MyTokenStorageService extends TokenStorage {
 
 }
 
@@ -23,7 +23,7 @@ describe('AppHttpService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
-                AppHttpService,
+                AppHttp,
                 {
                     provide: ConnectionBackend, 
                     useValue: new CustomBackend()
@@ -33,7 +33,7 @@ describe('AppHttpService', () => {
                     useValue: null, 
                 }, 
                 {
-                    provide: TokenStorageService, 
+                    provide: TokenStorage, 
                     useValue: new MyTokenStorageService()
                 }, 
                 {
@@ -44,7 +44,7 @@ describe('AppHttpService', () => {
         });
     });
 
-    it('should ...', inject([AppHttpService], (service: AppHttpService) => {
+    it('should ...', inject([AppHttp], (service: AppHttp) => {
         expect(service).toBeTruthy();
     }));
 });

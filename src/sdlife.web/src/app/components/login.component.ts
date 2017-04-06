@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { TokenStorageService } from '../services/token-storage.service';
+import { TokenStorage } from '../services/token-storage.service';
 
 @Component({
     selector: 'app-login',
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
         private snackBar: MdSnackBar,
         private router: Router,
         private route: ActivatedRoute,
-        private tokenStorage: TokenStorageService) {
+        private tokenStorage: TokenStorage) {
     }
 
     ngOnInit(): void {

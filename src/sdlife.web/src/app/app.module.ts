@@ -12,8 +12,8 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login.component';
 import { AccountingComponent } from './components/accounting.component';
 
-import { AppHttpService } from './services/app-http.service';
-import { TokenStorageService } from './services/token-storage.service';
+import { AppHttp } from './services/app-http.service';
+import { TokenStorage } from './services/token-storage.service';
 import { PageHeaderComponent } from './components/common/page-header.component';
 //import "hammerjs";
 //import "moment";
@@ -28,24 +28,24 @@ import { PageHeaderComponent } from './components/common/page-header.component';
     imports: [
         BrowserModule,
         FormsModule,
-        //HttpModule,
+        HttpModule,
         AppRoutingModule,
         MaterialModule.forRoot(),
         FlexLayoutModule,
         BrowserAnimationsModule
     ],
     providers: [
-        TokenStorageService,
+        TokenStorage,
         {
-            provide: Http, 
+            provide: AppHttp, 
             useFactory: (
                 backend,
                 defaultOptions,
                 tokenStorage,
                 router) => {
-                return new AppHttpService(backend, defaultOptions, tokenStorage, router)
+                return new AppHttp(backend, defaultOptions, tokenStorage, router)
             }, 
-            deps: [XHRBackend, RequestOptions, TokenStorageService, Router]
+            deps: [XHRBackend, RequestOptions, TokenStorage, Router]
         }
     ],
     bootstrap: [AppComponent]

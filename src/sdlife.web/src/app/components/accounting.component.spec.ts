@@ -5,7 +5,7 @@ import { MaterialModule } from "@angular/material";
 
 import { AccountingComponent } from './accounting.component';
 import { PageHeaderComponent } from "./common/page-header.component";
-import { TokenStorageService } from "../services/token-storage.service";
+import { TokenStorage } from "../services/token-storage.service";
 
 
 describe('AccountingComponent', () => {
@@ -22,7 +22,7 @@ describe('AccountingComponent', () => {
                         provide: Router, 
                         useValue: null, 
                     }, 
-                    TokenStorageService
+                    TokenStorage
                 ]
             })
             .compileComponents();

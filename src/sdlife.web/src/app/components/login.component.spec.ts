@@ -8,7 +8,7 @@ import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/empty";
 
 import { LoginComponent } from './login.component';
-import { TokenStorageService } from "../services/token-storage.service";
+import { TokenStorage } from "../services/token-storage.service";
 
 
 describe('LoginComponent', () => {
@@ -31,7 +31,7 @@ describe('LoginComponent', () => {
                             params: Observable.empty()
                         }, 
                     }, 
-                    TokenStorageService
+                    TokenStorage
                 ]
             })
             .compileComponents();
