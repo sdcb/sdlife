@@ -28,7 +28,7 @@ import { PageHeaderComponent } from './components/common/page-header.component';
     imports: [
         BrowserModule,
         FormsModule,
-        HttpModule,
+        //HttpModule,
         AppRoutingModule,
         MaterialModule.forRoot(),
         FlexLayoutModule,
@@ -39,10 +39,10 @@ import { PageHeaderComponent } from './components/common/page-header.component';
         {
             provide: Http, 
             useFactory: (
-                backend: XHRBackend,
-                defaultOptions: RequestOptions,
-                tokenStorage: TokenStorageService,
-                router: Router) => {
+                backend,
+                defaultOptions,
+                tokenStorage,
+                router) => {
                 return new AppHttpService(backend, defaultOptions, tokenStorage, router)
             }, 
             deps: [XHRBackend, RequestOptions, TokenStorageService, Router]

@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { Http, XHRBackend, ConnectionBackend, RequestOptionsArgs, Request, Response, RequestOptions, Headers } from '@angular/http';
+import { Http, ConnectionBackend, RequestOptionsArgs, Request, Response, RequestOptions, Headers } from '@angular/http';
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/fromPromise';
