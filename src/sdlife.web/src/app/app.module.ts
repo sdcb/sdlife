@@ -37,14 +37,10 @@ import { PageHeaderComponent } from './components/common/page-header.component';
     providers: [
         TokenStorage,
         {
-            provide: AppHttp, 
-            useFactory: (
-                backend,
-                defaultOptions,
-                tokenStorage,
-                router) => {
+            provide: AppHttp,
+            useFactory(backend, defaultOptions, tokenStorage, router) {
                 return new AppHttp(backend, defaultOptions, tokenStorage, router)
-            }, 
+            },
             deps: [XHRBackend, RequestOptions, TokenStorage, Router]
         }
     ],
