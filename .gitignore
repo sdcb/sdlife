@@ -247,5 +247,5 @@ ModelManifest.xml
 *.js
 *.js.map
 appsettings.*.json
-/src/sdlife.web/Models/SqlAntlr/Details/*.cs
-/src/sdlife.web/Models/SqlAntlr/Details/*.tokens
+/sdlife.web/Models/SqlAntlr/Details/*.cs
+/sdlife.web/Models/SqlAntlr/Details/*.tokens
