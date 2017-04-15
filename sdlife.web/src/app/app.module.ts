@@ -15,6 +15,8 @@ import { AccountingComponent } from './components/accounting.component';
 import { AppHttp } from './services/app-http.service';
 import { TokenStorage } from './services/token-storage.service';
 import { PageHeaderComponent } from './components/common/page-header.component';
+
+import { Ng2MaterialModule } from "ng2-material";
 //import "hammerjs";
 //import "moment";
 
@@ -32,7 +34,8 @@ import { PageHeaderComponent } from './components/common/page-header.component';
         AppRoutingModule,
         MaterialModule.forRoot(),
         FlexLayoutModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule, 
+        Ng2MaterialModule.forRoot()
     ],
     providers: [
         TokenStorage,

@@ -1,7 +1,22 @@
 ﻿<app-page-header></app-page-header>
 
 <md-list>
-  <md-list-item *ngFor="let item of accountings | async">
-    {{item.id}} {{item.title}} {{item.amount}} {{item.time}}
-  </md-list-item>
+  <md-data-table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>标题</th>
+        <th>金额</th>
+        <th>时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of accountings | async">
+        <td>{{item.id}}</td>
+        <td class="md-text-cell">{{item.title}}</td>
+        <td>{{item.amount}}</td>
+        <td>{{item.time}}</td>
+      </tr>
+    </tbody>
+  </md-data-table>
 </md-list>
