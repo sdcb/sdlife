@@ -2,6 +2,7 @@
 import { Router } from '@angular/router';
 import { DataService, AccountingDto } from '../services/data.service';
 import { Observable } from 'rxjs/Rx';
+import * as moment from "moment";
 
 @Component({
     selector: 'app-accounting',
@@ -18,6 +19,8 @@ export class AccountingComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.accountings = this.data.loadAccountingInRange("2017/1/1", "2017/2/1", null);
+        let now = moment();
+        let currentMonth = now.clone().startOf("month");
+        this.accountings = this.data.loadAccountingInRange(currentMonth.toISOString(), now.toISOString(), null);
     }
 }

@@ -274,6 +274,7 @@ namespace sdlife.web.Managers.Implements
                 join comment in _db.AccountingComment on accounting.Id equals comment.AccountingId into commentGroup
                 from comment in commentGroup.DefaultIfEmpty()
                 where accounting.EventTime >= start && accounting.EventTime < end && accounting.CreateUserId == userId
+                orderby accounting.EventTime descending
                 select new AccountingDto
                 {
                     Id = accounting.Id,

@@ -19,7 +19,6 @@ import { PageHeaderComponent } from './components/common/page-header.component';
 import { Ng2MaterialModule } from "ng2-material";
 
 //import "hammerjs";
-//import "moment";
 
 @NgModule({
     declarations: [
