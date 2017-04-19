@@ -1,7 +1,7 @@
 ﻿<app-page-header></app-page-header>
 
 <md-toolbar>
-  filter condition here...
+  <input mdInput placeholder="过滤..." class="full-width" type="text" />
 </md-toolbar>
 
 <md-list>
@@ -11,7 +11,7 @@
         <th>Id</th>
         <th class="md-text-cell">收入/支出</th>
         <th class="md-text-cell">标题</th>
-        <th>金额</th>        
+        <th>金额</th>
         <th>时间</th>
       </tr>
     </thead>
@@ -20,7 +20,7 @@
         <td>{{item.id}}</td>
         <td class="md-text-cell">{{item.isIncome ? '收入' : '支出'}}</td>
         <td class="md-text-cell">{{item.title}}</td>
-        <td>{{item.amount}}</td>        
+        <td>{{item.amount}}</td>
         <td>{{item.time}}</td>
       </tr>
     </tbody>
