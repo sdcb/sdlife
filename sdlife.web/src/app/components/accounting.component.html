@@ -1,11 +1,12 @@
 ﻿<app-page-header></app-page-header>
 
 <md-toolbar>
-  <input mdInput placeholder="过滤..." class="full-width" type="text" />
+  <input class="form-control input-xs"
+         placeholder="过滤..." type="text" />
 </md-toolbar>
 
 <md-list>
-  <md-data-table>
+  <table class="table">
     <thead>
       <tr>
         <th>Id</th>
@@ -24,5 +25,5 @@
         <td>{{item.time}}</td>
       </tr>
     </tbody>
-  </md-data-table>
+  </table>
 </md-list>

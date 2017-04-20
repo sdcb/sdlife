@@ -16,8 +16,6 @@ import { AppHttp } from './services/app-http.service';
 import { TokenStorage } from './services/token-storage.service';
 import { PageHeaderComponent } from './components/common/page-header.component';
 
-import { Ng2MaterialModule } from "ng2-material";
-
 //import "hammerjs";
 
 @NgModule({
@@ -34,8 +32,7 @@ import { Ng2MaterialModule } from "ng2-material";
         AppRoutingModule,
         MaterialModule.forRoot(),
         FlexLayoutModule,
-        BrowserAnimationsModule, 
-        Ng2MaterialModule.forRoot()
+        BrowserAnimationsModule
     ],
     providers: [
         TokenStorage,
