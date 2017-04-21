@@ -6,7 +6,7 @@
     <AssemblyName>sdlife.web</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>sdlife.web</PackageId>
-    <UserSecretsId>aspnet-sdlife.web-22e022c3-0a67-41bd-b099-03574093de8d</UserSecretsId>
+    <UserSecretsId>sdlife</UserSecretsId>
     <RuntimeFrameworkVersion>1.1.0</RuntimeFrameworkVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
