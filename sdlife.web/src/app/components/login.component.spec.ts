@@ -1,6 +1,5 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpModule } from "@angular/http";
-import { MaterialModule } from "@angular/material"
 import { FormsModule } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 
@@ -19,7 +18,7 @@ describe('LoginComponent', () => {
         TestBed
             .configureTestingModule({
                 declarations: [LoginComponent],
-                imports: [HttpModule, MaterialModule, FormsModule], 
+                imports: [HttpModule, FormsModule], 
                 providers: [
                     {
                         provide: Router,

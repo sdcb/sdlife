@@ -1,5 +1,4 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MaterialModule } from "@angular/material";
 import { Router } from "@angular/router";
 
 import { PageHeaderComponent } from './page-header.component';
@@ -13,7 +12,7 @@ describe('PageHeaderComponent', () => {
         TestBed
             .configureTestingModule({
                 declarations: [PageHeaderComponent], 
-                imports: [MaterialModule], 
+                imports: [], 
                 providers: [
                     TokenStorage, 
                     {

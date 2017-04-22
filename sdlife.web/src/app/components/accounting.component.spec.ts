@@ -1,7 +1,6 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpModule } from "@angular/http";
 import { Router } from "@angular/router";
-import { MaterialModule } from "@angular/material";
 
 import { AccountingComponent } from './accounting.component';
 import { PageHeaderComponent } from "./common/page-header.component";
@@ -16,7 +15,7 @@ describe('AccountingComponent', () => {
         TestBed
             .configureTestingModule({
                 declarations: [AccountingComponent, PageHeaderComponent],
-                imports: [HttpModule, MaterialModule], 
+                imports: [HttpModule], 
                 providers: [
                     {
                         provide: Router, 

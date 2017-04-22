@@ -1,6 +1,5 @@
 ﻿import { Http } from '@angular/http';
 import { Component, OnInit } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TokenStorage } from '../services/token-storage.service';
 
@@ -21,7 +20,6 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private http: Http,
-        private snackBar: MdSnackBar,
         private router: Router,
         private route: ActivatedRoute,
         private tokenStorage: TokenStorage) {
@@ -47,9 +45,7 @@ export class LoginComponent implements OnInit {
                     json.refreshTime);
                 this.router.navigateByUrl(this.redirectUrl);
             }, err => {
-                this.snackBar.open("用户名或密码不正确", "错误", {
-                    duration: 1500
-                });
+                alert("用户名或密码不正确");
             }, () => {
                 this.inRequest = false;
             });
