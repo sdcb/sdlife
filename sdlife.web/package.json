@@ -37,8 +37,6 @@
   "devDependencies": {
     "@angular/cli": "1.0.0",
     "@angular/compiler-cli": "^2.4.0",
-    "@angular/flex-layout": "^2.0.0-beta.7",
-    "@angular/material": "^2.0.0-beta.3",
     "@types/core-js": "^0.9.41",
     "@types/jasmine": "2.5.47",
     "@types/jquery": "^2.0.41",
