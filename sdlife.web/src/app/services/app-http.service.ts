@@ -4,6 +4,8 @@ import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/fromPromise';
 import "rxjs/add/operator/toPromise";
+import "rxjs/add/operator/catch";
+import "rxjs/add/operator/map";
 import { TokenStorage } from './token-storage.service';
 import { Router } from '@angular/router';
 

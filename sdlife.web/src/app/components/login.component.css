@@ -1,0 +1,35 @@
+﻿.fake-body {
+  position: relative;
+  height: 100%;
+}
+
+.fake-body {
+  background: #eee url(https://www.toptal.com/designers/subtlepatterns/patterns/sativa.png);
+}
+
+.panel-heading {
+  padding: 5px 15px;
+}
+
+.panel-footer {
+  padding: 1px 15px;
+  color: #A0A0A0;
+}
+
+.profile-img {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 10px;
+  display: block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
