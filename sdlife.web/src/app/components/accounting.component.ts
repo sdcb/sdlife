@@ -12,6 +12,7 @@ import * as moment from "moment";
 })
 export class AccountingComponent implements OnInit {
     accountings: Observable<AccountingDto[]>;
+    createDialog: AccountingCreateDialog;
 
     constructor(
         private router: Router,
@@ -24,7 +25,15 @@ export class AccountingComponent implements OnInit {
         this.accountings = this.data.loadAccountingInRange(currentMonth.toISOString(), now.toISOString(), null);
     }
 
-    openCreateDialog() {
-        console.log("creating...");
+    create() {
+        
     }
+
+    openCreateDialog() {
+        this.createDialog = new AccountingCreateDialog();
+    }
+}
+
+class AccountingCreateDialog {
+    isIncome = false;
 }
