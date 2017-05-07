@@ -53,19 +53,31 @@
           <h4 class="modal-title">记一笔</h4>
         </div>
         <div class="modal-body">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="form-group">
-                <div class="input-group">
-                  <label class="radio-inline">
-                    <input type="radio" name="isIncome" [(ngModel)]="createDialog.isIncome" [value]="true"/> 收入
-                  </label>
-                  <label class="radio-inline">
-                    <input type="radio" name="isIncome" [(ngModel)]="createDialog.isIncome" [value]="false"/> 支出
-                  </label>
-                </div>
-              </div>
+          <div class="form-group">
+            <div class="input-group">
+              <label class="radio-inline">
+                <input type="radio" name="isIncome" [(ngModel)]="createDialog.isIncome" [value]="true" /> 收入
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="isIncome" [(ngModel)]="createDialog.isIncome" [value]="false" /> 支出
+              </label>
             </div>
+          </div>
+          <div class="form-group">
+            <label>时间</label>
+            <input type="text" class="form-control" placeholder="时间...">
+          </div>
+          <div class="form-group">
+            <label>名称</label>
+            <input type="text" class="form-control" placeholder="名称...">
+          </div>
+          <div class="form-group">
+            <label>金额</label>
+            <input type="number" class="form-control" placeholder="金额..." required>
+          </div>
+          <div class="form-group">
+            <label>备注</label>
+            <textarea class="form-control" rows="3" placeholder="备注..."></textarea>
           </div>
         </div>
         <div class="modal-footer">
