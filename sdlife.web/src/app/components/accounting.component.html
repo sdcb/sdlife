@@ -65,19 +65,19 @@
           </div>
           <div class="form-group">
             <label>时间</label>
-            <input type="text" class="form-control" placeholder="时间...">
+            <input type="text" class="form-control" placeholder="时间..." [(ngModel)]="createDialog.time" />
           </div>
           <div class="form-group">
             <label>名称</label>
-            <input type="text" class="form-control" placeholder="名称...">
+            <input type="text" class="form-control" placeholder="名称..." [(ngModel)]="createDialog.title" />
           </div>
           <div class="form-group">
             <label>金额</label>
-            <input type="number" class="form-control" placeholder="金额..." required>
+            <input type="number" class="form-control" placeholder="金额..." [(ngModel)]="createDialog.amount" required />
           </div>
           <div class="form-group">
             <label>备注</label>
-            <textarea class="form-control" rows="3" placeholder="备注..."></textarea>
+            <textarea class="form-control" rows="3" placeholder="备注..." [(ngModel)]="createDialog.comment"></textarea>
           </div>
         </div>
         <div class="modal-footer">

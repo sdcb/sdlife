@@ -36,4 +36,8 @@ export class AccountingComponent implements OnInit {
 
 class AccountingCreateDialog {
     isIncome = false;
+    time = moment().format("L");
+    title: string;
+    amount = 0;
+    comment: string;
 }
