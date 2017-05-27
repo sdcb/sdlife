@@ -25,8 +25,13 @@ export class AccountingComponent implements OnInit {
         this.accountings = this.data.loadAccountingInRange(currentMonth.toISOString(), now.toISOString(), null);
     }
 
+    edit() {
+        console.log("editing...");
+    }
+
     create() {
         
+        this.data.createAccounting(this.createDialog).subscribe(fuck => console.log(fuck));
     }
 
     openCreateDialog() {
