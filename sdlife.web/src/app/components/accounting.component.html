@@ -27,6 +27,7 @@
               <th>标题</th>
               <th>金额</th>
               <th>时间</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -36,6 +37,9 @@
               <td>{{item.title}}</td>
               <td>{{item.amount}}</td>
               <td>{{item.time}}</td>
+              <td>
+                <a (click)="edit()">编辑</a>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -65,19 +69,19 @@
           </div>
           <div class="form-group">
             <label>时间</label>
-            <input type="text" class="form-control" placeholder="时间..." [(ngModel)]="createDialog.time" />
+            <input type="text" class="form-control" placeholder="时间..." name="time" [(ngModel)]="createDialog.time" />
           </div>
           <div class="form-group">
             <label>名称</label>
-            <input type="text" class="form-control" placeholder="名称..." [(ngModel)]="createDialog.title" />
+            <input type="text" class="form-control" placeholder="名称..." name="title" [(ngModel)]="createDialog.title" />
           </div>
           <div class="form-group">
             <label>金额</label>
-            <input type="number" class="form-control" placeholder="金额..." [(ngModel)]="createDialog.amount" required />
+            <input type="number" class="form-control" placeholder="金额..." name="amount" [(ngModel)]="createDialog.amount" required />
           </div>
           <div class="form-group">
             <label>备注</label>
-            <textarea class="form-control" rows="3" placeholder="备注..." [(ngModel)]="createDialog.comment"></textarea>
+            <textarea class="form-control" rows="3" placeholder="备注..." name="comment" [(ngModel)]="createDialog.comment"></textarea>
           </div>
         </div>
         <div class="modal-footer">
