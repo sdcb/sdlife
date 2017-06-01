@@ -28,8 +28,8 @@ export class DataService {
             .post("/Accounting/Create", dto);
     }
 
-    editAccounting(data: AccountingDto) {
-        let dto: AccountingDto = {
+    editAccounting(data: AccountingEntity) {
+        let dto = {
             id: data.id,
             title: data.title,
             amount: data.amount,
@@ -52,7 +52,6 @@ export interface AccountingEntity extends AccountingDto {
 }
 
 export interface AccountingDto {
-    id?: number;
     title: string;
     amount: number;
     time: string;

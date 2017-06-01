@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService, AccountingDto } from '../services/data.service';
+import { DataService, AccountingDto, AccountingEntity } from '../services/data.service';
 import { Observable } from 'rxjs/Rx';
 import * as moment from "moment";
 
@@ -64,7 +64,7 @@ export class AccountingComponent implements OnInit {
         this.createDialog = new AccountingCreateDialog();
     }
 
-    openEditDialog(v: AccountingDto) {
+    openEditDialog(v: AccountingEntity) {
         let item = new AccountingCreateDialog();
         item.id = v.id || -1;
         item.title = v.title;
@@ -88,7 +88,6 @@ class AccountingCreateDialog {
         let timePart = moment().diff(moment().startOf("day"));
         let dateTime = time.add(timePart);
         return {
-            id:this.id,
             isIncome: this.isIncome,
             time: formatDate(dateTime),
             title: this.title,
@@ -97,7 +96,7 @@ class AccountingCreateDialog {
         }
     }
 
-    editDto(): AccountingDto {
+    editDto(): AccountingEntity {
         let time = moment(this.time);
         let timePart = moment().diff(moment().startOf("day"));
         let dateTime = time.add(timePart); 
