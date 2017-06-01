@@ -27,6 +27,7 @@
               <th>标题</th>
               <th>金额</th>
               <th>时间</th>
+              <th>备注</th>
               <th></th>
             </tr>
           </thead>
@@ -37,8 +38,17 @@
               <td>{{item.title}}</td>
               <td>{{item.amount}}</td>
               <td>{{item.time}}</td>
+              <td>{{item.comment}}</td>
               <td>
-                <a (click)="edit()">编辑</a>
+                <a href="#create-dialog"
+                   data-toggle="modal"
+                   (click)="openEditDialog(item)">
+                  <i class="glyphicon glyphicon-pencil"></i>
+                </a>
+                <a (click)="delete(item.id)" href="#delete-dialog"
+                   data-toggle="modal" style="margin-left:5px;">
+                  <i class="glyphicon glyphicon-trash"></i>
+                </a>
               </td>
             </tr>
           </tbody>
@@ -57,6 +67,9 @@
           <h4 class="modal-title">记一笔</h4>
         </div>
         <div class="modal-body">
+          <div >
+            <input type="text" id="modal_id" name="id" [(ngModel)] ="createDialog.id" />
+          </div>
           <div class="form-group">
             <div class="input-group">
               <label class="radio-inline">
@@ -90,5 +103,26 @@
         </div>
       </div>
     </form>
+  </div>
+</div>
+
+
+<div class="modal fade" id="delete-dialog" tabindex="-1" role="dialog" aria-labelledby="delteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="margin-top:10px;">
+        <input id="table_id" value="" hidden />
+        你确定要删除词条数据吗？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" (click)="confirm()">确定</button>
+      </div>
+    </div>
   </div>
 </div>

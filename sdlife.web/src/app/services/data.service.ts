@@ -17,7 +17,6 @@ export class DataService {
     }
 
     createAccounting(data: AccountingDto) {
-        console.log(data);
         let dto: AccountingDto = {
             title: data.title,
             amount: data.amount,
@@ -27,6 +26,24 @@ export class DataService {
         };
         return this.http
             .post("/Accounting/Create", dto);
+    }
+
+    editAccounting(data: AccountingEntity) {
+        let dto = {
+            id: data.id,
+            title: data.title,
+            amount: data.amount,
+            isIncome: data.isIncome,
+            comment: data.comment,
+            time: data.time
+        };
+        return this.http
+            .post("/Accounting/Update", dto);
+    }
+
+    deleteAccounting(id) {
+        return this.http
+            .post(`/Accounting/Delete?id=${id}`, null);
     }
 }
 
