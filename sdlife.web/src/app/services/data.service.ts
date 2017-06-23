@@ -15,6 +15,36 @@ export class DataService {
             .post("/Accounting/Get", query)
             .map(res => <AccountingDto[]>res.json());
     }
+
+    createAccounting(data: AccountingDto) {
+        let dto: AccountingDto = {
+            title: data.title,
+            amount: data.amount,
+            isIncome: data.isIncome,
+            comment: data.comment,
+            time: data.time
+        };
+        return this.http
+            .post("/Accounting/Create", dto);
+    }
+
+    editAccounting(data: AccountingEntity) {
+        let dto = {
+            id: data.id,
+            title: data.title,
+            amount: data.amount,
+            isIncome: data.isIncome,
+            comment: data.comment,
+            time: data.time
+        };
+        return this.http
+            .post("/Accounting/Update", dto);
+    }
+
+    deleteAccounting(id) {
+        return this.http
+            .post(`/Accounting/Delete?id=${id}`, null);
+    }
 }
 
 export interface AccountingEntity extends AccountingDto {
