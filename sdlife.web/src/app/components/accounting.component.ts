@@ -49,7 +49,6 @@ export class AccountingComponent implements OnInit {
 
     async create() {
         var data = this.createDialog;
-        console.log(data);
         if (data.id != undefined) {
             let response = await this.data.editAccounting(this.createDialog.editDto()).toPromise();
         } else {
